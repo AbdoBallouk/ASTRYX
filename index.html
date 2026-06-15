@@ -12,7 +12,7 @@
         @media print {
             @page {
                 size: A4;
-                margin: 1.8cm;
+                margin: 1.5cm;
             }
             body {
                 background: white;
@@ -48,6 +48,7 @@
             .text-primary, .text-accent, .text-amber {
                 color: #2c3e50 !important;
             }
+            /* Force grid layout for better space usage */
             .grid {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
@@ -55,6 +56,16 @@
             }
             .grid-cols-3 {
                 grid-template-columns: repeat(3, 1fr);
+            }
+            /* Prevent breaks inside critical containers */
+            .table-container, .spec-card, .feature-card, .glow-card {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            /* Ensure tables don't break */
+            table {
+                page-break-inside: avoid;
+                break-inside: avoid;
             }
             img {
                 max-width: 100%;
@@ -64,20 +75,6 @@
             h1, h2, h3, h4 {
                 page-break-after: avoid;
                 color: #1a1a1a;
-            }
-            section, .feature-card, .table-container {
-                page-break-inside: avoid;
-                break-inside: avoid;
-            }
-            table {
-                border-collapse: collapse;
-                width: 100%;
-                page-break-inside: avoid;
-            }
-            th, td {
-                border: 1px solid #aaa;
-                padding: 6px 8px;
-                text-align: left;
             }
             footer {
                 margin-top: 20px;
@@ -476,7 +473,7 @@
             </div>
         </div>
         
-        <!-- Advanced Hardware Control -->
+        <!-- Advanced Hardware Control (Split into two columns to prevent print breaks) -->
         <div class="grid md:grid-cols-2 gap-6 mb-12">
             <div class="bg-card rounded-xl p-5 border border-border feature-card">
                 <h3 class="font-bold text-lg mb-3"><i class="fa-solid fa-microchip text-primary mr-2"></i> Advanced Hardware Control</h3>
