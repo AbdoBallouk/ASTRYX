@@ -1,3 +1,16 @@
+سأقوم بكتابة الكود **الكامل والمتكامل** الذي يحتوي على **جميع** المواصفات والميزات والخصائص والمتطلبات، مع:
+
+1. **الصورة الرئيسية بدون إطار** (اسم الملف: `main-picture-spectrum.png`)
+2. **صور المنتج المكتبي والمحمول بحجم كبير ودقة عالية** بدون إطارات
+3. **السلايدر (Carousel)** لعرض لقطات البرنامج
+4. **المحاكي الحي** (الأنيميشن)
+5. **جميع جداول المواصفات** (مسح الطيف، الشلال، مقياس الاستطاعة، فك التعديل، تسجيل IQ، العلامات، التحكم بالعتاد)
+6. **جدول المتطلبات** (System Requirements)
+7. **جدول المقارنة** بين HackRF و Pluto
+8. **الترجمة الكاملة** (عربي/إنجليزي)
+9. **خاصية الطباعة** المتوافقة مع ورق A4
+
+```html
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -8,11 +21,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* Print Styles - Optimized for A4 with page breaks control */
+        /* Print Styles - Optimized for A4 */
         @media print {
             @page {
                 size: A4;
-                margin: 1.8cm;
+                margin: 1.5cm;
             }
             body {
                 background: white;
@@ -23,46 +36,39 @@
             .no-print, nav, .sticky, .print-hide, button, .lang-toggle, .carousel-button, .carousel-dots, #simulator, .audio-control, #audioBtn, .mode-buttons, .carousel-container {
                 display: none !important;
             }
-            .print-show {
-                display: block !important;
-            }
             .bg-card, .bg-dark, .bg-slate-950, .bg-slate-900, .bg-black, .spec-card {
                 background: white !important;
-                border: 1px solid #ddd !important;
+                border: none !important;
                 color: black !important;
                 box-shadow: none !important;
+            }
+            .hero-image, .hardware-image {
+                border: none !important;
+                box-shadow: none !important;
+                background: transparent !important;
+                max-height: 200px;
+                object-fit: contain;
+            }
+            .border-border, .border {
+                border: none !important;
             }
             .text-slate-400, .text-slate-300, .text-gray-400, .text-slate-500 {
                 color: #444 !important;
             }
-            .border-border, .border {
-                border-color: #ccc !important;
-            }
-            .text-primary, .text-accent, .text-amber {
-                color: #2c3e50 !important;
-            }
-            .bg-primary, .bg-accent, .bg-amber {
-                background: #f5f5f5 !important;
-                color: black !important;
-            }
             .grid {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-            .grid-cols-3, .grid-cols-4 {
-                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
             }
             img {
                 max-width: 100%;
                 page-break-inside: avoid;
-                border: 1px solid #eee;
+                border: none !important;
             }
             h1, h2, h3, h4 {
                 page-break-after: avoid;
-                color: #1a1a1a;
             }
-            section, .spec-card, .gallery-item, .gallery-card, .table-container {
+            section, .spec-card, .gallery-item, .table-container {
                 page-break-inside: avoid;
                 break-inside: avoid;
             }
@@ -80,38 +86,52 @@
                 margin-top: 20px;
                 border-top: 1px solid #ccc;
                 padding-top: 10px;
-                font-size: 8pt;
-            }
-            .hardware-image {
-                max-height: 180px;
-                object-fit: contain;
-            }
-            .print-full-width {
-                width: 100%;
-            }
-            .print-grid-2 {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 15px;
             }
         }
         
-        body { background: #0a0c15; color: #eef2ff; }
-        .glow-card { transition: all 0.3s ease; border: 1px solid #1e2a3a; background: #0f1420; }
-        .glow-card:hover { border-color: #10b981; box-shadow: 0 0 25px rgba(16,185,129,0.2); transform: translateY(-3px); }
-        .hero-image { width: 100%; border-radius: 1rem; object-fit: cover; max-height: 450px; }
-        .spec-card { background: linear-gradient(135deg, #0f1420 0%, #0a0c15 100%); transition: all 0.3s; }
-        .spec-card:hover { transform: translateY(-2px); border-color: #10b981; }
-        .gradient-text { background: linear-gradient(135deg, #10b981, #3b82f6, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .hardware-image { border-radius: 1rem; transition: transform 0.3s; width: 100%; object-fit: cover; height: 280px; }
+        body { background: #0a0c15; color: #eef2ff; font-family: 'Inter', sans-serif; }
+        
+        /* Image styles - NO borders, NO frames */
+        .hero-image {
+            width: 100%;
+            border-radius: 0;
+            object-fit: contain;
+            max-height: 500px;
+            background: transparent;
+            box-shadow: none;
+            border: none;
+        }
+        
+        .hardware-image {
+            width: 100%;
+            border-radius: 0;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            max-height: 400px;
+        }
         .hardware-image:hover { transform: scale(1.02); }
+        
+        .glow-card { 
+            transition: all 0.3s ease; 
+            border: 1px solid #1e2a3a; 
+            background: #0f1420;
+        }
+        .glow-card:hover { border-color: #10b981; box-shadow: 0 0 25px rgba(16,185,129,0.2); transform: translateY(-3px); }
+        
+        .spec-card { background: linear-gradient(135deg, #0f1420 0%, #0a0c15 100%); transition: all 0.3s; border: 1px solid #1e2a3a; border-radius: 1rem; }
+        .spec-card:hover { transform: translateY(-2px); border-color: #10b981; }
+        
+        .gradient-text { background: linear-gradient(135deg, #10b981, #3b82f6, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; }
         
         /* Carousel Styles */
         .carousel-container {
             position: relative;
             overflow: hidden;
-            border-radius: 1.5rem;
-            background: #0a0c15;
+            border-radius: 0;
+            background: transparent;
         }
         .carousel-track {
             display: flex;
@@ -123,15 +143,17 @@
         }
         .carousel-slide img {
             width: 100%;
-            height: 500px;
+            height: 550px;
             object-fit: contain;
-            background: #0a0c15;
+            background: transparent;
+            border: none;
+            box-shadow: none;
         }
         .carousel-button {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.7);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(16,185,129,0.5);
             border-radius: 50%;
@@ -169,6 +191,20 @@
         @media (max-width: 768px) {
             .carousel-slide img { height: 300px; }
             .carousel-button { width: 36px; height: 36px; }
+            .hero-image { max-height: 300px; }
+            .hardware-image { max-height: 250px; }
+        }
+        
+        /* Table styles */
+        .spec-table th, .spec-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #1e2a3a;
+        }
+        .spec-table th {
+            background: #0f1420;
+            font-weight: 600;
+            color: #10b981;
         }
     </style>
 </head>
@@ -191,7 +227,7 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
+    <!-- HERO SECTION - Main image without frame -->
     <header class="relative overflow-hidden py-16 px-6 border-b border-border">
         <div class="max-w-7xl mx-auto">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
@@ -202,20 +238,38 @@
                     <div class="flex flex-wrap gap-3 pt-2 no-print"><a href="#simulator" class="bg-primary hover:bg-emerald-600 text-black font-bold px-6 py-2.5 rounded-xl text-sm shadow-lg transition" data-i18n="btnSim">🎮 Live Simulator</a><a href="#carousel" class="bg-card border border-border hover:border-primary text-slate-200 px-6 py-2.5 rounded-xl text-sm font-bold transition" data-i18n="btnGallery">📸 Full Gallery</a><a href="#fullspecs" class="bg-slate-900 border border-slate-700 text-slate-300 px-6 py-2.5 rounded-xl text-sm font-bold transition" data-i18n="btnSpec">⚙️ Full Specs</a></div>
                 </div>
                 <div class="relative">
-                    <div class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-primary to-accent opacity-20 blur-xl"></div>
-                    <img src="main-picture-spectrum.png" onerror="this.src='https://placehold.co/800x500/0f1420/10b981?text=AB-SpectroX+Main+View'" class="hero-image w-full rounded-2xl border border-border shadow-2xl">
-                    <p class="text-center text-xs text-slate-500 mt-2 no-print">AB-SpectroX Gold · Main Interface</p>
+                    <img src="main-picture-spectrum.png" onerror="this.src='https://placehold.co/800x500/0f1420/10b981?text=AB-SpectroX+Main+View'" class="hero-image w-full">
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Hardware Showcase - HIGH RESOLUTION -->
+    <!-- Hardware Showcase - HIGH RESOLUTION, LARGE SIZE, NO FRAMES -->
     <section class="py-16 px-6 max-w-7xl mx-auto">
         <div class="text-center mb-12"><span class="text-xs font-mono text-amber uppercase tracking-wider">hardware platforms</span><h2 class="text-3xl font-black mt-2" data-i18n="hardwareTitle">AB-SpectroX Platform Family</h2><p class="text-slate-400 text-sm max-w-2xl mx-auto" data-i18n="hardwareSub">Professional Mobile & Desktop RF Analysis Solutions · Field-deployable and lab-grade</p></div>
         <div class="grid lg:grid-cols-2 gap-8">
-            <div class="bg-card rounded-2xl border border-border overflow-hidden glow-card"><div class="p-5 bg-gradient-to-r from-primary/20 to-transparent"><h3 class="text-2xl font-bold"><i class="fa-solid fa-tablet-alt text-primary mr-3"></i> AB-SpectroX <span class="text-amber">Mobile Edition</span></h3><p class="text-sm text-slate-400 mt-1">Portable Field Deployment · Battery Optimized</p></div><img src="AB-spectrox.png" onerror="this.src='https://placehold.co/800x500/0f1420/10b981?text=Mobile+Edition+AB-SpectroX'" class="w-full h-auto object-contain p-5 hardware-image" style="height: auto; max-height: 350px;"><div class="p-5 border-t border-border"><p class="text-slate-300">Compact handheld design · Full 1MHz-7.25GHz analysis · Ideal for field deployment, spectrum monitoring, interference hunting, and TSCM operations.</p><div class="flex gap-4 mt-3 text-xs text-primary"><span><i class="fa-regular fa-battery-full"></i> 8+ hours battery</span><span><i class="fa-regular fa-sd-card"></i> 256GB storage</span><span><i class="fa-regular fa-bluetooth"></i> Wireless sync</span></div></div></div>
-            <div class="bg-card rounded-2xl border border-border overflow-hidden glow-card"><div class="p-5 bg-gradient-to-r from-accent/20 to-transparent"><h3 class="text-2xl font-bold"><i class="fa-solid fa-desktop text-accent mr-3"></i> AB-SpectroX <span class="text-amber">Desktop Workstation</span></h3><p class="text-sm text-slate-400 mt-1">Lab Grade · High Performance Computing</p></div><img src="touchstone.png" onerror="this.src='https://placehold.co/800x500/0f1420/3b82f6?text=Desktop+Workstation+AB-SpectroX'" class="w-full h-auto object-contain p-5 hardware-image" style="height: auto; max-height: 350px;"><div class="p-5 border-t border-border"><p class="text-slate-300">High-performance workstation · Multi-display support · Advanced calibration · Ideal for lab environments, continuous spectrum surveillance, and EMC pre-compliance.</p><div class="flex gap-4 mt-3 text-xs text-accent"><span><i class="fa-regular fa-display"></i> Quad monitor</span><span><i class="fa-regular fa-microchip"></i> 12-core CPU</span><span><i class="fa-regular fa-memory"></i> 64GB RAM</span></div></div></div>
+            <div class="bg-card rounded-2xl border border-border overflow-hidden glow-card">
+                <div class="p-5 bg-gradient-to-r from-primary/20 to-transparent">
+                    <h3 class="text-2xl font-bold"><i class="fa-solid fa-tablet-alt text-primary mr-3"></i> AB-SpectroX <span class="text-amber">Mobile Edition</span></h3>
+                    <p class="text-sm text-slate-400 mt-1">Portable Field Deployment · Battery Optimized</p>
+                </div>
+                <img src="AB-spectrox.png" onerror="this.src='https://placehold.co/1000x600/0f1420/10b981?text=AB-SpectroX+Mobile+Edition'" class="w-full hardware-image" style="padding: 20px; background: transparent;">
+                <div class="p-5 border-t border-border">
+                    <p class="text-slate-300">Compact handheld design · Full 1MHz-7.25GHz analysis · Ideal for field deployment, spectrum monitoring, interference hunting, and TSCM operations.</p>
+                    <div class="flex gap-4 mt-3 text-xs text-primary"><span><i class="fa-regular fa-battery-full"></i> 8+ hours battery</span><span><i class="fa-regular fa-sd-card"></i> 256GB storage</span><span><i class="fa-regular fa-bluetooth"></i> Wireless sync</span></div>
+                </div>
+            </div>
+            <div class="bg-card rounded-2xl border border-border overflow-hidden glow-card">
+                <div class="p-5 bg-gradient-to-r from-accent/20 to-transparent">
+                    <h3 class="text-2xl font-bold"><i class="fa-solid fa-desktop text-accent mr-3"></i> AB-SpectroX <span class="text-amber">Desktop Workstation</span></h3>
+                    <p class="text-sm text-slate-400 mt-1">Lab Grade · High Performance Computing</p>
+                </div>
+                <img src="touchstone.png" onerror="this.src='https://placehold.co/1000x600/0f1420/3b82f6?text=AB-SpectroX+Desktop+Workstation'" class="w-full hardware-image" style="padding: 20px; background: transparent;">
+                <div class="p-5 border-t border-border">
+                    <p class="text-slate-300">High-performance workstation · Multi-display support · Advanced calibration · Ideal for lab environments, continuous spectrum surveillance, and EMC pre-compliance.</p>
+                    <div class="flex gap-4 mt-3 text-xs text-accent"><span><i class="fa-regular fa-display"></i> Quad monitor</span><span><i class="fa-regular fa-microchip"></i> 12-core CPU</span><span><i class="fa-regular fa-memory"></i> 64GB RAM</span></div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -228,7 +282,7 @@
         </div>
     </section>
 
-    <!-- CAROUSEL GALLERY (High resolution slider) -->
+    <!-- CAROUSEL GALLERY -->
     <section id="carousel" class="py-16 px-6 max-w-7xl mx-auto no-print">
         <div class="text-center mb-10"><span class="text-xs font-mono text-accent uppercase">software gallery</span><h2 class="text-3xl font-black mt-1" data-i18n="galleryTitle">Real Software Screenshots</h2><p class="text-slate-400 text-sm" data-i18n="gallerySub">High resolution captures from AB-SpectroX Gold · Browse through the interface</p></div>
         <div class="carousel-container relative">
@@ -244,7 +298,7 @@
             <button class="carousel-button carousel-button-next" id="nextBtn"><i class="fa-solid fa-chevron-right text-white text-xl"></i></button>
             <div class="carousel-dots" id="carouselDots"></div>
         </div>
-        <p class="text-center text-xs text-slate-500 mt-3"><i class="fa-regular fa-images"></i> 6 screenshots · Auto-slideshow every 5 seconds · Click arrows or dots to navigate</p>
+        <p class="text-center text-xs text-slate-500 mt-3"><i class="fa-regular fa-images"></i> 6 screenshots · Auto-slideshow every 5 seconds</p>
     </section>
 
     <!-- LIVE SIMULATOR -->
@@ -259,34 +313,35 @@
         
         <!-- Key Features Grid - 6 cards -->
         <div class="grid md:grid-cols-3 gap-6 mb-12">
-            <div class="spec-card bg-card rounded-xl p-5 border border-border"><div class="text-3xl mb-3">📡</div><h3 class="font-bold text-lg">Spectrum Sweep</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>1 MHz – 7.25 GHz (HackRF)</li><li>70 – 6000 MHz (Pluto extended)</li><li>RBW: 1k,2k,5k,10k,20k,50k,100k,200k,500k,1M,2M,5M Hz</li><li>FFT points: 8,192 – 262,144</li><li>Detectors: RMS, Average, Peak</li><li>Peak Hold (0-500ms fall rate)</li><li>Adaptive Spur Filter (learns 40MHz spurs)</li></ul></div>
-            <div class="spec-card bg-card rounded-xl p-5 border border-border"><div class="text-3xl mb-3">🌊</div><h3 class="font-bold text-lg">Waterfall / Spectrogram</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>27 color palettes</li><li>Hot Iron, Viridis, Inferno, Plasma</li><li>Matrix, Cyberpunk, Ocean, Military Amber</li><li>Medical Blue, Fire & Ice, Hacker Terminal</li><li>Auto Palette mode (noise floor tracking)</li><li>Side colorbar with dBm scale</li><li>Mouse marker + double-click retune</li><li>Persistent display (1-60s decay)</li></ul></div>
-            <div class="spec-card bg-card rounded-xl p-5 border border-border"><div class="text-3xl mb-3">⚡</div><h3 class="font-bold text-lg">Professional Power Meter</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>Units: dBm / Watt (full decimal)</li><li>External attenuator (0-120 dB)</li><li>Path loss compensation (0-80 dB)</li><li>External offset (±40 dB)</li><li>Multi-point frequency calibration</li><li>Guided calibration wizard</li><li>Auto calibration with sweep generator</li><li>Channel Power with ENBW (0.8-3.0)</li><li>SNR calculation (20th percentile noise)</li><li>Uncertainty estimation</li><li>JSON Save/Load</li></ul></div>
-            <div class="spec-card bg-card rounded-xl p-5 border border-border"><div class="text-3xl mb-3">🎙️</div><h3 class="font-bold text-lg">Live Demodulation</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>FM (200kHz bandwidth)</li><li>AM (up to 10kHz)</li><li>LSB / USB (Single Sideband)</li><li>CW (1.2kHz for morse)</li><li>Real-time IQ from HackRF/Pluto</li><li>Sample rate: 2MHz for FM</li><li>DC removal, bandpass filters</li><li>De‑emphasis (FM), AGC</li><li>Hiss reduction</li><li>PyAudio / sounddevice output</li><li>48kHz, 16‑bit int</li><li>Double-click to retune</li></ul></div>
-            <div class="spec-card bg-card rounded-xl p-5 border border-border"><div class="text-3xl mb-3">💾</div><h3 class="font-bold text-lg">IQ Recorder / Player / Tx</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>SigMF CS8 (.sigmf-data) – Tx ready</li><li>SigMF C16 (.sigmf-data)</li><li>Complex Float32 (.cf32)</li><li>Recording: max duration / file size</li><li>SigMF metadata sidecar</li><li>Narrowband preview during recording</li><li>Auto-resume sweep after recording</li><li>Playback: open .sigmf-data/.cf32</li><li>Spectrum preview during playback</li><li>Loop mode</li><li>Transmit ci8 via HackRF/Pluto</li><li>Adjustable frequency and gain</li></ul></div>
-            <div class="spec-card bg-card rounded-xl p-5 border border-border"><div class="text-3xl mb-3">🎯</div><h3 class="font-bold text-lg">Markers & User Interface</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>Max 8 markers (standard + peak)</li><li>Delta reference marker</li><li>Customizable colors</li><li>Rename markers</li><li>Add from context menu</li><li>Peak cycling (add peak marker)</li><li>Instant bilingual (EN/AR)</li><li>Show/hide modules (Waterfall, Demod, IQ, Power Meter)</li><li>Screenshot (spectrum+waterfall as PNG)</li><li>Save/Load all settings to JSON</li><li>Reset to defaults</li><li>Capture folder selection</li></ul></div>
+            <div class="spec-card p-5"><div class="text-3xl mb-3">📡</div><h3 class="font-bold text-lg">Spectrum Sweep</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>1 MHz – 7.25 GHz (HackRF)</li><li>70 – 6000 MHz (Pluto extended)</li><li>RBW: 1k,2k,5k,10k,20k,50k,100k,200k,500k,1M,2M,5M Hz</li><li>FFT points: 8,192 – 262,144</li><li>Detectors: RMS, Average, Peak</li><li>Peak Hold (0-500ms fall rate)</li><li>Adaptive Spur Filter (learns 40MHz spurs per gain profile)</li></ul></div>
+            <div class="spec-card p-5"><div class="text-3xl mb-3">🌊</div><h3 class="font-bold text-lg">Waterfall / Spectrogram</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>27 color palettes</li><li>Hot Iron, Viridis, Inferno, Plasma, Magma</li><li>Cividis, Turbo, Neon Aurora, Cyber Sunset</li><li>Deep Space Neon, Matrix Green, Ocean Depths</li><li>Sunset Glow, Military Amber, Medical Blue</li><li>Fire & Ice, Hacker Terminal, Professional Blue</li><li>Neon Pink, Electric Purple, Golden Hour, Arctic Ice</li><li>Lava Flow, Cyberpunk Neon, Royal Gold, Toxic Green, Deep Ocean</li><li>Auto Palette mode (noise floor tracking)</li><li>Side colorbar with dBm scale</li><li>Mouse marker + double-click retune</li><li>Persistent display (1-60s decay)</li></ul></div>
+            <div class="spec-card p-5"><div class="text-3xl mb-3">⚡</div><h3 class="font-bold text-lg">Professional Power Meter</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>Units: dBm / Watt (full decimal)</li><li>External attenuator compensation (0-120 dB)</li><li>Path loss compensation (0-80 dB)</li><li>External offset (±40 dB)</li><li>Multi-point frequency calibration (list, linear interpolation, apply range)</li><li>Guided calibration: steps through frequencies with capture prompts</li><li>Auto calibration: works with sweeping signal generator, peak tracking</li><li>Channel Power with ENBW factor (0.8-3.0 adjustable)</li><li>SNR calculation (peak minus 20th percentile noise)</li><li>Uncertainty estimation based on variance, attenuation, SNR, signal level</li><li>Save/Load calibration JSON (points, ENBW, losses, offset, attenuator used)</li></ul></div>
+            <div class="spec-card p-5"><div class="text-3xl mb-3">🎙️</div><h3 class="font-bold text-lg">Live Demodulation</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>FM (200kHz bandwidth)</li><li>AM (up to 10kHz)</li><li>LSB / USB (Single Sideband)</li><li>CW (1.2kHz for morse/telemetry)</li><li>Real-time IQ from HackRF/Pluto</li><li>Sample rate: 2MHz for FM (adjustable for other modes)</li><li>DC removal, bandpass filters</li><li>De‑emphasis (FM), Automatic Gain Control (AGC)</li><li>Hiss reduction</li><li>PyAudio / sounddevice output</li><li>48kHz, 16‑bit int</li><li>Volume control slider (0-100%)</li><li>Double-click on spectrum/waterfall to retune</li><li>State reset on frequency/mode change</li></ul></div>
+            <div class="spec-card p-5"><div class="text-3xl mb-3">💾</div><h3 class="font-bold text-lg">IQ Recorder / Player / Transmitter</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>SigMF CS8 (.sigmf-data) – Tx ready</li><li>SigMF C16 (.sigmf-data)</li><li>Complex Float32 (.cf32)</li><li>Complex Int16 (.sc16)</li><li>Recording: max duration limit (seconds, 0 = unlimited)</li><li>Max file size limit (MB, 0 = unlimited)</li><li>Write metadata (SigMF sidecar or JSON)</li><li>Narrowband preview during recording</li><li>Auto-resume sweep after recording</li><li>Real-time statistics (duration, size, queue depth)</li><li>Playback: open .sigmf-data or .cf32</li><li>Spectrum preview during playback (as live)</li><li>Loop mode</li><li>Stop playback and auto-resume sweep</li><li>Transmit IQ files (ci8 only) via HackRF or Pluto</li><li>Set transmit frequency and gain (0-47 dB for HackRF, mapped to attenuation for Pluto)</li></ul></div>
+            <div class="spec-card p-5"><div class="text-3xl mb-3">🎯</div><h3 class="font-bold text-lg">Markers & User Interface</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>Max 8 markers (standard + peak)</li><li>Marker types: Standard (solid line), Peak (solid above, dashed below)</li><li>Delta reference marker (set any marker as reference)</li><li>Customizable colors via color picker</li><li>Rename markers</li><li>Add from context menu (right-click on spectrum)</li><li>Add peak marker (cycles through detected peaks)</li><li>Remove marker ("Remove" button or Delete key)</li><li>Clear all markers</li><li>Instant bilingual (EN/AR) – all UI strings update</li><li>Show/hide modules: Waterfall, Demodulator, IQ Recorder, Power Meter</li><li>Frequency info bar (start, center, stop, span)</li><li>Hide side panel button (collapses/expands settings panel)</li><li>Screenshot captures spectrum + waterfall together as PNG</li><li>Save/Load all settings (device, display, demod, IQ, markers, calibration, spur profiles) to single JSON</li><li>Reset to defaults (one-click button)</li><li>Capture folder selection for screenshots and IQ recordings</li></ul></div>
         </div>
         
         <!-- Advanced Hardware Control -->
         <div class="grid md:grid-cols-2 gap-6 mb-12">
-            <div class="bg-card rounded-xl p-5 border border-border"><h3 class="font-bold text-lg mb-3"><i class="fa-solid fa-microchip text-primary mr-2"></i> Advanced Hardware Control</h3><ul class="text-sm space-y-2 text-slate-300"><li><span class="text-primary font-bold">HackRF One:</span> LNA 0-40dB, VGA 0-62dB, LNA Amp (+14dB), Bias-T, Smart Gain Guard (auto VGA reduce when Amp on)</li><li><span class="text-accent font-bold">ADALM-Pluto:</span> RX gain 0-71dB manual, AGC modes (slow/fast), Auto RX gain suggestions based on freq/span, TX attenuation mapping</li><li>Frequency range auto‑detection (Pluto probes RX limits, 70-6000MHz extended)</li><li>Start/Stop scan, Pause/Resume, center frequency spinbox, span spinbox</li></ul></div>
-            <div class="bg-card rounded-xl p-5 border border-border"><h3 class="font-bold text-lg mb-3"><i class="fa-regular fa-map text-accent mr-2"></i> Frequency Allocation Bands</h3><ul class="text-sm space-y-2 text-slate-300"><li>Embedded Europe (ECA) frequency allocation tables</li><li>Embedded United States (FCC) frequency allocation tables</li><li>Semi-transparent colored overlays on spectrum plot</li><li>Descriptive tooltips with band name and applications</li><li>Auto-load at startup</li></ul></div>
+            <div class="bg-card rounded-xl p-5 border border-border"><h3 class="font-bold text-lg mb-3"><i class="fa-solid fa-microchip text-primary mr-2"></i> Advanced Hardware Control</h3><ul class="text-sm space-y-2 text-slate-300"><li><span class="text-primary font-bold">HackRF One:</span> LNA 0-40dB, VGA 0-62dB, LNA Amp (+14dB), Bias-T (On/Off), Smart Gain Guard (auto VGA reduction when Amp enabled)</li><li><span class="text-accent font-bold">ADALM-Pluto:</span> RX gain 0-71dB manual + AGC modes (slow/fast attack), Auto RX gain suggestions based on freq/span, TX attenuation mapping</li><li>Platform dropdown (HackRF/Pluto) with auto-restart</li><li>Start/Stop scan button (changes color green→red)</li><li>Pause/Resume button (temporarily freezes spectrum update)</li><li>Center frequency spinbox + Apply button</li><li>Span spinbox + Apply button</li><li>Frequency range spinboxes (Start/Stop) with side buttons</li><li>FFT settings dropdowns (Bin Width, Samples) with auto-restart</li><li>Power reference controls (Ref Level dBm + Step dB + Apply + Auto)</li><li>Calibrated spectrum display (applies calibration points + path loss + offset)</li><li>Frequency range auto‑detection (Pluto probes RX limits, 70-6000MHz extended)</li></ul></div>
+            <div class="bg-card rounded-xl p-5 border border-border"><h3 class="font-bold text-lg mb-3"><i class="fa-regular fa-map text-accent mr-2"></i> Frequency Allocation Bands</h3><ul class="text-sm space-y-2 text-slate-300"><li>Embedded Europe (ECA) frequency allocation tables loaded via CSV</li><li>Embedded United States (FCC) frequency allocation tables</li><li>Semi-transparent colored overlays on spectrum plot</li><li>Descriptive tooltips with band name and applications</li><li>Auto-load at startup</li></ul></div>
         </div>
         
         <!-- System Requirements Table -->
         <div class="bg-card border border-border rounded-2xl overflow-hidden mb-8 table-container">
             <div class="bg-slate-900 px-6 py-4 border-b border-border"><h3 class="font-bold text-xl"><i class="fa-solid fa-computer text-primary mr-2"></i> System Requirements</h3></div>
             <div class="overflow-x-auto p-4">
-                <table class="w-full text-sm">
-                    <thead class="bg-slate-800/50"><tr><th class="p-3 text-left">Component</th><th class="p-3 text-left">Minimum Requirement</th><th class="p-3 text-left">Recommended</th></tr></thead>
+                <table class="w-full text-sm spec-table">
+                    <thead><tr><th class="p-3">Component</th><th class="p-3">Minimum Requirement</th><th class="p-3">Recommended</th></tr></thead>
                     <tbody>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Operating System</td><td class="p-3">Windows 10 (64-bit)</td><td class="p-3">Windows 11 (64-bit)</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Processor</td><td class="p-3">Intel Core i5-4xxx / AMD Ryzen 3</td><td class="p-3">Intel Core i7 / AMD Ryzen 7</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">RAM</td><td class="p-3">4 GB</td><td class="p-3">8 GB or more</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Storage<td class="p-3">500 MB for binaries + 10 GB for IQ files</td><td class="p-3">1 GB + 50 GB SSD</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Graphics</td><td class="p-3">OpenGL 2.1+ integrated</td><td class="p-3">OpenGL 3.3+ dedicated GPU</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">SDR Hardware</td><td class="p-3">HackRF One (hackrf.dll) or ADALM-Pluto (libiio)</td><td class="p-3">Same + calibrated antennas</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Runtime Libraries</td><td class="p-3">Microsoft Visual C++ Redistributable 2015-2022</td><td class="p-3">Same</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Operating System</td><td class="p-3">Windows 10 (64-bit)</td><td class="p-3">Windows 11 (64-bit)</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Processor</td><td class="p-3">Intel Core i5-4xxx / AMD Ryzen 3</td><td class="p-3">Intel Core i7 / AMD Ryzen 7</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">RAM</td><td class="p-3">4 GB</td><td class="p-3">8 GB or more (16 GB recommended for large SigMF files)</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Storage</td><td class="p-3">500 MB for binaries + 10 GB for IQ files</td><td class="p-3">1 GB + 50 GB SSD</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Graphics</td><td class="p-3">OpenGL 2.1+ integrated graphics</td><td class="p-3">OpenGL 3.3+ dedicated GPU</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">SDR Hardware</td><td class="p-3">HackRF One (with hackrf.dll) or ADALM-Pluto (with libiio)</td><td class="p-3">Same + calibrated antennas and accessories</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Runtime Libraries</td><td class="p-3">Microsoft Visual C++ Redistributable 2015-2022</td><td class="p-3">Same</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Audio Output (for Demod)</td><td class="p-3">Any sound card with PyAudio or sounddevice support</td><td class="p-3">External DAC or high-quality audio interface</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -296,30 +351,40 @@
         <div class="bg-card border border-border rounded-2xl overflow-hidden table-container">
             <div class="bg-slate-900 px-6 py-4 border-b border-border"><h3 class="font-bold text-xl">HackRF One vs ADALM-Pluto — Hardware Comparison</h3></div>
             <div class="overflow-x-auto p-4">
-                <table class="w-full text-sm">
-                    <thead class="bg-slate-800/50"><tr><th class="p-3 text-left">Feature</th><th class="p-3 text-left">HackRF One</th><th class="p-3 text-left">ADALM-Pluto</th></tr></thead>
+                <table class="w-full text-sm spec-table">
+                    <thead><tr><th class="p-3">Feature</th><th class="p-3">HackRF One</th><th class="p-3">ADALM-Pluto</th></tr></thead>
                     <tbody>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Frequency Range</td><td class="p-3">1 MHz – 7.25 GHz</td><td class="p-3">70 MHz – 6.0 GHz (extended firmware)</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Instantaneous Bandwidth</td><td class="p-3">Up to 20 MHz</td><td class="p-3">Up to 56 MHz</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Gain Control</td><td class="p-3">LNA 0-40dB, VGA 0-62dB, LNA Amp (+14dB)</td><td class="p-3">0-71dB manual + AGC (slow/fast attack)</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Smart Gain Protection</td><td class="p-3">Auto VGA reduction when Amp enabled</td><td class="p-3">Auto RX gain suggestion based on frequency/span</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Bias-T</td><td class="p-3">Supported (14V on/off)</td><td class="p-3">Not supported in UI</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">TX Support</td><td class="p-3">Yes (hackrf_transfer, ci8 files)</td><td class="p-3">Yes (pyadi-iio, ci8, attenuation mapping)</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Connection</td><td class="p-3">USB 2.0/3.0</td><td class="p-3">USB 2.0 or Ethernet (IIO)</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Frequency Range</td><td class="p-3">1 MHz – 7.25 GHz</td><td class="p-3">70 MHz – 6.0 GHz (extended firmware)</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Instantaneous Bandwidth</td><td class="p-3">Up to 20 MHz</td><td class="p-3">Up to 56 MHz</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Gain Control</td><td class="p-3">LNA 0-40dB, VGA 0-62dB, LNA Amp (+14dB)</td><td class="p-3">0-71dB manual + AGC (slow/fast attack)</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Smart Gain Protection</td><td class="p-3">Auto VGA reduction when Amp enabled</td><td class="p-3">Auto RX gain suggestion based on frequency/span</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Bias-T</td><td class="p-3">Supported (14V on/off toggle)</td><td class="p-3">Not supported in UI</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">TX Support</td><td class="p-3">Yes (hackrf_transfer, ci8 files)</td><td class="p-3">Yes (pyadi-iio, ci8, attenuation mapping)</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Connection Interface</td><td class="p-3">USB 2.0/3.0</td><td class="p-3">USB 2.0 or Ethernet (IIO network)</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Sample Rate (Max)</td><td class="p-3">20 MSPS</td><td class="p-3">56 MSPS</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">ADC Resolution</td><td class="p-3">8 bits</td><td class="p-3">12 bits</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
         
-        <!-- Additional Features -->
+        <!-- Performance Optimizations -->
         <div class="grid md:grid-cols-2 gap-6 mt-8">
-            <div class="bg-card rounded-xl p-5 border border-border"><h3 class="font-bold text-lg mb-2"><i class="fa-regular fa-gauge-high text-amber mr-2"></i> Performance Optimizations</h3><p class="text-sm text-slate-300">OpenGL acceleration via PyQtGraph · Periodic garbage collection (every 50 frames) · Float32 spectrum buffers · Adaptive FFT resize · High-priority Windows threading</p></div>
-            <div class="bg-card rounded-xl p-5 border border-border"><h3 class="font-bold text-lg mb-2"><i class="fa-regular fa-bell text-accent mr-2"></i> User Feedback & Notifications</h3><p class="text-sm text-slate-300">Status bar with error messages · Runtime badge (IQ REC, TX LIVE, DEMOD, FILE PREVIEW) · Pluto connection diagnostics · Error dialogs for critical issues</p></div>
+            <div class="bg-card rounded-xl p-5 border border-border"><h3 class="font-bold text-lg mb-2"><i class="fa-regular fa-gauge-high text-amber mr-2"></i> Performance Optimizations</h3><p class="text-sm text-slate-300">OpenGL acceleration via PyQtGraph · Periodic garbage collection (every 50 frames in main thread) · Float32 spectrum buffers · Pre-allocated memory pointers · Adaptive FFT resize (auto-resizes waterfall width) · High-priority Windows threading</p></div>
+            <div class="bg-card rounded-xl p-5 border border-border"><h3 class="font-bold text-lg mb-2"><i class="fa-regular fa-bell text-accent mr-2"></i> User Feedback & Notifications</h3><p class="text-sm text-slate-300">Status bar with error messages and changes · Runtime badge (IQ REC, TX LIVE, DEMOD, FILE PREVIEW) next to Start/Stop button · Pluto connection diagnostics with status messages · Error dialogs for critical issues (device open fail, calibration error)</p></div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-border bg-dark/50 py-12 px-6 text-center"><div class="max-w-4xl mx-auto space-y-4"><i class="fa-regular fa-cube text-4xl text-primary/50"></i><h3 class="text-2xl font-black">AB-SpectroX Gold · Ready for Deployment</h3><p class="text-slate-400 text-sm max-w-2xl mx-auto">Standalone Windows executable, no command line. Perfect for universities, EW labs, and RF R&D. Complete SigMF compliance, professional calibration tools, and bilingual interface.</p><div class="bg-black/50 inline-block rounded-xl p-3 font-mono text-[11px] text-emerald-300 text-left">$ git clone https://github.com/AbdoBallouk/ASTRYX.git<br>$ python -m astryx_spectrometer --gui</div><div class="flex justify-center gap-5 pt-4"><a href="https://github.com/AbdoBallouk/ASTRYX" target="_blank" class="text-xs bg-card px-5 py-2 rounded-full"><i class="fa-brands fa-github"></i> Repository</a><span class="text-xs text-slate-500">© 2026 AB-SpectroX · Developed by Dr. Eng Abdo Ballouk</span></div></div></footer>
+    <footer class="border-t border-border bg-dark/50 py-12 px-6 text-center">
+        <div class="max-w-4xl mx-auto space-y-4">
+            <i class="fa-regular fa-cube text-4xl text-primary/50"></i>
+            <h3 class="text-2xl font-black">AB-SpectroX Gold · Ready for Deployment</h3>
+            <p class="text-slate-400 text-sm max-w-2xl mx-auto">Standalone Windows executable, no command line. Perfect for universities, EW labs, and RF R&D. Complete SigMF compliance, professional calibration tools, and bilingual interface.</p>
+            <div class="bg-black/50 inline-block rounded-xl p-3 font-mono text-[11px] text-emerald-300 text-left">$ git clone https://github.com/AbdoBallouk/ASTRYX.git<br>$ python -m astryx_spectrometer --gui</div>
+            <div class="flex justify-center gap-5 pt-4"><a href="https://github.com/AbdoBallouk/ASTRYX" target="_blank" class="text-xs bg-card px-5 py-2 rounded-full"><i class="fa-brands fa-github"></i> Repository</a><span class="text-xs text-slate-500">© 2026 AB-SpectroX · Developed by Dr. Eng Abdo Ballouk</span></div>
+        </div>
+    </footer>
 
     <script>
         // Carousel Logic
@@ -337,9 +402,11 @@
         function goToSlide(index) { currentIndex = index; updateCarousel(); resetAutoSlide(); }
         function resetAutoSlide() { clearInterval(autoSlideInterval); autoSlideInterval = setInterval(nextSlide, 5000); }
         
-        slides.forEach((_, i) => { const dot = document.createElement('div'); dot.classList.add('carousel-dot'); if (i === 0) dot.classList.add('active'); dot.addEventListener('click', () => goToSlide(i)); dotsContainer.appendChild(dot); });
-        prevBtn.addEventListener('click', prevSlide); nextBtn.addEventListener('click', nextSlide);
-        resetAutoSlide();
+        if (slides.length > 0) {
+            slides.forEach((_, i) => { const dot = document.createElement('div'); dot.classList.add('carousel-dot'); if (i === 0) dot.classList.add('active'); dot.addEventListener('click', () => goToSlide(i)); dotsContainer.appendChild(dot); });
+            prevBtn.addEventListener('click', prevSlide); nextBtn.addEventListener('click', nextSlide);
+            resetAutoSlide();
+        }
         
         // Bilingual Dictionary
         const dict = { 
@@ -377,3 +444,4 @@
     </script>
 </body>
 </html>
+```
