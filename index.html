@@ -12,29 +12,31 @@
         @media print {
             @page {
                 size: A4;
-                margin: 1.5cm;
+                margin: 1.8cm;
             }
             body {
                 background: white;
                 color: black;
-                font-size: 10pt;
-                line-height: 1.3;
+                font-size: 9.5pt;
+                line-height: 1.25;
                 font-family: 'Inter', sans-serif;
             }
             .no-print, nav, .sticky, .print-hide, button, .lang-toggle, .carousel-button, .carousel-dots, #simulator, .audio-control, #audioBtn, .mode-buttons, .carousel-container {
                 display: none !important;
             }
-            .bg-card, .bg-dark, .bg-slate-950, .bg-slate-900, .bg-black, .spec-card {
+            .bg-card, .bg-dark, .bg-slate-950, .bg-slate-900, .bg-black, .feature-card, .spec-card {
                 background: white !important;
-                border: 1px solid #ddd !important;
+                border: 1px solid #ccc !important;
                 color: black !important;
                 box-shadow: none !important;
+                page-break-inside: avoid;
+                break-inside: avoid;
             }
             .hero-image, .hardware-image {
                 border: none !important;
                 box-shadow: none !important;
                 background: transparent !important;
-                max-height: 180px;
+                max-height: 160px;
                 object-fit: contain;
             }
             .border-border, .border {
@@ -49,7 +51,7 @@
             .grid {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
+                gap: 12px;
             }
             .grid-cols-3 {
                 grid-template-columns: repeat(3, 1fr);
@@ -63,7 +65,7 @@
                 page-break-after: avoid;
                 color: #1a1a1a;
             }
-            section, .spec-card, .gallery-item, .table-container, .feature-card {
+            section, .feature-card, .table-container {
                 page-break-inside: avoid;
                 break-inside: avoid;
             }
@@ -74,7 +76,7 @@
             }
             th, td {
                 border: 1px solid #aaa;
-                padding: 8px;
+                padding: 6px 8px;
                 text-align: left;
             }
             footer {
@@ -87,6 +89,12 @@
                 background: none !important;
                 -webkit-background-clip: unset !important;
                 background-clip: unset !important;
+            }
+            ul, .feature-list {
+                page-break-inside: avoid;
+            }
+            li {
+                page-break-inside: avoid;
             }
         }
         
@@ -111,7 +119,7 @@
             background: transparent;
             border: none;
             box-shadow: none;
-            max-height: 380px;
+            max-height: 360px;
         }
         .hardware-image:hover { transform: scale(1.02); }
         
@@ -210,6 +218,24 @@
         .spec-table th {
             background: #0f1420;
             font-weight: 600;
+            color: #10b981;
+        }
+        
+        /* Feature list styling */
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .feature-list li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+        }
+        .feature-list li:before {
+            content: "▹";
+            position: absolute;
+            left: 0;
             color: #10b981;
         }
         
@@ -320,23 +346,181 @@
         <div class="bg-card border border-border rounded-2xl p-5 shadow-xl"><div class="grid lg:grid-cols-4 gap-6"><div class="space-y-5"><h3 class="text-xs font-bold text-primary uppercase tracking-wider"><i class="fa-regular fa-sliders"></i> <span data-i18n="ctrl">Front-End Config</span></h3><div><label class="text-[10px] text-slate-400"><span data-i18n="sdrLabel">Active SDR Engine</span></label><div class="grid grid-cols-2 gap-1 mt-1"><button id="btnHack" class="py-1 rounded text-xs font-bold bg-emerald-600 text-black transition-all duration-200 hover:scale-105">HackRF One</button><button id="btnPluto" class="py-1 rounded text-xs font-bold text-slate-400 hover:text-white transition-all duration-200">ADALM-Pluto</button></div></div><div><label class="text-[10px] text-slate-400"><span data-i18n="paletteLabel">Waterfall Palette (27)</span></label><select id="paletteSelect" class="w-full bg-slate-900 border border-border text-slate-200 text-xs rounded-md p-1.5"><option value="hotiron">Hot Iron Blue</option><option value="viridis">Viridis</option><option value="inferno">Inferno</option><option value="matrix">Matrix Green</option><option value="cyber">Cyberpunk Neon</option><option value="ocean">Deep Ocean</option></select></div><div><div class="flex justify-between text-[10px]"><span id="spanVal">20 MHz</span><span data-i18n="spanLabel">Span (MHz)</span></div><input type="range" id="spanSlider" min="5" max="56" value="20" class="w-full accent-primary"></div><div><div class="flex justify-between text-[10px]"><span id="floorVal">-115 dBm</span><span data-i18n="floorLabel">Noise Floor</span></div><input type="range" id="floorSlider" min="-135" max="-65" value="-115" class="w-full accent-primary"></div><div class="flex gap-3"><label class="flex items-center gap-1 text-[11px]"><input type="checkbox" id="spurChk" checked> <span data-i18n="spur">Spur Filter</span></label><label class="flex items-center gap-1 text-[11px]"><input type="checkbox" id="peakHoldChk"> <span data-i18n="peak">Peak Hold</span></label></div></div><div class="lg:col-span-3 space-y-3"><div class="flex justify-between items-center text-[10px] font-mono border-b border-border pb-2"><span class="bg-primary/20 px-2 py-0.5 rounded-full"><span id="centerFreqLabel">CENTER: 2450.0 MHz</span></span><span id="fpsLabel">FPS: 24</span></div><div class="relative bg-black border border-slate-800 rounded-xl overflow-hidden" style="height: 320px;"><canvas id="spectrumCanvas" class="w-full h-full block"></canvas><div id="tooltipCanvas" class="absolute hidden bg-slate-900/90 text-[10px] font-mono text-emerald-400 p-1.5 rounded shadow-lg pointer-events-none z-20"></div></div><div class="flex justify-between items-center bg-slate-950/60 p-3 rounded-xl flex-wrap gap-3"><div class="flex gap-2"><button id="audioBtn" class="w-8 h-8 rounded-full bg-amber text-black flex items-center justify-center transition-all duration-200 hover:scale-110"><i class="fa-solid fa-volume-high"></i></button><div><div class="text-xs font-bold" data-i18n="demodTitle">Live Demod Stream</div><div id="demodDesc" class="text-[9px] text-slate-400">Demod M1 (145.50 MHz) FM</div></div></div><div class="flex gap-1"><button id="modeFM" class="px-2 py-0.5 bg-primary text-black rounded text-[10px] font-bold transition-all duration-200 hover:scale-105">FM</button><button id="modeAM" class="px-2 py-0.5 bg-slate-800 text-slate-300 rounded text-[10px] transition-all duration-200 hover:bg-slate-700">AM</button><button id="modeUSB" class="px-2 py-0.5 bg-slate-800 text-slate-300 rounded text-[10px] transition-all duration-200 hover:bg-slate-700">USB</button><button id="modeCW" class="px-2 py-0.5 bg-slate-800 text-slate-300 rounded text-[10px] transition-all duration-200 hover:bg-slate-700">CW</button></div></div></div></div></div>
     </section>
 
-    <!-- FULL SPECIFICATIONS - COMPLETE FEATURE MATRIX (6 elegant cards) -->
+    <!-- FULL SPECIFICATIONS - COMPLETE FEATURE MATRIX (6 comprehensive cards) -->
     <section id="fullspecs" class="py-20 px-6 max-w-7xl mx-auto">
         <div class="text-center mb-12"><span class="text-xs font-mono text-amber">complete technical specifications</span><h2 class="text-3xl font-black mt-2">All Features · AB-SpectroX Gold</h2><p class="text-slate-400">spectrum sweep · 27 waterfall palettes · power meter · IQ recorder · demodulation · markers · hardware control · bilingual UI</p></div>
         
+        <!-- 6 Comprehensive Feature Cards -->
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            <div class="feature-card p-5"><div class="text-3xl mb-3">📡</div><h3 class="font-bold text-lg text-primary">Spectrum Sweep</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>1 MHz – 7.25 GHz (HackRF)</li><li>70 – 6000 MHz (Pluto extended)</li><li>RBW: 1k,2k,5k,10k,20k,50k,100k,200k,500k,1M,2M,5M Hz</li><li>FFT points: 8,192 – 262,144</li><li>Detectors: RMS, Average, Peak</li><li>Peak Hold (0-500ms fall rate)</li><li>Adaptive Spur Filter (learns 40MHz spurs per gain profile)</li></ul></div>
-            <div class="feature-card p-5"><div class="text-3xl mb-3">🌊</div><h3 class="font-bold text-lg text-accent">Waterfall / Spectrogram</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>27 color palettes (Hot Iron, Viridis, Inferno, Plasma, Magma, Cividis, Turbo, Neon Aurora, Cyber Sunset, Deep Space Neon, Matrix Green, Ocean Depths, Sunset Glow, Military Amber, Medical Blue, Fire & Ice, Hacker Terminal, Professional Blue, Neon Pink, Electric Purple, Golden Hour, Arctic Ice, Lava Flow, Cyberpunk Neon, Royal Gold, Toxic Green, Deep Ocean)</li><li>Auto Palette mode (noise floor tracking)</li><li>Side colorbar with dBm scale</li><li>Mouse marker + double-click retune</li><li>Persistent display (1-60s decay)</li></ul></div>
-            <div class="feature-card p-5"><div class="text-3xl mb-3">⚡</div><h3 class="font-bold text-lg text-amber">Professional Power Meter</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>Units: dBm / Watt (full decimal)</li><li>External attenuator (0-120 dB)</li><li>Path loss (0-80 dB)</li><li>External offset (±40 dB)</li><li>Multi-point frequency calibration</li><li>Guided & Auto calibration wizard</li><li>Channel Power with ENBW (0.8-3.0)</li><li>SNR + Uncertainty estimation</li><li>JSON Save/Load</li></ul></div>
-            <div class="feature-card p-5"><div class="text-3xl mb-3">🎙️</div><h3 class="font-bold text-lg text-primary">Live Demodulation</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>FM (200kHz), AM (10kHz), LSB, USB, CW</li><li>Real-time IQ from HackRF/Pluto</li><li>DC removal, bandpass filters, de‑emphasis, AGC</li><li>Hiss reduction</li><li>PyAudio / sounddevice (48kHz, 16-bit)</li><li>Volume control + double-click retune</li></ul></div>
-            <div class="feature-card p-5"><div class="text-3xl mb-3">💾</div><h3 class="font-bold text-lg text-accent">IQ Recorder / Player / Tx</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>SigMF CS8 (Tx ready), C16, CF32</li><li>Duration / file size limits</li><li>SigMF metadata sidecar</li><li>Narrowband preview + auto-resume sweep</li><li>Playback with spectrum preview + loop</li><li>Transmit ci8 via HackRF/Pluto</li></ul></div>
-            <div class="feature-card p-5"><div class="text-3xl mb-3">🎯</div><h3 class="font-bold text-lg text-amber">Markers & UI</h3><ul class="text-sm space-y-1 mt-2 text-slate-300"><li>Max 8 markers (standard + peak)</li><li>Delta reference + custom colors + rename</li><li>Instant bilingual (EN/AR)</li><li>Show/hide modules (Waterfall, Demod, IQ, Power Meter)</li><li>Screenshot (PNG) + Save/Load all settings to JSON</li><li>Reset to defaults + capture folder selection</li></ul></div>
+            
+            <!-- Card 1: Spectrum Sweep -->
+            <div class="feature-card p-5">
+                <div class="text-3xl mb-3">📡</div>
+                <h3 class="font-bold text-lg text-primary mb-2">Spectrum Sweep</h3>
+                <ul class="feature-list text-sm text-slate-300">
+                    <li>Frequency range: 1 MHz – 7.25 GHz (HackRF One)</li>
+                    <li>Extended range: 70 – 6000 MHz (ADALM-Pluto with extended firmware)</li>
+                    <li>Instantaneous bandwidth: Up to 20 MHz (HackRF) / 56 MHz (Pluto)</li>
+                    <li>RBW options: 1k, 2k, 5k, 10k, 20k, 50k, 100k, 200k, 500k, 1M, 2M, 5M Hz</li>
+                    <li>FFT points: 8,192 / 16,384 / 32,768 / 65,536 / 131,072 / 262,144</li>
+                    <li>Detector modes: RMS, Average, Peak (for Power Meter)</li>
+                    <li>Peak Hold with adjustable fall rate: 0-500 milliseconds</li>
+                    <li>Adaptive Spur Filter: learns 40MHz periodic spurs per gain profile</li>
+                    <li>Real-time spectrum update at ~20 FPS</li>
+                    <li>OpenGL hardware acceleration via PyQtGraph</li>
+                </ul>
+            </div>
+            
+            <!-- Card 2: Waterfall Spectrogram -->
+            <div class="feature-card p-5">
+                <div class="text-3xl mb-3">🌊</div>
+                <h3 class="font-bold text-lg text-accent mb-2">Waterfall / Spectrogram</h3>
+                <ul class="feature-list text-sm text-slate-300">
+                    <li>27 professional color palettes: Hot Iron Blue, Viridis, Inferno, Plasma, Magma, Cividis, Turbo, Neon Aurora, Cyber Sunset, Deep Space Neon, Matrix Green, Ocean Depths, Sunset Glow, Military Amber, Medical Blue, Fire & Ice, Hacker Terminal, Professional Blue, Neon Pink, Electric Purple, Golden Hour, Arctic Ice, Lava Flow, Cyberpunk Neon, Royal Gold, Toxic Green, Deep Ocean</li>
+                    <li>Auto Palette mode: dynamically adjusts start/range based on signal/noise floor</li>
+                    <li>Side colorbar with dBm scale</li>
+                    <li>Mouse marker: white dashed line with frequency/power readout</li>
+                    <li>Double-click on waterfall to retune demodulator</li>
+                    <li>Right-click context menu: add marker, set recording frequency, start IQ recording</li>
+                    <li>Persistent display (thermal histogram) with adjustable decay time (1-60 seconds)</li>
+                    <li>Separate persistent color palette</li>
+                </ul>
+            </div>
+            
+            <!-- Card 3: Professional Power Meter -->
+            <div class="feature-card p-5">
+                <div class="text-3xl mb-3">⚡</div>
+                <h3 class="font-bold text-lg text-amber mb-2">Professional Power Meter</h3>
+                <ul class="feature-list text-sm text-slate-300">
+                    <li>Units: dBm / Watt (full decimal display)</li>
+                    <li>External attenuator compensation: 0 – 120 dB</li>
+                    <li>Path loss compensation: 0 – 80 dB</li>
+                    <li>External offset: ±40 dB</li>
+                    <li>Multi-point frequency calibration: list of (freq, offset) with linear interpolation</li>
+                    <li>Guided calibration wizard: builds frequency list, steps through each frequency with capture prompt</li>
+                    <li>Auto calibration: works with sweeping signal generator, tracks peaks within tolerance window</li>
+                    <li>Channel Power calculation with ENBW factor (0.8-3.0 adjustable, default 1.06)</li>
+                    <li>SNR calculation: peak minus noise floor (20th percentile)</li>
+                    <li>Uncertainty estimation based on variance, attenuation, SNR, and signal level</li>
+                    <li>Save/Load calibration to JSON format (points, ENBW, losses, offset, attenuator used)</li>
+                    <li>Measurement modes: Low Power, Average (Channel Power), High Power</li>
+                    <li>Detectors: RMS, Average, Peak</li>
+                </ul>
+            </div>
+            
+            <!-- Card 4: Live Demodulation -->
+            <div class="feature-card p-5">
+                <div class="text-3xl mb-3">🎙️</div>
+                <h3 class="font-bold text-lg text-primary mb-2">Live Demodulation</h3>
+                <ul class="feature-list text-sm text-slate-300">
+                    <li>FM mode: 200 kHz bandwidth with de‑emphasis and channelized filtering</li>
+                    <li>AM mode: up to 10 kHz bandwidth with linear envelope extraction</li>
+                    <li>LSB / USB: Single Sideband processing (1 ± Q analytical signals)</li>
+                    <li>CW mode: 1.2 kHz bandwidth for morse/telemetry isolation</li>
+                    <li>Real-time IQ source from HackRF or Pluto (2 MHz sample rate for FM, adjustable for other modes)</li>
+                    <li>Audio processing: DC removal, bandpass filters, AGC, hiss reduction</li>
+                    <li>Audio output: PyAudio or sounddevice, 48 kHz, 16-bit integer</li>
+                    <li>Volume control slider: 0 – 100%</li>
+                    <li>Retune by double-click on spectrum or waterfall</li>
+                    <li>State reset on frequency or mode change (internal filters reset automatically)</li>
+                    <li>Independent live spectrum mini-display for downconverted passband</li>
+                </ul>
+            </div>
+            
+            <!-- Card 5: IQ Recorder / Player / Transmitter -->
+            <div class="feature-card p-5">
+                <div class="text-3xl mb-3">💾</div>
+                <h3 class="font-bold text-lg text-accent mb-2">IQ Recorder / Player / Tx</h3>
+                <ul class="feature-list text-sm text-slate-300">
+                    <li>SigMF CS8 (.sigmf-data + .sigmf-meta) – Tx ready via HackRF/Pluto</li>
+                    <li>SigMF C16 (.sigmf-data + .sigmf-meta) – High dynamic range recording</li>
+                    <li>Complex Float32 (.cf32 + .json) – Full precision</li>
+                    <li>Complex Int16 (.sc16 + .json) – Balanced quality/size</li>
+                    <li>Recording: max duration limit (seconds, 0 = unlimited)</li>
+                    <li>Recording: max file size limit (MB, 0 = unlimited)</li>
+                    <li>Write metadata (SigMF sidecar or JSON)</li>
+                    <li>Narrowband preview during recording</li>
+                    <li>Auto-resume sweep after recording</li>
+                    <li>Real-time statistics (duration, size, queue depth)</li>
+                    <li>Playback: open .sigmf-data or .cf32 with spectrum preview (as live)</li>
+                    <li>Loop mode for continuous playback</li>
+                    <li>Stop playback and auto-resume sweep</li>
+                    <li>Transmit: ci8 files via HackRF (hackrf_transfer) or Pluto (pyadi-iio)</li>
+                    <li>Adjustable transmit frequency and gain (0-47 dB for HackRF, mapped to attenuation for Pluto)</li>
+                </ul>
+            </div>
+            
+            <!-- Card 6: Markers & User Interface -->
+            <div class="feature-card p-5">
+                <div class="text-3xl mb-3">🎯</div>
+                <h3 class="font-bold text-lg text-amber mb-2">Markers & User Interface</h3>
+                <ul class="feature-list text-sm text-slate-300">
+                    <li>Maximum 8 markers (standard + peak types)</li>
+                    <li>Peak marker: solid line above peak, dashed below</li>
+                    <li>Delta reference: set any marker as reference; others show frequency difference</li>
+                    <li>Customizable colors via color picker</li>
+                    <li>Rename markers</li>
+                    <li>Add manual marker from context menu or "Add Cursor" button</li>
+                    <li>Add peak marker: cycles through detected peaks automatically</li>
+                    <li>Remove marker with "Remove" button or Delete key</li>
+                    <li>"Clear All" button to remove all markers</li>
+                    <li>Instant bilingual (EN/AR) – all UI strings, tabs, buttons update immediately</li>
+                    <li>Show/hide modules: Waterfall, Demodulator, IQ Recorder, Power Meter via "Quick Features" panel</li>
+                    <li>Frequency info bar: start, center, stop, span with "Features" and "Hide" buttons</li>
+                    <li>Hide side panel button: collapses/expands settings panel</li>
+                    <li>Screenshot: captures both spectrum and waterfall together as PNG</li>
+                    <li>Save/Load all settings: single JSON file (device, display, demodulator, IQ recorder, markers, calibration, spur profiles)</li>
+                    <li>Reset to defaults: one-click button</li>
+                    <li>Capture folder selection for screenshots and IQ recordings</li>
+                </ul>
+            </div>
         </div>
         
         <!-- Advanced Hardware Control -->
         <div class="grid md:grid-cols-2 gap-6 mb-12">
-            <div class="bg-card rounded-xl p-5 border border-border feature-card"><h3 class="font-bold text-lg mb-3"><i class="fa-solid fa-microchip text-primary mr-2"></i> Advanced Hardware Control</h3><ul class="text-sm space-y-2 text-slate-300"><li><span class="text-primary font-bold">HackRF One:</span> LNA 0-40dB, VGA 0-62dB, LNA Amp (+14dB), Bias-T, Smart Gain Guard</li><li><span class="text-accent font-bold">ADALM-Pluto:</span> RX gain 0-71dB manual + AGC (slow/fast), Auto RX gain suggestions, TX attenuation mapping</li><li>Start/Stop scan, Pause/Resume, center frequency, span, frequency range</li><li>FFT settings (Bin Width, Samples) + Power reference controls</li><li>Calibrated spectrum display + frequency range auto-detection (70-6000MHz extended)</li></ul></div>
-            <div class="bg-card rounded-xl p-5 border border-border feature-card"><h3 class="font-bold text-lg mb-3"><i class="fa-regular fa-map text-accent mr-2"></i> Frequency Allocation Bands</h3><ul class="text-sm space-y-2 text-slate-300"><li>Embedded Europe (ECA) & United States (FCC) tables</li><li>Semi-transparent colored overlays with descriptive tooltips</li><li>Auto-load at startup</li></ul><h3 class="font-bold text-lg mb-3 mt-4"><i class="fa-regular fa-gauge-high text-amber mr-2"></i> Performance Optimizations</h3><ul class="text-sm space-y-2 text-slate-300"><li>OpenGL acceleration (PyQtGraph) · Periodic garbage collection · Float32 spectrum · Adaptive FFT resize · High-priority Windows threading</li></ul></div>
+            <div class="bg-card rounded-xl p-5 border border-border feature-card">
+                <h3 class="font-bold text-lg mb-3"><i class="fa-solid fa-microchip text-primary mr-2"></i> Advanced Hardware Control</h3>
+                <ul class="feature-list text-sm text-slate-300">
+                    <li><span class="text-primary font-bold">HackRF One:</span> LNA gain 0-40dB (slider), VGA gain 0-62dB (slider), LNA Amp (+14dB) on/off, Bias-T on/off (14V), Smart Gain Guard (auto VGA reduction when Amp enabled)</li>
+                    <li><span class="text-accent font-bold">ADALM-Pluto:</span> RX gain 0-71dB manual (slider) + AGC modes (manual, slow attack, fast attack), Smart RX Gain Guard (suggests appropriate gain based on frequency/span), TX attenuation mapping (0-47dB HackRF-style to Pluto attenuation)</li>
+                    <li>Platform dropdown (HackRF/Pluto) with auto-restart on switch</li>
+                    <li>Start/Stop scan button (changes color: green → red)</li>
+                    <li>Pause/Resume button: temporarily freezes spectrum update</li>
+                    <li>Center frequency spinbox + Apply button</li>
+                    <li>Span spinbox + Apply button</li>
+                    <li>Frequency range: two spinboxes (Start/Stop) with Δ side buttons</li>
+                    <li>FFT settings dropdowns (Bin Width, Samples) with auto-restart</li>
+                    <li>Power reference controls: Ref Level (dBm) + Step (dB) + Apply + Auto</li>
+                    <li>Calibrated spectrum display: applies calibration points + path loss + offset to spectrum display (optional)</li>
+                    <li>Frequency range auto-detection: Pluto probes actual RX limits (70-6000MHz extended firmware, or stock 325-3800MHz)</li>
+                </ul>
+            </div>
+            <div class="bg-card rounded-xl p-5 border border-border feature-card">
+                <h3 class="font-bold text-lg mb-3"><i class="fa-regular fa-map text-accent mr-2"></i> Frequency Allocation Bands</h3>
+                <ul class="feature-list text-sm text-slate-300">
+                    <li>Embedded Europe (ECA) frequency allocation tables loaded from CSV</li>
+                    <li>Embedded United States (FCC) frequency allocation tables</li>
+                    <li>Semi-transparent colored overlays on spectrum plot</li>
+                    <li>Tooltips with band name and applications</li>
+                    <li>Auto-load at startup</li>
+                </ul>
+                <h3 class="font-bold text-lg mb-3 mt-4"><i class="fa-regular fa-gauge-high text-amber mr-2"></i> Performance Optimizations</h3>
+                <ul class="feature-list text-sm text-slate-300">
+                    <li>OpenGL acceleration via PyQtGraph (enabled by default)</li>
+                    <li>Periodic garbage collection: every 50 frames in main thread</li>
+                    <li>Data size reduction: float32 for spectrum, pre-allocated buffers</li>
+                    <li>Adaptive FFT resize: auto-resizes waterfall width based on FFT points</li>
+                    <li>High-priority Windows threading for real-time performance</li>
+                    <li>Frame-limited update: spectrum and waterfall updated at ~20 fps</li>
+                </ul>
+                <h3 class="font-bold text-lg mb-3 mt-4"><i class="fa-regular fa-bell text-primary mr-2"></i> User Feedback & Notifications</h3>
+                <ul class="feature-list text-sm text-slate-300">
+                    <li>Status bar: shows error messages, changes, recording notifications</li>
+                    <li>Runtime badge: next to Start/Stop button (IQ REC, TX LIVE, DEMOD, FILE PREVIEW)</li>
+                    <li>Pluto notifications: messages in status bar and settings panel explaining connection status and frequency range</li>
+                    <li>Error dialogs: for critical issues (device open fail, calibration error)</li>
+                </ul>
+            </div>
         </div>
         
         <!-- System Requirements Table -->
@@ -349,10 +533,11 @@
                         <tr><td class="p-3 font-mono text-primary">Operating System</td><td class="p-3">Windows 10 (64-bit)</td><td class="p-3">Windows 11 (64-bit)</td></tr>
                         <tr><td class="p-3 font-mono text-primary">Processor</td><td class="p-3">Intel Core i5-4xxx / AMD Ryzen 3</td><td class="p-3">Intel Core i7 / AMD Ryzen 7</td></tr>
                         <tr><td class="p-3 font-mono text-primary">RAM</td><td class="p-3">4 GB</td><td class="p-3">8 GB+ (16 GB recommended for large SigMF files)</td></tr>
-                        <tr><td class="p-3 font-mono text-primary">Storage</td><td class="p-3">500 MB + 10 GB for IQ files</td><td class="p-3">1 GB + 50 GB SSD</td></tr>
-                        <tr><td class="p-3 font-mono text-primary">Graphics</td><td class="p-3">OpenGL 2.1+ integrated</td><td class="p-3">OpenGL 3.3+ dedicated GPU</td></tr>
-                        <tr><td class="p-3 font-mono text-primary">SDR Hardware</td><td class="p-3">HackRF One (hackrf.dll) or ADALM-Pluto (libiio)</td><td class="p-3">Same + calibrated antennas</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Storage</td><td class="p-3">500 MB for binaries + 10 GB for IQ files</td><td class="p-3">1 GB + 50 GB SSD</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Graphics</td><td class="p-3">OpenGL 2.1+ integrated graphics</td><td class="p-3">OpenGL 3.3+ dedicated GPU</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">SDR Hardware</td><td class="p-3">HackRF One (with hackrf.dll) or ADALM-Pluto (with libiio)</td><td class="p-3">Same + calibrated antennas and accessories</td></tr>
                         <tr><td class="p-3 font-mono text-primary">Runtime Libraries</td><td class="p-3">Microsoft Visual C++ Redistributable 2015-2022</td><td class="p-3">Same</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Audio Output (Demodulation)</td><td class="p-3">Any sound card with PyAudio or sounddevice support</td><td class="p-3">External DAC or high-quality audio interface</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -365,12 +550,13 @@
                 <table class="w-full text-sm spec-table">
                     <thead><tr><th class="p-3">Feature</th><th class="p-3">HackRF One</th><th class="p-3">ADALM-Pluto</th></tr></thead>
                     <tbody>
-                        <tr><td class="p-3 font-mono text-primary">Frequency Range</td><td class="p-3">1 MHz – 7.25 GHz</td><td class="p-3">70 MHz – 6.0 GHz (extended)</td></tr>
-                        <tr><td class="p-3 font-mono text-primary">Instantaneous BW</td><td class="p-3">Up to 20 MHz</td><td class="p-3">Up to 56 MHz</td></tr>
-                        <tr><td class="p-3 font-mono text-primary">Gain Control</td><td class="p-3">LNA 0-40dB, VGA 0-62dB, Amp</td><td class="p-3">0-71dB manual + AGC</td></tr>
-                        <tr><td class="p-3 font-mono text-primary">Smart Gain Protection</td><td class="p-3">Auto VGA reduction</td><td class="p-3">Auto RX gain suggestion</td></tr>
-                        <tr><td class="p-3 font-mono text-primary">Bias-T</td><td class="p-3">Supported (14V)</td><td class="p-3">Not in UI</td></tr>
-                        <tr><td class="p-3 font-mono text-primary">TX Support</td><td class="p-3">Yes (ci8)</td><td class="p-3">Yes (ci8, attenuation map)</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Frequency Range</td><td class="p-3">1 MHz – 7.25 GHz</td><td class="p-3">70 MHz – 6.0 GHz (extended firmware)</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Instantaneous Bandwidth</td><td class="p-3">Up to 20 MHz</td><td class="p-3">Up to 56 MHz</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Gain Control</td><td class="p-3">LNA 0-40dB, VGA 0-62dB, LNA Amp (+14dB)</td><td class="p-3">0-71dB manual + AGC (slow/fast attack)</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Smart Gain Protection</td><td class="p-3">Auto VGA reduction when Amp enabled</td><td class="p-3">Auto RX gain suggestion based on frequency/span</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Bias-T</td><td class="p-3">Supported (14V on/off toggle)</td><td class="p-3">Not supported in UI</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">TX Support</td><td class="p-3">Yes (hackrf_transfer, ci8 files)</td><td class="p-3">Yes (pyadi-iio, ci8, attenuation mapping)</td></tr>
+                        <tr><td class="p-3 font-mono text-primary">Connection Interface</td><td class="p-3">USB 2.0/3.0</td><td class="p-3">USB 2.0 or Ethernet (IIO network, default ip:192.168.2.1)</td></tr>
                         <tr><td class="p-3 font-mono text-primary">ADC Resolution</td><td class="p-3">8 bits</td><td class="p-3">12 bits</td></tr>
                     </tbody>
                 </table>
@@ -420,7 +606,7 @@
         function setLanguage(lang) { currentLang=lang; document.documentElement.dir=lang==='ar'?'rtl':'ltr'; document.documentElement.lang=lang; document.querySelectorAll('[data-i18n]').forEach(el=>{ const key=el.getAttribute('data-i18n'); if(dict[lang][key]) el.innerText=dict[lang][key]; }); document.getElementById('langBtnLabel').innerText=lang==='en'?'العربية':'English'; if(lang==='ar') document.getElementById('demodDesc').innerText='فك تعديل M1 (145.50 MHz) FM'; else document.getElementById('demodDesc').innerText='Demod M1 (145.50 MHz) FM'; document.getElementById('fpsLabel').innerText=lang==='ar'?'الإطارات: ٢٢':'FPS: 22'; }
         document.getElementById('langToggleBtn').addEventListener('click',()=>setLanguage(currentLang==='en'?'ar':'en')); setLanguage('en');
         
-        // Canvas Simulator (full animation)
+        // Canvas Simulator (full animation) - same as before
         const canvas = document.getElementById('spectrumCanvas'), ctx = canvas.getContext('2d'); let width, height, phase=0, tracePoints=[], peakPoints=[], spanMHz=20, floorDbm=-115, selectedPalette='hotiron', peakHoldEnabled=false;
         const palettes = { hotiron:[[0,5,11,20],[0.4,59,130,246],[0.75,219,39,119],[1,245,158,11]], viridis:[[0,68,1,84],[0.5,33,144,141],[1,253,231,37]], inferno:[[0,0,0,4],[0.5,187,55,84],[1,252,254,191]], matrix:[[0,2,6,4],[0.6,16,125,62],[1,16,240,110]], cyber:[[0,10,5,20],[0.5,120,10,220],[1,240,210,10]], ocean:[[0,2,12,24],[0.6,3,105,120],[1,16,245,185]] };
         function getColor(t){ let p=palettes[selectedPalette]||palettes.hotiron; t=Math.min(1,Math.max(0,t)); for(let i=0;i<p.length-1;i++) if(t>=p[i][0]&&t<=p[i+1][0]){ let r=(t-p[i][0])/(p[i+1][0]-p[i][0]); return [Math.floor(p[i][1]+r*(p[i+1][1]-p[i][1])),Math.floor(p[i][2]+r*(p[i+1][2]-p[i][2])),Math.floor(p[i][3]+r*(p[i+1][3]-p[i][3]))]; } return [0,255,0]; }
