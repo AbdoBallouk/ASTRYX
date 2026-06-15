@@ -21,6 +21,7 @@
         [dir="rtl"] .feature-list li:before { right: 0; left: auto; }
         [dir="ltr"] .feature-list li:before { left: 0; right: auto; }
         
+        /* Print styles - ensure tables don't break across pages */
         @media print {
             @page { size: A4; margin: 1.2cm; }
             body { background: white; color: black; font-size: 9pt; line-height: 1.2; }
@@ -66,7 +67,6 @@
         ::-webkit-scrollbar-track { background: #0f111a; }
         ::-webkit-scrollbar-thumb { background: #2d3a4e; border-radius: 10px; }
         
-        /* Gallery image styling */
         .gallery-img { width: 100%; height: 220px; object-fit: cover; transition: transform 0.3s; }
         .gallery-img:hover { transform: scale(1.02); }
         .gallery-card { background: #0f1420; border-radius: 1rem; overflow: hidden; border: 1px solid #1e2a3a; transition: all 0.3s; }
@@ -93,7 +93,7 @@
     <header class="relative overflow-hidden py-16 px-6 border-b border-border">
         <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
             <div class="space-y-6">
-                <div class="inline-flex gap-2 bg-primary/10 border border-primary/30 rounded-full px-3 py-1 text-primary text-xs font-mono"><i class="fa-regular fa-circle-check animate-pulse"></i> <span id="heroBadge">AB-SpectroX · محلل طيف ترددي لحظي</span></div>
+                <div class="inline-flex gap-2 bg-primary/10 border border-primary/30 rounded-full px-3 py-1 text-primary text-xs font-mono"><i class="fa-regular fa-circle-check animate-pulse"></i> <span id="heroBadge">AB-SpectroX · محلل طيف ترددي لحظي مع شلال ومقياس استطاعة وتسجيل عينات IQ</span></div>
                 <h1 class="text-4xl sm:text-5xl font-black leading-tight"><span id="heroTitle1">محلل طيف ترددي</span><br><span class="gradient-text" id="heroTitle2">احترافي</span><br><span id="heroTitle3">الإصدار الذهبي</span></h1>
                 <p class="text-slate-300 text-base leading-relaxed" id="heroDesc">منصة عالية الأداء معجلة بالعتاد لمراقبة وتحليل الترددات اللاسلكية لحظياً. تدعم <span class="value-unit">HackRF One</span> و <span class="value-unit">ADALM-Pluto</span> بمحرك <span class="value-unit">PyQt6</span> معجل <span class="value-unit">GPU</span>. <span class="ltr-text">27</span> لوحة ألوان للشلال، مقياس استطاعة احترافي، تسجيل <span class="value-unit">SigMF</span>، وفك تعديل حي.</p>
                 <div class="flex flex-wrap gap-3 no-print"><a href="#simulator" class="bg-primary hover:bg-emerald-600 text-black font-bold px-5 py-2 rounded-lg text-sm shadow-lg transition" id="btnSim">🎮 المحاكي الحي</a><a href="#carousel" class="bg-card border border-border hover:border-primary text-slate-200 px-5 py-2 rounded-lg text-sm font-bold transition" id="btnGallery">📸 معرض الصور</a><a href="#fullspecs" class="bg-slate-900 border border-slate-700 text-slate-300 px-5 py-2 rounded-lg text-sm font-bold transition" id="btnSpec">⚙️ المواصفات الكاملة</a></div>
@@ -102,11 +102,11 @@
         </div>
     </header>
 
-    <!-- IMPORTANCE SECTION -->
+    <!-- IMPORTANCE SECTION (Updated text) -->
     <section class="py-16 px-6 max-w-7xl mx-auto">
-        <div class="text-center mb-10"><span class="text-xs font-mono text-amber uppercase" id="importanceTag">academic & research value</span><h2 class="text-3xl font-black mt-2" id="importanceTitle">إطار متكامل للتعليم الجامعي والبحث العلمي المتقدم</h2><p class="text-slate-400 text-sm max-w-3xl mx-auto mt-2" id="importanceSubtitle">سد الفجوة بين أجهزة التحليل باهظة الثمن وبرمجيات المصدر المفتوح المعقدة</p></div>
-        <div class="importance-card bg-card rounded-2xl border border-border overflow-hidden mb-10"><div class="p-6 bg-gradient-to-r from-primary/10 to-accent/10"><p class="text-slate-300 leading-relaxed" id="importanceDesc">صُممت هذه المنصة البرمجية والهندسية الاحترافية لتسد بالكامل الفجوة بين أجهزة التحليل المخبرية التقليدية باهظة الثمن، وبين برمجيات المصدر المفتوح المعقدة. تتيح المنصة بيئة رسومية تفاعلية متطورة لرصد وتحليل الإشارات الراديوية الحية مباشرة من <span class="ltr-text">1 MHz</span> إلى <span class="ltr-text">7.25 GHz</span> في الزمن الحقيقي، مع استخراج فوري للخصائص مثل الاستطاعة وعرض الحزمة ونسبة الإشارة إلى الضجيج (<span class="value-unit">SNR</span>).</p></div></div>
-        <div class="mb-8"><h3 class="text-xl font-bold text-primary mb-4 text-center" id="applicationsTitle">مصفوفة التطبيقات الهندسية والمخبرية الأساسية</h3><div class="overflow-x-auto"><table class="w-full text-sm importance-table bg-card rounded-xl border border-border"><thead class="bg-slate-900"><tr><th class="p-3 text-right font-bold text-primary" id="appFieldHeader">المجال الأكاديمي/المخبري</th><th class="p-3 text-right font-bold text-primary" id="appImplHeader">التطبيقات العملية داخل المنصة</th></tr></thead><tbody id="appsTableBody"></tbody></table></div></div>
+        <div class="text-center mb-10"><span class="text-xs font-mono text-amber uppercase" id="importanceTag">academic & research value</span><h2 class="text-3xl font-black mt-2" id="importanceTitle">منصة تحليل طيف ترددي متقدمة تجمع بين الدقة المخبرية وسهولة الاستخدام</h2><p class="text-slate-400 text-sm max-w-3xl mx-auto mt-2" id="importanceSubtitle">يقدم بديلاً عملياً للأجهزة المكلفة والبرمجيات المعقدة</p></div>
+        <div class="importance-card bg-card rounded-2xl border border-border overflow-hidden mb-10"><div class="p-6 bg-gradient-to-r from-primary/10 to-accent/10"><p class="text-slate-300 leading-relaxed" id="importanceDesc">منصة تحليل طيف ترددي متقدمة تجمع بين الدقة المخبرية وسهولة الاستخدام، لتمنح الباحثين والطلاب أداة قوية وموثوقة في الزمن الحقيقي. صُممت لتوفير قدرات احترافية دون تعقيد، وبكلفة أقل بكثير من أجهزة التحليل التقليدية.</p></div></div>
+        <div class="mb-8"><h3 class="text-xl font-bold text-primary mb-4 text-center" id="applicationsTitle">بعض من التطبيقات الهندسية</h3><div class="overflow-x-auto"><table class="w-full text-sm importance-table bg-card rounded-xl border border-border"><thead class="bg-slate-900"><tr><th class="p-3 text-right font-bold text-primary" id="appFieldHeader">المجال الأكاديمي/المخبري</th><th class="p-3 text-right font-bold text-primary" id="appImplHeader">التطبيقات العملية داخل المنصة</th></tr></thead><tbody id="appsTableBody"></tbody></table></div></div>
         <div class="grid md:grid-cols-3 gap-6" id="benefitsGrid"></div>
     </section>
 
@@ -130,7 +130,7 @@
     <!-- VIDEO SECTION -->
     <section class="py-16 px-6 bg-slate-950/40 border-y border-border no-print"><div class="max-w-6xl mx-auto text-center mb-8"><span class="text-xs font-mono text-primary uppercase" id="videoTag">product demonstration</span><h2 class="text-3xl font-black mt-2" id="videoTitle">شاهد AB-SpectroX أثناء العمل</h2><p class="text-slate-400" id="videoSub">تحليل طيف حي، مخطط شلال، وفك تعديل مباشر</p></div><div class="max-w-4xl mx-auto"><iframe src="https://drive.google.com/file/d/1vjrFUdUkPAQZ-5bjAFtsirkCNfEu4fAX/preview" width="100%" height="450" allow="autoplay" allowfullscreen class="rounded-2xl shadow-2xl border border-border"></iframe><p class="text-center text-xs text-slate-500 mt-3" id="videoNote">فيديو توضيحي · AB-SpectroX Gold Edition (اضغط للتشغيل)</p></div></section>
 
-    <!-- CAROUSEL GALLERY - Fixed image paths -->
+    <!-- CAROUSEL GALLERY -->
     <section id="carousel" class="py-16 px-6 max-w-7xl mx-auto no-print"><div class="text-center mb-8"><span class="text-xs font-mono text-accent uppercase" id="galleryTag">software gallery</span><h2 class="text-3xl font-black mt-1" id="galleryTitle">لقطات حقيقية من البرنامج</h2><p class="text-slate-400 text-sm" id="gallerySub">صور عالية الدقة من AB-SpectroX الذهبي</p></div>
         <div class="carousel-container relative"><div class="carousel-track" id="carouselTrack">
             <div class="carousel-slide"><img src="S6 Wideband Spectrum.png" onerror="this.src='https://placehold.co/1200x600/0f1420/10b981?text=S6+Wideband+Spectrum'" alt="S6 Wideband Spectrum"></div>
@@ -198,7 +198,7 @@
         canvas.addEventListener('mouseleave',()=>document.getElementById('tooltipCanvas').style.display='none');
         resizeCanvas(); drawLoop();
 
-        // Complete Data
+        // Complete Data for ALL features (identical to previous but with updated text for importance section)
         const appsData = {
             ar: [["مختبرات قياسات الترددات الراديوية","تسجيل دقيق للاستطاعة، حساب عرض الحزمة المشغولة، تقدير معامل التشكيل، ورسم استجابة المرشحات."],["تصميم الهوائيات وانتشار الموجات","رسم حي لملامح الاستطاعة المستقبلة، تتبع كفاءة الهوائي بالنسبة للاستقطاب الفيزيائي."],["معالجة الإشارات الرقمية (DSP)","تصور مباشر لتأثيرات تغيير عرض حزمة الدقة (RBW) وتحجيم نقاط تحويل فورييه (FFT) على دقة الطيف."],["الراديو المعرفي والتحليل الطيفي الزمني","تسجيل طيفي طويل المدى، كشف آلي للفراغات الطيفية، وتوصيف دقيق لانشغال الحزم."],["أمن الشبكات اللاسلكية","كشف وتصنيف متجهات التداخل، تسجيل الباعثات غير المصرح بها، وتحليل التهديدات."],["فيزياء الغلاف الجوي والفضاء","مراقبة الضجيج الجوي عالي التردد، بصمات الانبعاثات الشمسية الراديوية."],["مشاريع التخرج والبحث العلمي","إطار برمجي نمطي قابل للتوسع لفك تشفير بنى الاتصالات المخصصة وتوصيف قنوات التلاشي."]],
             en: [["RF Measurements Laboratories","Precise power logging, occupied bandwidth calculation, modulation index estimation, and active filter response mapping."],["Antenna Design & Wave Propagation","Live mapping of received power profiles, tracking antenna efficiency relative to physical polarization."],["Digital Signal Processing (DSP)","Direct visualization of RBW adjustments and FFT size scaling on spectral resolution."],["Cognitive Radio & Spectral Analysis","Long-duration spectrum captures, automated detection of spectral opportunities (white spaces)."],["Wireless Network Security","Detection of harmful interference, logging of unauthorized emitters, and threat analysis."],["Space Physics & Atmospheric Research","Monitoring high-frequency atmospheric noise, solar radio burst signatures."],["Capstone Design & Graduate Research","Extensible framework for decoding custom communication architectures."]]
@@ -239,11 +239,9 @@
             document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
             document.documentElement.lang = lang;
             
-            // Update all text elements with translations
             const t = translations[lang];
             Object.keys(t).forEach(id => { const el = document.getElementById(id); if (el) el.innerText = t[id]; });
             
-            // Build dynamic tables
             const appsBody = document.getElementById('appsTableBody');
             appsBody.innerHTML = '';
             appsData[lang].forEach(app => { const tr = document.createElement('tr'); tr.className = 'border-t border-border'; tr.innerHTML = `<td class="p-3 font-mono text-accent">${app[0]}</td><td class="p-3 text-slate-300">${app[1]}</td>`; appsBody.appendChild(tr); });
@@ -272,7 +270,80 @@
             document.getElementById('langBtnLabel').innerText = lang === 'ar' ? 'English' : 'العربية';
         }
 
-        const translations = { ar: { heroBadge: "AB-SpectroX · محلل طيف ترددي لحظي", heroTitle1: "محلل طيف ترددي", heroTitle2: "احترافي", heroTitle3: "الإصدار الذهبي", heroDesc: "منصة عالية الأداء لمراقبة وتحليل الترددات اللاسلكية لحظياً.", btnSim: "🎮 المحاكي الحي", btnGallery: "📸 معرض الصور", btnSpec: "⚙️ المواصفات الكاملة", importanceTag: "academic & research value", importanceTitle: "إطار متكامل للتعليم الجامعي والبحث العلمي المتقدم", importanceSubtitle: "سد الفجوة بين أجهزة التحليل باهظة الثمن وبرمجيات المصدر المفتوح المعقدة", importanceDesc: "صُممت هذه المنصة البرمجية والهندسية الاحترافية لتسد بالكامل الفجوة بين أجهزة التحليل المخبرية التقليدية باهظة الثمن، وبين برمجيات المصدر المفتوح المعقدة.", applicationsTitle: "مصفوفة التطبيقات الهندسية", appFieldHeader: "المجال الأكاديمي/المخبري", appImplHeader: "التطبيقات العملية داخل المنصة", hardwareTag: "hardware platforms", hardwareTitle: "عائلة AB-SpectroX", hardwareSub: "حلول تحليل ترددات احترافية متنقلة ومكتبية", mobileTitle: "Mobile Edition", mobileSub: "إصدار ميداني محمول · بطارية محسنة · شاشة عالية الدقة", mobileDesc: "تصميم محمول صغير الحجم · تحليل كامل من 1 MHz إلى 7.25 GHz", mobileBattery: "بطارية 8+ ساعات", mobileStorage: "تخزين 256GB", mobileSync: "مزامنة لاسلكية", desktopTitle: "Desktop Workstation", desktopSub: "درجة مخبرية · أداء عالي · دقة قياس فائقة", desktopDesc: "محطة عمل عالية الأداء · دعم شاشات متعددة · معايرة متقدمة", desktopDisplay: "أربع شاشات", desktopCpu: "معالج 12 نواة", desktopRam: "64GB RAM", videoTag: "product demonstration", videoTitle: "شاهد AB-SpectroX أثناء العمل", videoSub: "تحليل طيف حي، مخطط شلال، وفك تعديل مباشر", videoNote: "فيديو توضيحي · AB-SpectroX Gold Edition (اضغط للتشغيل)", galleryTag: "software gallery", galleryTitle: "لقطات حقيقية من البرنامج", gallerySub: "صور عالية الدقة من AB-SpectroX الذهبي", galleryInfo: "6 لقطات شاشة · عرض تلقائي كل 5 ثوان", simTag: "interactive engine", simTitle: "لوحة تحليل الطيف التفاعلية", simSub: "مسح طيف حي، شلال، تتبع القمم، مرشح توافقيات", ctrlTitle: "تكوين العتاد", sdrLabel: "عتاد الاستقبال النشط", paletteLabel: "لوحة ألوان الشلال", spanLabel: "المدى (MHz)", floorLabel: "مستوى أرضية الضجيج", spurLabel: "مرشح التوافقيات", peakLabel: "تتبع القمم", demodBtnText: "بث تجريبي", specTag: "complete specifications", specTitle: "جميع الميزات · AB-SpectroX الذهبي", specSub: "مسح الطيف · 27 لوحة شلال · مقياس استطاعة · مسجل IQ · فك تعديل · علامات · تحكم بالعتاد · واجهة ثنائية اللغة", sysReqTitle: "متطلبات النظام", sysComp: "المكون", sysMin: "الحد الأدنى", sysRec: "الموصى به", compareTitle: "HackRF One مقابل ADALM-Pluto — مقارنة العتاد", compFeature: "الميزة", compHack: "HackRF One", compPluto: "ADALM-Pluto", footerTitle: "AB-SpectroX الذهبي · جاهز للنشر", footerDesc: "ملف تنفيذي مستقل لنظام Windows · مثالي للجامعات ومختبرات EW والبحث والتطوير", repoLink: "المستودع", copyright: "© 2026 AB-SpectroX · تطوير د. م. عبده بلوق", printBtnText: "طباعة (A4)" }, en: { heroBadge: "AB-SpectroX · Real-Time RF Spectrum Analyzer", heroTitle1: "Professional RF", heroTitle2: "Spectrum Analyzer", heroTitle3: "Gold Edition", heroDesc: "High-performance hardware-accelerated platform for real-time RF monitoring, capture, and analysis.", btnSim: "🎮 Live Simulator", btnGallery: "📸 Gallery", btnSpec: "⚙️ Full Specs", importanceTag: "academic & research value", importanceTitle: "An Integrated Framework for Academic Education & Advanced Research", importanceSubtitle: "Bridging the gap between expensive commercial analyzers and complex open-source tools", importanceDesc: "This professional software platform bridges the gap between expensive lab hardware and complex open-source tools.", applicationsTitle: "Core Engineering & Laboratory Applications Matrix", appFieldHeader: "Academic / Laboratory Discipline", appImplHeader: "Practical Implementations Within the Platform", hardwareTag: "hardware platforms", hardwareTitle: "AB-SpectroX Platform Family", hardwareSub: "Professional Mobile & Desktop RF Analysis Solutions", mobileTitle: "Mobile Edition", mobileSub: "Portable Field Deployment · Battery Optimized · High-Res Display", mobileDesc: "Compact handheld design · Full 1MHz-7.25GHz analysis", mobileBattery: "8+ hours battery", mobileStorage: "Storage 256GB", mobileSync: "Wireless sync", desktopTitle: "Desktop Workstation", desktopSub: "Lab Grade · High Performance Computing · Ultra Precision", desktopDesc: "High-performance workstation · Multi-display support · Advanced calibration", desktopDisplay: "Quad monitor", desktopCpu: "12-core CPU", desktopRam: "64GB RAM", videoTag: "product demonstration", videoTitle: "Watch AB-SpectroX in Action", videoSub: "Real-time spectrum analysis, waterfall visualization, and live demodulation", videoNote: "Demonstration video · AB-SpectroX Gold Edition (Click to play)", galleryTag: "software gallery", galleryTitle: "Real Software Screenshots", gallerySub: "High resolution captures from AB-SpectroX Gold", galleryInfo: "6 screenshots · Auto-slideshow every 5 seconds", simTag: "interactive engine", simTitle: "Live Tactical RF Analyzer Dashboard", simSub: "real-time spectrum sweep, waterfall with 27 color palettes, peak hold, spur filter, audio demo", ctrlTitle: "Front-End Config", sdrLabel: "Active SDR Engine", paletteLabel: "Waterfall Palette (27)", spanLabel: "Span (MHz)", floorLabel: "Noise Floor (dBm)", spurLabel: "Spur Filter", peakLabel: "Peak Hold", demodBtnText: "Demo Audio", specTag: "complete specifications", specTitle: "All Features · AB-SpectroX Gold", specSub: "spectrum sweep · 27 waterfall palettes · power meter · IQ recorder · demodulation · markers · hardware control · bilingual UI", sysReqTitle: "System Requirements", sysComp: "Component", sysMin: "Minimum Requirement", sysRec: "Recommended", compareTitle: "HackRF One vs ADALM-Pluto — Hardware Comparison", compFeature: "Feature", compHack: "HackRF One", compPluto: "ADALM-Pluto", footerTitle: "AB-SpectroX Gold · Ready for Deployment", footerDesc: "Standalone Windows executable, no command line. Perfect for universities, EW labs, and RF R&D.", repoLink: "Repository", copyright: "© 2026 AB-SpectroX · Developed by Dr. Eng Abdo Ballouk", printBtnText: "Print (A4)" } };
+        const translations = { 
+            ar: { 
+                heroBadge: "AB-SpectroX · محلل طيف ترددي لحظي مع شلال ومقياس استطاعة وتسجيل عينات IQ", 
+                heroTitle1: "محلل طيف ترددي", heroTitle2: "احترافي", heroTitle3: "الإصدار الذهبي", 
+                heroDesc: "منصة عالية الأداء لمراقبة وتحليل الترددات اللاسلكية لحظياً.", 
+                btnSim: "🎮 المحاكي الحي", btnGallery: "📸 معرض الصور", btnSpec: "⚙️ المواصفات الكاملة", 
+                importanceTag: "academic & research value", 
+                importanceTitle: "منصة تحليل طيف ترددي متقدمة تجمع بين الدقة المخبرية وسهولة الاستخدام", 
+                importanceSubtitle: "يقدم بديلاً عملياً للأجهزة المكلفة والبرمجيات المعقدة", 
+                importanceDesc: "منصة تحليل طيف ترددي متقدمة تجمع بين الدقة المخبرية وسهولة الاستخدام، لتمنح الباحثين والطلاب أداة قوية وموثوقة في الزمن الحقيقي. صُممت لتوفير قدرات احترافية دون تعقيد، وبكلفة أقل بكثير من أجهزة التحليل التقليدية.", 
+                applicationsTitle: "بعض من التطبيقات الهندسية", 
+                appFieldHeader: "المجال الأكاديمي/المخبري", appImplHeader: "التطبيقات العملية داخل المنصة", 
+                hardwareTag: "hardware platforms", hardwareTitle: "عائلة AB-SpectroX", hardwareSub: "حلول تحليل ترددات احترافية متنقلة ومكتبية", 
+                mobileTitle: "Mobile Edition", mobileSub: "إصدار ميداني محمول · بطارية محسنة · شاشة عالية الدقة", 
+                mobileDesc: "تصميم محمول صغير الحجم · تحليل كامل من 1 MHz إلى 7.25 GHz", 
+                mobileBattery: "بطارية 8+ ساعات", mobileStorage: "تخزين 256GB", mobileSync: "مزامنة لاسلكية", 
+                desktopTitle: "Desktop Workstation", desktopSub: "درجة مخبرية · أداء عالي · دقة قياس فائقة", 
+                desktopDesc: "محطة عمل عالية الأداء · دعم شاشات متعددة · معايرة متقدمة", 
+                desktopDisplay: "أربع شاشات", desktopCpu: "معالج 12 نواة", desktopRam: "64GB RAM", 
+                videoTag: "product demonstration", videoTitle: "شاهد AB-SpectroX أثناء العمل", 
+                videoSub: "تحليل طيف حي، مخطط شلال، وفك تعديل مباشر", videoNote: "فيديو توضيحي · AB-SpectroX Gold Edition (اضغط للتشغيل)", 
+                galleryTag: "software gallery", galleryTitle: "لقطات حقيقية من البرنامج", gallerySub: "صور عالية الدقة من AB-SpectroX الذهبي", 
+                galleryInfo: "6 لقطات شاشة · عرض تلقائي كل 5 ثوان", 
+                simTag: "interactive engine", simTitle: "لوحة تحليل الطيف التفاعلية", 
+                simSub: "مسح طيف حي، شلال، تتبع القمم، مرشح توافقيات", 
+                ctrlTitle: "تكوين العتاد", sdrLabel: "عتاد الاستقبال النشط", paletteLabel: "لوحة ألوان الشلال", 
+                spanLabel: "المدى (MHz)", floorLabel: "مستوى أرضية الضجيج", 
+                spurLabel: "مرشح التوافقيات", peakLabel: "تتبع القمم", demodBtnText: "بث تجريبي", 
+                specTag: "complete specifications", specTitle: "جميع الميزات · AB-SpectroX الذهبي", 
+                specSub: "مسح الطيف · 27 لوحة شلال · مقياس استطاعة · مسجل IQ · فك تعديل · علامات · تحكم بالعتاد · واجهة ثنائية اللغة", 
+                sysReqTitle: "متطلبات النظام", sysComp: "المكون", sysMin: "الحد الأدنى", sysRec: "الموصى به", 
+                compareTitle: "HackRF One مقابل ADALM-Pluto — مقارنة العتاد", compFeature: "الميزة", compHack: "HackRF One", compPluto: "ADALM-Pluto", 
+                footerTitle: "AB-SpectroX الذهبي · جاهز للنشر", footerDesc: "ملف تنفيذي مستقل لنظام Windows · مثالي للجامعات ومختبرات EW والبحث والتطوير", 
+                repoLink: "المستودع", copyright: "© 2026 AB-SpectroX · تطوير د. م. عبده بلوق", printBtnText: "طباعة (A4)" 
+            }, 
+            en: { 
+                heroBadge: "AB-SpectroX · Real‑time spectrum analyzer with spectrogram & power meter and IQ sample recording", 
+                heroTitle1: "Professional RF", heroTitle2: "Spectrum Analyzer", heroTitle3: "Gold Edition", 
+                heroDesc: "High-performance hardware-accelerated platform for real-time RF monitoring, capture, and analysis.", 
+                btnSim: "🎮 Live Simulator", btnGallery: "📸 Gallery", btnSpec: "⚙️ Full Specs", 
+                importanceTag: "academic & research value", 
+                importanceTitle: "Advanced RF spectrum analysis platform combining lab-grade precision with ease of use", 
+                importanceSubtitle: "A practical alternative to expensive equipment and complex software", 
+                importanceDesc: "An advanced RF spectrum analysis platform combining lab-grade precision with ease of use, offering researchers and students a powerful, reliable real-time tool. Designed to provide professional capabilities without complexity, at a fraction of the cost of traditional analyzers.", 
+                applicationsTitle: "Some Engineering Applications", 
+                appFieldHeader: "Academic / Laboratory Discipline", appImplHeader: "Practical Implementations Within the Platform", 
+                hardwareTag: "hardware platforms", hardwareTitle: "AB-SpectroX Platform Family", 
+                hardwareSub: "Professional Mobile & Desktop RF Analysis Solutions", 
+                mobileTitle: "Mobile Edition", mobileSub: "Portable Field Deployment · Battery Optimized · High-Res Display", 
+                mobileDesc: "Compact handheld design · Full 1MHz-7.25GHz analysis", 
+                mobileBattery: "8+ hours battery", mobileStorage: "Storage 256GB", mobileSync: "Wireless sync", 
+                desktopTitle: "Desktop Workstation", desktopSub: "Lab Grade · High Performance Computing · Ultra Precision", 
+                desktopDesc: "High-performance workstation · Multi-display support · Advanced calibration", 
+                desktopDisplay: "Quad monitor", desktopCpu: "12-core CPU", desktopRam: "64GB RAM", 
+                videoTag: "product demonstration", videoTitle: "Watch AB-SpectroX in Action", 
+                videoSub: "Real-time spectrum analysis, waterfall visualization, and live demodulation", 
+                videoNote: "Demonstration video · AB-SpectroX Gold Edition (Click to play)", 
+                galleryTag: "software gallery", galleryTitle: "Real Software Screenshots", 
+                gallerySub: "High resolution captures from AB-SpectroX Gold", 
+                galleryInfo: "6 screenshots · Auto-slideshow every 5 seconds", 
+                simTag: "interactive engine", simTitle: "Live Tactical RF Analyzer Dashboard", 
+                simSub: "real-time spectrum sweep, waterfall with 27 color palettes, peak hold, spur filter, audio demo", 
+                ctrlTitle: "Front-End Config", sdrLabel: "Active SDR Engine", paletteLabel: "Waterfall Palette (27)", 
+                spanLabel: "Span (MHz)", floorLabel: "Noise Floor (dBm)", 
+                spurLabel: "Spur Filter", peakLabel: "Peak Hold", demodBtnText: "Demo Audio", 
+                specTag: "complete specifications", specTitle: "All Features · AB-SpectroX Gold", 
+                specSub: "spectrum sweep · 27 waterfall palettes · power meter · IQ recorder · demodulation · markers · hardware control · bilingual UI", 
+                sysReqTitle: "System Requirements", sysComp: "Component", sysMin: "Minimum Requirement", sysRec: "Recommended", 
+                compareTitle: "HackRF One vs ADALM-Pluto — Hardware Comparison", compFeature: "Feature", compHack: "HackRF One", compPluto: "ADALM-Pluto", 
+                footerTitle: "AB-SpectroX Gold · Ready for Deployment", footerDesc: "Standalone Windows executable, no command line. Perfect for universities, EW labs, and RF R&D.", 
+                repoLink: "Repository", copyright: "© 2026 AB-SpectroX · Developed by Dr. Eng Abdo Ballouk", 
+                printBtnText: "Print (A4)" 
+            } 
+        };
 
         let currentLang = 'ar';
         document.getElementById('langToggleBtn').addEventListener('click', () => { currentLang = currentLang === 'ar' ? 'en' : 'ar'; buildPage(currentLang); });
