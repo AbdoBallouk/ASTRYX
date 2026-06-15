@@ -1,250 +1,93 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>ASTRYX Gold | AB-SpectroX - Professional RF Spectrum Analyzer</title>
+    <title>ASTRYX Gold | AB-SpectroX - محلل طيف ترددي احترافي</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* Print Styles - Optimized for A4 with page break control */
+        /* --- Fixes for mixed RTL/LTR content (numbers & units) --- */
+        .ltr-text {
+            direction: ltr;
+            display: inline-block;
+            unicode-bidi: isolate;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+        }
+        .value-unit {
+            direction: ltr;
+            display: inline-block;
+            unicode-bidi: isolate;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+        }
+        /* Override for any stubborn RTL issues */
+        [dir="rtl"] .ltr-text, [dir="rtl"] .value-unit {
+            direction: ltr;
+            display: inline-block;
+        }
+        
+        /* Print Styles */
         @media print {
-            @page {
-                size: A4;
-                margin: 1.5cm;
-            }
-            body {
-                background: white;
-                color: black;
-                font-size: 9.5pt;
-                line-height: 1.25;
-                font-family: 'Inter', sans-serif;
-            }
-            .no-print, nav, .sticky, .print-hide, button, .lang-toggle, .carousel-button, .carousel-dots, #simulator, .audio-control, #audioBtn, .mode-buttons, .carousel-container {
-                display: none !important;
-            }
-            .bg-card, .bg-dark, .bg-slate-950, .bg-slate-900, .bg-black, .feature-card, .spec-card {
-                background: white !important;
-                border: 1px solid #ccc !important;
-                color: black !important;
-                box-shadow: none !important;
-                page-break-inside: avoid;
-                break-inside: avoid;
-            }
-            .hero-image, .hardware-image {
-                border: none !important;
-                box-shadow: none !important;
-                background: transparent !important;
-                max-height: 160px;
-                object-fit: contain;
-            }
-            .border-border, .border {
-                border: 1px solid #ccc !important;
-            }
-            .text-slate-400, .text-slate-300, .text-gray-400, .text-slate-500 {
-                color: #444 !important;
-            }
-            .text-primary, .text-accent, .text-amber {
-                color: #2c3e50 !important;
-            }
-            .grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-            .grid-cols-3, .grid-cols-4 {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .table-container, .spec-card, .feature-card, .glow-card, .importance-card {
-                page-break-inside: avoid;
-                break-inside: avoid;
-            }
-            table {
-                page-break-inside: avoid;
-                break-inside: avoid;
-            }
-            img {
-                max-width: 100%;
-                page-break-inside: avoid;
-                border: none !important;
-            }
-            h1, h2, h3, h4 {
-                page-break-after: avoid;
-                color: #1a1a1a;
-            }
-            footer {
-                margin-top: 20px;
-                border-top: 1px solid #ccc;
-                padding-top: 10px;
-            }
-            .gradient-text {
-                color: #2c3e50 !important;
-                background: none !important;
-                -webkit-background-clip: unset !important;
-                background-clip: unset !important;
-            }
-            ul, .feature-list {
-                page-break-inside: avoid;
-            }
-            li {
-                page-break-inside: avoid;
-            }
+            @page { size: A4; margin: 1.2cm; }
+            body { background: white; color: black; font-size: 9pt; line-height: 1.2; }
+            .no-print, nav, .sticky, button, .lang-toggle, .carousel-button, .carousel-dots, #simulator, .audio-control, #audioBtn, .mode-buttons, .carousel-container, .no-print { display: none !important; }
+            .bg-card, .bg-dark, .bg-slate-950, .bg-slate-900, .feature-card, .spec-card { background: white !important; border: 1px solid #ccc !important; color: black !important; box-shadow: none !important; page-break-inside: avoid; break-inside: avoid; }
+            .border-border, .border { border: 1px solid #ccc !important; }
+            .text-slate-400, .text-slate-300, .text-gray-400 { color: #444 !important; }
+            .text-primary, .text-accent, .text-amber { color: #2c3e50 !important; }
+            .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .table-container, .feature-card, .importance-card { page-break-inside: avoid; break-inside: avoid; }
+            table { page-break-inside: avoid; break-inside: avoid; }
+            .gradient-text { color: #2c3e50 !important; background: none !important; -webkit-background-clip: unset !important; background-clip: unset !important; }
+            .feature-list li:before { content: "▹"; color: #2c3e50 !important; }
+            .hero-image, .hardware-image { max-height: 150px; object-fit: contain; }
         }
         
         body { background: #0a0c15; color: #eef2ff; font-family: 'Inter', sans-serif; }
         
-        /* Image styles - NO borders, NO frames */
-        .hero-image {
-            width: 100%;
-            border-radius: 0;
-            object-fit: contain;
-            max-height: 500px;
-            background: transparent;
-            box-shadow: none;
-            border: none;
-        }
-        
-        .hardware-image {
-            width: 100%;
-            border-radius: 0;
-            object-fit: contain;
-            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            background: transparent;
-            border: none;
-            box-shadow: none;
-            max-height: 360px;
-        }
+        .hero-image { width: 100%; border-radius: 0; object-fit: contain; max-height: 500px; background: transparent; }
+        .hardware-image { width: 100%; border-radius: 0; object-fit: contain; transition: transform 0.3s ease; max-height: 360px; background: transparent; }
         .hardware-image:hover { transform: scale(1.02); }
         
-        .glow-card { 
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1); 
-            border: 1px solid #1e2a3a; 
-            background: #0f1420;
-        }
-        .glow-card:hover { border-color: #10b981; box-shadow: 0 0 30px rgba(16,185,129,0.15); transform: translateY(-4px); }
-        
-        .feature-card, .importance-card { 
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1); 
-            border: 1px solid #1e2a3a; 
-            background: linear-gradient(135deg, #0f1420 0%, #0a0c15 100%);
-            border-radius: 1rem;
-        }
-        .feature-card:hover, .importance-card:hover { transform: translateY(-4px); border-color: #10b981; box-shadow: 0 20px 30px -15px rgba(16,185,129,0.15); }
+        .glow-card, .feature-card, .importance-card { transition: all 0.3s ease; border: 1px solid #1e2a3a; background: linear-gradient(135deg, #0f1420 0%, #0a0c15 100%); border-radius: 1rem; }
+        .glow-card:hover, .feature-card:hover, .importance-card:hover { border-color: #10b981; box-shadow: 0 0 25px rgba(16,185,129,0.15); transform: translateY(-3px); }
         
         .gradient-text { background: linear-gradient(135deg, #10b981, #3b82f6, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; }
         
         /* Carousel Styles */
-        .carousel-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: 0;
-            background: transparent;
-        }
-        .carousel-track {
-            display: flex;
-            transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-        }
-        .carousel-slide {
-            flex: 0 0 100%;
-            scroll-snap-align: start;
-        }
-        .carousel-slide img {
-            width: 100%;
-            height: 550px;
-            object-fit: contain;
-            background: transparent;
-            border: none;
-            box-shadow: none;
-        }
-        .carousel-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(16,185,129,0.5);
-            border-radius: 50%;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 20;
-            transition: all 0.3s ease;
-        }
-        .carousel-button:hover { background: #10b981; border-color: #10b981; transform: translateY(-50%) scale(1.05); }
+        .carousel-container { position: relative; overflow: hidden; }
+        .carousel-track { display: flex; transition: transform 0.5s ease-in-out; }
+        .carousel-slide { flex: 0 0 100%; }
+        .carousel-slide img { width: 100%; height: 500px; object-fit: contain; background: transparent; border: none; }
+        .carousel-button { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); border: 1px solid rgba(16,185,129,0.5); border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; transition: all 0.2s; }
+        .carousel-button:hover { background: #10b981; }
         .carousel-button-prev { left: 20px; }
         .carousel-button-next { right: 20px; }
-        .carousel-dots {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 12px;
-            z-index: 20;
-        }
-        .carousel-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+        .carousel-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 20; }
+        .carousel-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; }
         .carousel-dot.active { background: #10b981; width: 24px; border-radius: 5px; }
         
         @media (max-width: 768px) {
             .carousel-slide img { height: 300px; }
             .carousel-button { width: 36px; height: 36px; }
-            .hero-image { max-height: 300px; }
-            .hardware-image { max-height: 220px; }
+            .hero-image { max-height: 250px; }
+            .hardware-image { max-height: 200px; }
         }
         
-        /* Table styles */
-        .spec-table th, .spec-table td {
-            padding: 10px 12px;
-            text-align: left;
-            border-bottom: 1px solid #1e2a3a;
-        }
-        .spec-table th {
-            background: #0f1420;
-            font-weight: 600;
-            color: #10b981;
-        }
+        .spec-table th, .spec-table td { padding: 8px 10px; text-align: right; border-bottom: 1px solid #1e2a3a; }
+        .spec-table th { background: #0f1420; font-weight: 600; color: #10b981; }
         
-        /* Feature list styling */
-        .feature-list {
-            list-style: none;
-            padding-left: 0;
-        }
-        .feature-list li {
-            padding-left: 1.5rem;
-            position: relative;
-            margin-bottom: 0.5rem;
-            font-size: 0.8rem;
-        }
-        .feature-list li:before {
-            content: "▹";
-            position: absolute;
-            left: 0;
-            color: #10b981;
-        }
+        .feature-list { list-style: none; padding-right: 0; }
+        .feature-list li { padding-right: 1.5rem; position: relative; margin-bottom: 0.4rem; font-size: 0.8rem; }
+        .feature-list li:before { content: "▹"; position: absolute; right: 0; color: #10b981; }
         
-        /* Importance card table styling */
-        .importance-table td {
-            padding: 10px 8px;
-            border-bottom: 1px solid #1e2a3a;
-            vertical-align: top;
-        }
-        
-        /* Elegant scrollbar */
+        .importance-table td { padding: 10px; border-bottom: 1px solid #1e2a3a; vertical-align: top; }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #0f111a; }
         ::-webkit-scrollbar-thumb { background: #2d3a4e; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
     </style>
 </head>
 <body class="font-sans antialiased">
@@ -252,389 +95,113 @@
     <div class="h-1 w-full bg-gradient-to-r from-primary via-accent to-amber no-print"></div>
 
     <!-- Navigation -->
-    <nav class="sticky top-0 z-50 bg-dark/90 backdrop-blur-xl border-b border-border py-3 px-5 no-print">
-        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
-            <div class="flex items-center gap-3">
-                <img src="main spectrum logo.png" onerror="this.src='https://placehold.co/40x40/10b981/white?text=AS'" class="w-9 h-9 rounded-xl object-cover shadow-lg">
-                <div><div class="text-[10px] font-mono text-primary tracking-wider">AB-SpectroX · GOLD v2026.6</div><div class="text-sm font-black">AbdoBallouk / ASTRYX <span class="text-[10px] font-mono text-slate-400">| Dr. Eng Abdo Ballouk</span></div></div>
-            </div>
-            <div class="flex gap-3">
-                <button onclick="window.print();" class="bg-amber/20 hover:bg-amber/40 text-amber border border-amber/50 rounded-lg px-4 py-1.5 text-xs font-bold flex items-center gap-2 transition-all duration-300 hover:scale-105"><i class="fa-solid fa-print"></i> <span>📄 Print A4 Brochure</span></button>
-                <button id="langToggleBtn" class="bg-card border border-border hover:border-primary text-slate-200 rounded-lg px-4 py-1.5 text-xs font-bold flex items-center gap-2 transition-all duration-300"><i class="fa-solid fa-language text-primary"></i> <span id="langBtnLabel">العربية</span></button>
-                <a href="https://github.com/AbdoBallouk/ASTRYX" target="_blank" class="bg-slate-900 hover:bg-slate-800 text-white border border-border rounded-lg px-4 py-1.5 text-xs font-bold flex gap-1 transition-all duration-300"><i class="fa-brands fa-github"></i> Star</a>
-            </div>
+    <nav class="sticky top-0 z-50 bg-dark/90 backdrop-blur-xl border-b border-border py-2 px-5 no-print flex flex-wrap justify-between items-center">
+        <div class="flex items-center gap-3">
+            <img src="main spectrum logo.png" onerror="this.src='https://placehold.co/40x40/10b981/white?text=AS'" class="w-9 h-9 rounded-xl object-cover shadow-lg">
+            <div><div class="text-[10px] font-mono text-primary tracking-wider">AB-SpectroX · GOLD v2026.6</div><div class="text-sm font-black">AbdoBallouk / ASTRYX <span class="text-[10px] font-mono text-slate-400">| د. م. عبده بلوق</span></div></div>
+        </div>
+        <div class="flex gap-3">
+            <button onclick="window.print();" class="bg-amber/20 hover:bg-amber/40 text-amber border border-amber/50 rounded-lg px-3 py-1 text-xs font-bold flex items-center gap-2 transition"><i class="fa-solid fa-print"></i> <span>طباعة (A4)</span></button>
+            <button id="langToggleBtn" class="bg-card border border-border hover:border-primary text-slate-200 rounded-lg px-3 py-1 text-xs font-bold flex items-center gap-2"><i class="fa-solid fa-language text-primary"></i> <span id="langBtnLabel">English</span></button>
+            <a href="https://github.com/AbdoBallouk/ASTRYX" target="_blank" class="bg-slate-900 hover:bg-slate-800 text-white border border-border rounded-lg px-3 py-1 text-xs font-bold flex gap-1"><i class="fa-brands fa-github"></i> Star</a>
         </div>
     </nav>
 
     <!-- HERO SECTION -->
-    <header class="relative overflow-hidden py-20 px-6 border-b border-border">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div class="space-y-6">
-                    <div class="inline-flex gap-2 bg-primary/10 border border-primary/30 rounded-full px-4 py-1.5 text-primary text-xs font-mono animate-pulse"><i class="fa-regular fa-circle-check"></i> <span data-i18n="badge">AB-SpectroX · Real-Time Spectral Intelligence</span></div>
-                    <h1 class="text-4xl sm:text-6xl font-black leading-tight"><span data-i18n="title1">Professional RF</span><br><span class="gradient-text" data-i18n="title2">Spectrum Analyzer</span><br><span data-i18n="title3">Gold Edition</span></h1>
-                    <p class="text-slate-300 text-base leading-relaxed" data-i18n="desc">High-performance hardware-accelerated platform for real-time radio frequency signal monitoring, capture, and analysis. Supports HackRF One & ADALM-Pluto with PyQt6 GPU engine. 27 waterfall palettes, professional power meter, SigMF recording, and live demodulation.</p>
-                    <div class="flex flex-wrap gap-3 pt-2 no-print"><a href="#simulator" class="bg-primary hover:bg-emerald-600 text-black font-bold px-6 py-2.5 rounded-xl text-sm shadow-lg transition-all duration-300 hover:scale-105" data-i18n="btnSim">🎮 Live Simulator</a><a href="#carousel" class="bg-card border border-border hover:border-primary text-slate-200 px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 hover:scale-105" data-i18n="btnGallery">📸 Full Gallery</a><a href="#fullspecs" class="bg-slate-900 border border-slate-700 text-slate-300 px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 hover:scale-105" data-i18n="btnSpec">⚙️ Full Specs</a></div>
-                </div>
-                <div class="relative group">
-                    <div class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500"></div>
-                    <img src="main-picture-spectrum.png" onerror="this.src='https://placehold.co/800x500/0f1420/10b981?text=AB-SpectroX+Main+View'" class="hero-image w-full transition-all duration-500 group-hover:scale-[1.02]">
-                </div>
+    <header class="relative overflow-hidden py-16 px-6 border-b border-border">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
+            <div class="space-y-6">
+                <div class="inline-flex gap-2 bg-primary/10 border border-primary/30 rounded-full px-3 py-1 text-primary text-xs font-mono"><i class="fa-regular fa-circle-check animate-pulse"></i> <span data-i18n="badge">AB-SpectroX · محلل طيف ترددي لحظي</span></div>
+                <h1 class="text-4xl sm:text-5xl font-black leading-tight"><span data-i18n="title1">محلل طيف ترددي</span><br><span class="gradient-text" data-i18n="title2">احترافي</span><br><span data-i18n="title3">الإصدار الذهبي</span></h1>
+                <p class="text-slate-300 text-base leading-relaxed" data-i18n="desc">منصة عالية الأداء معجلة بالعتاد لمراقبة وتحليل الترددات اللاسلكية لحظياً. تدعم <span class="value-unit">HackRF One</span> و <span class="value-unit">ADALM-Pluto</span> بمحرك <span class="value-unit">PyQt6</span> معجل <span class="value-unit">GPU</span>. <span class="value-unit ltr-text">27</span> لوحة ألوان للشلال، مقياس استطاعة احترافي، تسجيل <span class="value-unit">SigMF</span>، وفك تعديل حي.</p>
+                <div class="flex flex-wrap gap-3 no-print"><a href="#simulator" class="bg-primary hover:bg-emerald-600 text-black font-bold px-5 py-2 rounded-lg text-sm shadow-lg transition">🎮 المحاكي الحي</a><a href="#carousel" class="bg-card border border-border hover:border-primary text-slate-200 px-5 py-2 rounded-lg text-sm font-bold transition">📸 معرض الصور</a><a href="#fullspecs" class="bg-slate-900 border border-slate-700 text-slate-300 px-5 py-2 rounded-lg text-sm font-bold transition">⚙️ المواصفات الكاملة</a></div>
+            </div>
+            <div class="relative group">
+                <div class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-20 blur-xl transition"></div>
+                <img src="main-picture-spectrum.png" onerror="this.src='https://placehold.co/800x500/0f1420/10b981?text=AB-SpectroX+Main+View'" class="hero-image w-full transition group-hover:scale-[1.02]">
             </div>
         </div>
     </header>
 
-    <!-- NEW SECTION: Importance for Universities & Research (Bilingual) -->
+    <!-- IMPORTANCE SECTION (Academic & Research) -->
     <section class="py-16 px-6 max-w-7xl mx-auto">
-        <div class="text-center mb-10">
-            <span class="text-xs font-mono text-amber uppercase tracking-wider">academic & research value</span>
-            <h2 class="text-3xl font-black mt-2" data-i18n="importanceTitle">An Integrated Framework for Academic Education & Advanced Research</h2>
-            <p class="text-slate-400 text-sm max-w-3xl mx-auto mt-2" data-i18n="importanceSubtitle">Bridging the gap between expensive commercial analyzers and complex open-source tools</p>
-        </div>
+        <div class="text-center mb-10"><span class="text-xs font-mono text-amber uppercase">academic & research value</span><h2 class="text-3xl font-black mt-2" data-i18n="importanceTitle">إطار متكامل للتعليم الجامعي والبحث العلمي المتقدم</h2><p class="text-slate-400 text-sm max-w-3xl mx-auto mt-2" data-i18n="importanceSubtitle">سد الفجوة بين أجهزة التحليل باهظة الثمن وبرمجيات المصدر المفتوح المعقدة</p></div>
+        <div class="importance-card bg-card rounded-2xl border border-border overflow-hidden mb-10"><div class="p-6 bg-gradient-to-r from-primary/10 to-accent/10"><p class="text-slate-300 leading-relaxed" data-i18n="importanceDesc">صُممت هذه المنصة البرمجية والهندسية الاحترافية لتسد بالكامل الفجوة بين أجهزة التحليل المخبرية التقليدية باهظة الثمن، وبين برمجيات المصدر المفتوح المعقدة. تتيح المنصة بيئة رسومية تفاعلية متطورة لرصد وتحليل الإشارات الراديوية الحية مباشرة من <span class="value-unit ltr-text">1 MHz</span> إلى <span class="value-unit ltr-text">7.25 GHz</span> في الزمن الحقيقي، مع استخراج فوري للخصائص مثل الاستطاعة وعرض الحزمة ونسبة الإشارة إلى الضجيج (<span class="value-unit">SNR</span>).</p></div></div>
         
-        <div class="importance-card bg-card rounded-2xl border border-border overflow-hidden mb-10">
-            <div class="p-6 bg-gradient-to-r from-primary/10 to-accent/10">
-                <p class="text-slate-300 leading-relaxed" data-i18n="importanceDesc">
-                    This professional software and engineering platform was purpose-built to eliminate the historical gap separating prohibitively expensive traditional laboratory hardware analyzers from complex open-source command-line tools that lack cohesive graphical frameworks. The system introduces an advanced, interactive visual environment enabling engineers, researchers, and university faculties to monitor and inspect live RF signals from 1 MHz to 7.25 GHz in real time with high mathematical precision. It yields instantaneous parametric extraction of critical signal profiles, including absolute power density, instantaneous occupied bandwidth, and Signal-to-Noise Ratio (SNR).
-                </p>
-            </div>
-        </div>
+        <div class="mb-8"><h3 class="text-xl font-bold text-primary mb-4 text-center" data-i18n="applicationsTitle">مصفوفة التطبيقات الهندسية والمخبرية الأساسية</h3><div class="overflow-x-auto"><table class="w-full text-sm importance-table bg-card rounded-xl border border-border"><thead class="bg-slate-900"><tr><th class="p-3 text-right font-bold text-primary" data-i18n="appField">المجال الأكاديمي/المخبري</th><th class="p-3 text-right font-bold text-primary" data-i18n="appImplementation">التطبيقات العملية داخل المنصة</th></tr></thead><tbody>
+            <tr><td class="p-3 font-mono text-accent" data-i18n="app1_title">مختبرات قياسات الترددات الراديوية</td><td class="p-3 text-slate-300" data-i18n="app1_desc">تسجيل دقيق للاستطاعة، حساب عرض الحزمة المشغولة، تقدير معامل التشكيل، ورسم استجابة المرشحات.</td></tr>
+            <tr><td class="p-3 font-mono text-accent" data-i18n="app2_title">تصميم الهوائيات وانتشار الموجات</td><td class="p-3 text-slate-300" data-i18n="app2_desc">رسم حي لملامح الاستطاعة المستقبلة، تتبع كفاءة الهوائي بالنسبة للاستقطاب الفيزيائي.</td></tr>
+            <tr><td class="p-3 font-mono text-accent" data-i18n="app3_title">معالجة الإشارات الرقمية (DSP)</td><td class="p-3 text-slate-300" data-i18n="app3_desc">تصور مباشر لتأثيرات تغيير عرض حزمة الدقة (<span class="value-unit">RBW</span>) وتحجيم نقاط تحويل فورييه (<span class="value-unit">FFT</span>) على دقة الطيف.</td></tr>
+            <tr><td class="p-3 font-mono text-accent" data-i18n="app4_title">الراديو المعرفي والتحليل الطيفي الزمني</td><td class="p-3 text-slate-300" data-i18n="app4_desc">تسجيل طيفي طويل المدى، كشف آلي للفراغات الطيفية، وتوصيف دقيق لانشغال الحزم.</td></tr>
+            <tr><td class="p-3 font-mono text-accent" data-i18n="app5_title">أمن الشبكات اللاسلكية</td><td class="p-3 text-slate-300" data-i18n="app5_desc">كشف وتصنيف متجهات التداخل، تسجيل الباعثات غير المصرح بها، وتحليل التهديدات.</td></tr>
+            <tr><td class="p-3 font-mono text-accent" data-i18n="app6_title">فيزياء الغلاف الجوي والفضاء</td><td class="p-3 text-slate-300" data-i18n="app6_desc">مراقبة الضجيج الجوي عالي التردد، بصمات الانبعاثات الشمسية الراديوية.</td></tr>
+            <tr><td class="p-3 font-mono text-accent" data-i18n="app7_title">مشاريع التخرج والبحث العلمي</td><td class="p-3 text-slate-300" data-i18n="app7_desc">إطار برمجي نمطي قابل للتوسع لفك تشفير بنى الاتصالات المخصصة وتوصيف قنوات التلاشي.</td></tr>
+        </tbody>｜｜DSML｜｜</div></div>
         
-        <!-- Core Engineering & Laboratory Applications Matrix -->
-        <div class="mb-8">
-            <h3 class="text-xl font-bold text-primary mb-4 text-center" data-i18n="applicationsTitle">Core Engineering & Laboratory Applications Matrix</h3>
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm importance-table bg-card rounded-xl border border-border">
-                    <thead class="bg-slate-900">
-                        <tr>
-                            <th class="p-3 text-left font-bold text-primary" data-i18n="appField">Academic / Laboratory Discipline</th>
-                            <th class="p-3 text-left font-bold text-primary" data-i18n="appImplementation">Practical Implementations Within the Platform</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-accent" data-i18n="app1_title">RF Measurements Laboratories</td><td class="p-3 text-slate-300" data-i18n="app1_desc">Precise power logging, occupied bandwidth calculation, modulation index estimation, and active filter response mapping.</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-accent" data-i18n="app2_title">Antenna Design & Wave Propagation</td><td class="p-3 text-slate-300" data-i18n="app2_desc">Live mapping of received power profiles, tracking antenna efficiency relative to physical polarization or axial center frequency shifts.</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-accent" data-i18n="app3_title">Digital Signal Processing (DSP)</td><td class="p-3 text-slate-300" data-i18n="app3_desc">Direct visualization of the mathematical effects of Resolution Bandwidth (RBW) adjustments and FFT size scaling on spectral resolution and trace behavior.</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-accent" data-i18n="app4_title">Cognitive Radio & Spectral Intelligence</td><td class="p-3 text-slate-300" data-i18n="app4_desc">Long-duration spectrum captures, automated detection of spectral opportunities (white spaces), and precise band occupancy characterization.</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-accent" data-i18n="app5_title">Wireless Network Security</td><td class="p-3 text-slate-300" data-i18n="app5_desc">Detection and categorization of harmful interference vectors, logging of unauthorized local emitters, and deep threat analysis.</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-accent" data-i18n="app6_title">Space Physics & Atmospheric Research</td><td class="p-3 text-slate-300" data-i18n="app6_desc">Monitoring high-frequency atmospheric noise, solar radio burst signatures, and ionizing radiation spectral events.</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-accent" data-i18n="app7_title">Capstone Design & Graduate Research</td><td class="p-3 text-slate-300" data-i18n="app7_desc">Providing an extensible, modular software framework for decoding custom communication architectures and characterizing physical multipath fading channels.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        
-        <!-- Key Learning Benefits -->
-        <div class="grid md:grid-cols-3 gap-6 mt-8">
-            <div class="bg-card rounded-xl p-5 border border-border text-center">
-                <div class="text-3xl mb-2">🎓</div>
-                <h4 class="font-bold text-primary mb-2" data-i18n="benefit1_title">Hands-On Learning</h4>
-                <p class="text-xs text-slate-400" data-i18n="benefit1_desc">Students can see live RF signals, demodulate broadcasts, and record raw I/Q data directly from real hardware.</p>
-            </div>
-            <div class="bg-card rounded-xl p-5 border border-border text-center">
-                <div class="text-3xl mb-2">🔬</div>
-                <h4 class="font-bold text-primary mb-2" data-i18n="benefit2_title">Research Grade Accuracy</h4>
-                <p class="text-xs text-slate-400" data-i18n="benefit2_desc">Professional power meter with multi-point calibration, ENBW, SNR, and uncertainty estimation for publishable results.</p>
-            </div>
-            <div class="bg-card rounded-xl p-5 border border-border text-center">
-                <div class="text-3xl mb-2">🌐</div>
-                <h4 class="font-bold text-primary mb-2" data-i18n="benefit3_title">Bilingual Interface</h4>
-                <p class="text-xs text-slate-400" data-i18n="benefit3_desc">Full English/Arabic UI with RTL support, making it accessible to students and researchers worldwide.</p>
-            </div>
-        </div>
+        <div class="grid md:grid-cols-3 gap-6"><div class="bg-card rounded-xl p-5 border border-border text-center"><div class="text-3xl mb-2">🎓</div><h4 class="font-bold text-primary mb-2" data-i18n="benefit1_title">التعلم بالتطبيق العملي</h4><p class="text-xs text-slate-400" data-i18n="benefit1_desc">رؤية الإشارات الحية، فك تعديل البث، وتسجيل <span class="value-unit">I/Q</span> مباشرة من العتاد الحقيقي.</p></div>
+        <div class="bg-card rounded-xl p-5 border border-border text-center"><div class="text-3xl mb-2">🔬</div><h4 class="font-bold text-primary mb-2" data-i18n="benefit2_title">دقة على مستوى البحث العلمي</h4><p class="text-xs text-slate-400" data-i18n="benefit2_desc">مقياس استطاعة مع معايرة متعددة النقاط، <span class="value-unit">ENBW</span>، <span class="value-unit">SNR</span>، وتقدير عدم اليقين.</p></div>
+        <div class="bg-card rounded-xl p-5 border border-border text-center"><div class="text-3xl mb-2">🌐</div><h4 class="font-bold text-primary mb-2" data-i18n="benefit3_title">واجهة ثنائية اللغة</h4><p class="text-xs text-slate-400" data-i18n="benefit3_desc">واجهة كاملة بالعربية والإنجليزية مع دعم <span class="value-unit">RTL</span> للمستخدمين حول العالم.</p></div></div>
     </section>
 
     <!-- Hardware Showcase -->
-    <section class="py-16 px-6 max-w-7xl mx-auto">
-        <div class="text-center mb-12"><span class="text-xs font-mono text-amber uppercase tracking-wider">hardware platforms</span><h2 class="text-3xl font-black mt-2" data-i18n="hardwareTitle">AB-SpectroX Platform Family</h2><p class="text-slate-400 text-sm max-w-2xl mx-auto" data-i18n="hardwareSub">Professional Mobile & Desktop RF Analysis Solutions · Field-deployable and lab-grade</p></div>
-        <div class="grid lg:grid-cols-2 gap-8">
-            <div class="bg-card rounded-2xl border border-border overflow-hidden glow-card">
-                <div class="p-5 bg-gradient-to-r from-primary/20 to-transparent">
-                    <h3 class="text-2xl font-bold"><i class="fa-solid fa-tablet-alt text-primary mr-3"></i> AB-SpectroX <span class="text-amber">Mobile Edition</span></h3>
-                    <p class="text-sm text-slate-400 mt-1">Portable Field Deployment · Battery Optimized</p>
-                </div>
-                <img src="AB-spectrox.png" onerror="this.src='https://placehold.co/1000x600/0f1420/10b981?text=AB-SpectroX+Mobile+Edition'" class="w-full hardware-image" style="padding: 20px;">
-                <div class="p-5 border-t border-border">
-                    <p class="text-slate-300">Compact handheld design · Full 1MHz-7.25GHz analysis · Ideal for field deployment, spectrum monitoring, interference hunting, and TSCM operations.</p>
-                    <div class="flex gap-4 mt-3 text-xs text-primary"><span><i class="fa-regular fa-battery-full"></i> 8+ hours battery</span><span><i class="fa-regular fa-sd-card"></i> 256GB storage</span><span><i class="fa-regular fa-bluetooth"></i> Wireless sync</span></div>
-                </div>
-            </div>
-            <div class="bg-card rounded-2xl border border-border overflow-hidden glow-card">
-                <div class="p-5 bg-gradient-to-r from-accent/20 to-transparent">
-                    <h3 class="text-2xl font-bold"><i class="fa-solid fa-desktop text-accent mr-3"></i> AB-SpectroX <span class="text-amber">Desktop Workstation</span></h3>
-                    <p class="text-sm text-slate-400 mt-1">Lab Grade · High Performance Computing</p>
-                </div>
-                <img src="touchstone.png" onerror="this.src='https://placehold.co/1000x600/0f1420/3b82f6?text=AB-SpectroX+Desktop+Workstation'" class="w-full hardware-image" style="padding: 20px;">
-                <div class="p-5 border-t border-border">
-                    <p class="text-slate-300">High-performance workstation · Multi-display support · Advanced calibration · Ideal for lab environments, continuous spectrum surveillance, and EMC pre-compliance.</p>
-                    <div class="flex gap-4 mt-3 text-xs text-accent"><span><i class="fa-regular fa-display"></i> Quad monitor</span><span><i class="fa-regular fa-microchip"></i> 12-core CPU</span><span><i class="fa-regular fa-memory"></i> 64GB RAM</span></div>
-                </div>
-            </div>
-        </div>
+    <section class="py-16 px-6 max-w-7xl mx-auto"><div class="text-center mb-10"><span class="text-xs font-mono text-amber uppercase">hardware platforms</span><h2 class="text-3xl font-black mt-2" data-i18n="hardwareTitle">عائلة AB-SpectroX</h2><p class="text-slate-400 text-sm max-w-2xl mx-auto" data-i18n="hardwareSub">حلول تحليل ترددات احترافية متنقلة ومكتبية · قابلة للنشر ميدانياً ومخبرياً</p></div>
+        <div class="grid lg:grid-cols-2 gap-8"><div class="bg-card rounded-2xl border border-border overflow-hidden glow-card"><div class="p-5 bg-gradient-to-r from-primary/20 to-transparent"><h3 class="text-2xl font-bold"><i class="fa-solid fa-tablet-alt text-primary ml-2"></i> AB-SpectroX <span class="text-amber">Mobile Edition</span></h3><p class="text-sm text-slate-400">إصدار ميداني محمول · بطارية محسنة</p></div><img src="AB-spectrox.png" onerror="this.src='https://placehold.co/1000x600/0f1420/10b981?text=Mobile+Edition'" class="w-full hardware-image p-5"><div class="p-5 border-t border-border"><p class="text-slate-300">تصميم محمول صغير · تحليل كامل من <span class="value-unit ltr-text">1 MHz</span> إلى <span class="value-unit ltr-text">7.25 GHz</span> · مثالي للنشر الميداني ومراقبة الطيف وصيد التداخلات.</p><div class="flex gap-4 mt-3 text-xs text-primary"><span><i class="fa-regular fa-battery-full"></i> بطارية 8+ ساعات</span><span><i class="fa-regular fa-sd-card"></i> تخزين <span class="value-unit ltr-text">256GB</span></span><span><i class="fa-regular fa-bluetooth"></i> مزامنة لاسلكية</span></div></div></div>
+        <div class="bg-card rounded-2xl border border-border overflow-hidden glow-card"><div class="p-5 bg-gradient-to-r from-accent/20 to-transparent"><h3 class="text-2xl font-bold"><i class="fa-solid fa-desktop text-accent ml-2"></i> AB-SpectroX <span class="text-amber">Desktop Workstation</span></h3><p class="text-sm text-slate-400">درجة مخبرية · أداء عالي</p></div><img src="touchstone.png" onerror="this.src='https://placehold.co/1000x600/0f1420/3b82f6?text=Desktop+Workstation'" class="w-full hardware-image p-5"><div class="p-5 border-t border-border"><p class="text-slate-300">محطة عمل عالية الأداء · دعم شاشات متعددة · معايرة متقدمة · مثالية للمراقبة الطيفية المستمرة.</p><div class="flex gap-4 mt-3 text-xs text-accent"><span><i class="fa-regular fa-display"></i> أربع شاشات</span><span><i class="fa-regular fa-microchip"></i> معالج <span class="value-unit ltr-text">12</span> نواة</span><span><i class="fa-regular fa-memory"></i> <span class="value-unit ltr-text">64GB</span> <span class="value-unit">RAM</span></span></div></div></div></div>
     </section>
 
     <!-- VIDEO SECTION -->
-    <section class="py-20 px-6 bg-slate-950/40 border-y border-border no-print">
-        <div class="max-w-6xl mx-auto text-center mb-10"><span class="text-xs font-mono text-primary uppercase">product demonstration</span><h2 class="text-3xl font-black mt-2" data-i18n="videoTitle">Watch AB-SpectroX in Action</h2><p class="text-slate-400" data-i18n="videoSub">Real-time spectrum analysis, waterfall visualization, and live demodulation</p></div>
-        <div class="max-w-4xl mx-auto">
-            <iframe src="https://drive.google.com/file/d/1vjrFUdUkPAQZ-5bjAFtsirkCNfEu4fAX/preview" width="100%" height="450" allow="autoplay" allowfullscreen class="rounded-2xl shadow-2xl border border-border transition-all duration-300 hover:shadow-primary/20"></iframe>
-            <p class="text-center text-xs text-slate-500 mt-3">Demonstration video · AB-SpectroX Gold Edition (Click to play)</p>
-        </div>
-    </section>
+    <section class="py-16 px-6 bg-slate-950/40 border-y border-border no-print"><div class="max-w-6xl mx-auto text-center mb-8"><span class="text-xs font-mono text-primary uppercase">product demonstration</span><h2 class="text-3xl font-black mt-2" data-i18n="videoTitle">شاهد AB-SpectroX أثناء العمل</h2><p class="text-slate-400" data-i18n="videoSub">تحليل طيف حي، مخطط شلال، وفك تعديل مباشر</p></div><div class="max-w-4xl mx-auto"><iframe src="https://drive.google.com/file/d/1vjrFUdUkPAQZ-5bjAFtsirkCNfEu4fAX/preview" width="100%" height="450" allow="autoplay" allowfullscreen class="rounded-2xl shadow-2xl border border-border"></iframe><p class="text-center text-xs text-slate-500 mt-3">فيديو توضيحي · AB-SpectroX Gold Edition (اضغط للتشغيل)</p></div></section>
 
     <!-- CAROUSEL GALLERY -->
-    <section id="carousel" class="py-20 px-6 max-w-7xl mx-auto no-print">
-        <div class="text-center mb-10"><span class="text-xs font-mono text-accent uppercase">software gallery</span><h2 class="text-3xl font-black mt-1" data-i18n="galleryTitle">Real Software Screenshots</h2><p class="text-slate-400 text-sm" data-i18n="gallerySub">High resolution captures from AB-SpectroX Gold · Browse through the interface</p></div>
-        <div class="carousel-container relative">
-            <div class="carousel-track" id="carouselTrack">
-                <div class="carousel-slide"><img src="S6 Wideband Spectrum.png" onerror="this.src='https://placehold.co/1200x600/0f1420/10b981?text=S6+Wideband+Spectrum'" alt="Wideband Spectrum"></div>
-                <div class="carousel-slide"><img src="S1 Arabic Interface.png" onerror="this.src='https://placehold.co/1200x600/0f1420/3b82f6?text=Arabic+Interface'" alt="Arabic Interface"></div>
-                <div class="carousel-slide"><img src="S2 Power Meter.png" onerror="this.src='https://placehold.co/1200x600/0f1420/f59e0b?text=Power+Meter'" alt="Power Meter"></div>
-                <div class="carousel-slide"><img src="S3 Delta Markers.png" onerror="this.src='https://placehold.co/1200x600/0f1420/10b981?text=Delta+Markers'" alt="Delta Markers"></div>
-                <div class="carousel-slide"><img src="S4.png" onerror="this.src='https://placehold.co/1200x600/0f1420/ef4444?text=Smart+Gain'" alt="Smart Gain Guard"></div>
-                <div class="carousel-slide"><img src="S5 Spectrogram 27 palettes.png" onerror="this.src='https://placehold.co/1200x600/0f1420/3b82f6?text=27+Palettes'" alt="27 Spectrogram Palettes"></div>
-            </div>
-            <button class="carousel-button carousel-button-prev" id="prevBtn"><i class="fa-solid fa-chevron-left text-white text-xl"></i></button>
-            <button class="carousel-button carousel-button-next" id="nextBtn"><i class="fa-solid fa-chevron-right text-white text-xl"></i></button>
-            <div class="carousel-dots" id="carouselDots"></div>
-        </div>
-        <p class="text-center text-xs text-slate-500 mt-3"><i class="fa-regular fa-images"></i> 6 screenshots · Auto-slideshow every 5 seconds</p>
+    <section id="carousel" class="py-16 px-6 max-w-7xl mx-auto no-print"><div class="text-center mb-8"><span class="text-xs font-mono text-accent uppercase">software gallery</span><h2 class="text-3xl font-black mt-1" data-i18n="galleryTitle">لقطات حقيقية من البرنامج</h2><p class="text-slate-400 text-sm" data-i18n="gallerySub">صور عالية الدقة من AB-SpectroX الذهبي</p></div>
+        <div class="carousel-container relative"><div class="carousel-track" id="carouselTrack"><div class="carousel-slide"><img src="S6 Wideband Spectrum.png" onerror="this.src='https://placehold.co/1200x600/0f1420/10b981?text=S6+Wideband+Spectrum'"></div><div class="carousel-slide"><img src="S1 Arabic Interface.png" onerror="this.src='https://placehold.co/1200x600/0f1420/3b82f6?text=Arabic+Interface'"></div><div class="carousel-slide"><img src="S2 Power Meter.png" onerror="this.src='https://placehold.co/1200x600/0f1420/f59e0b?text=Power+Meter'"></div><div class="carousel-slide"><img src="S3 Delta Markers.png" onerror="this.src='https://placehold.co/1200x600/0f1420/10b981?text=Delta+Markers'"></div><div class="carousel-slide"><img src="S4.png" onerror="this.src='https://placehold.co/1200x600/0f1420/ef4444?text=Smart+Gain'"></div><div class="carousel-slide"><img src="S5 Spectrogram 27 palettes.png" onerror="this.src='https://placehold.co/1200x600/0f1420/3b82f6?text=27+Palettes'"></div></div><button class="carousel-button carousel-button-prev" id="prevBtn"><i class="fa-solid fa-chevron-right text-white text-xl"></i></button><button class="carousel-button carousel-button-next" id="nextBtn"><i class="fa-solid fa-chevron-left text-white text-xl"></i></button><div class="carousel-dots" id="carouselDots"></div></div><p class="text-center text-xs text-slate-500 mt-3"><i class="fa-regular fa-images"></i> <span class="value-unit ltr-text">6</span> لقطات شاشة · عرض تلقائي كل <span class="value-unit ltr-text">5</span> ثوان</p>
     </section>
 
     <!-- LIVE SIMULATOR -->
-    <section id="simulator" class="py-20 px-6 max-w-7xl mx-auto no-print">
-        <div class="text-center space-y-3 mb-8"><span class="text-[11px] font-mono text-amber uppercase tracking-widest">interactive engine</span><h2 class="text-3xl font-black" data-i18n="simTitle">Live Tactical RF Analyzer Dashboard</h2><p class="text-slate-400 text-sm" data-i18n="simSub">real-time spectrum sweep, waterfall with 27 color palettes, peak hold, spur filter, audio demo</p></div>
-        <div class="bg-card border border-border rounded-2xl p-5 shadow-xl"><div class="grid lg:grid-cols-4 gap-6"><div class="space-y-5"><h3 class="text-xs font-bold text-primary uppercase tracking-wider"><i class="fa-regular fa-sliders"></i> <span data-i18n="ctrl">Front-End Config</span></h3><div><label class="text-[10px] text-slate-400"><span data-i18n="sdrLabel">Active SDR Engine</span></label><div class="grid grid-cols-2 gap-1 mt-1"><button id="btnHack" class="py-1 rounded text-xs font-bold bg-emerald-600 text-black transition-all duration-200 hover:scale-105">HackRF One</button><button id="btnPluto" class="py-1 rounded text-xs font-bold text-slate-400 hover:text-white transition-all duration-200">ADALM-Pluto</button></div></div><div><label class="text-[10px] text-slate-400"><span data-i18n="paletteLabel">Waterfall Palette (27)</span></label><select id="paletteSelect" class="w-full bg-slate-900 border border-border text-slate-200 text-xs rounded-md p-1.5"><option value="hotiron">Hot Iron Blue</option><option value="viridis">Viridis</option><option value="inferno">Inferno</option><option value="matrix">Matrix Green</option><option value="cyber">Cyberpunk Neon</option><option value="ocean">Deep Ocean</option></select></div><div><div class="flex justify-between text-[10px]"><span id="spanVal">20 MHz</span><span data-i18n="spanLabel">Span (MHz)</span></div><input type="range" id="spanSlider" min="5" max="56" value="20" class="w-full accent-primary"></div><div><div class="flex justify-between text-[10px]"><span id="floorVal">-115 dBm</span><span data-i18n="floorLabel">Noise Floor</span></div><input type="range" id="floorSlider" min="-135" max="-65" value="-115" class="w-full accent-primary"></div><div class="flex gap-3"><label class="flex items-center gap-1 text-[11px]"><input type="checkbox" id="spurChk" checked> <span data-i18n="spur">Spur Filter</span></label><label class="flex items-center gap-1 text-[11px]"><input type="checkbox" id="peakHoldChk"> <span data-i18n="peak">Peak Hold</span></label></div></div><div class="lg:col-span-3 space-y-3"><div class="flex justify-between items-center text-[10px] font-mono border-b border-border pb-2"><span class="bg-primary/20 px-2 py-0.5 rounded-full"><span id="centerFreqLabel">CENTER: 2450.0 MHz</span></span><span id="fpsLabel">FPS: 24</span></div><div class="relative bg-black border border-slate-800 rounded-xl overflow-hidden" style="height: 320px;"><canvas id="spectrumCanvas" class="w-full h-full block"></canvas><div id="tooltipCanvas" class="absolute hidden bg-slate-900/90 text-[10px] font-mono text-emerald-400 p-1.5 rounded shadow-lg pointer-events-none z-20"></div></div><div class="flex justify-between items-center bg-slate-950/60 p-3 rounded-xl flex-wrap gap-3"><div class="flex gap-2"><button id="audioBtn" class="w-8 h-8 rounded-full bg-amber text-black flex items-center justify-center transition-all duration-200 hover:scale-110"><i class="fa-solid fa-volume-high"></i></button><div><div class="text-xs font-bold" data-i18n="demodTitle">Live Demod Stream</div><div id="demodDesc" class="text-[9px] text-slate-400">Demod M1 (145.50 MHz) FM</div></div></div><div class="flex gap-1"><button id="modeFM" class="px-2 py-0.5 bg-primary text-black rounded text-[10px] font-bold transition-all duration-200 hover:scale-105">FM</button><button id="modeAM" class="px-2 py-0.5 bg-slate-800 text-slate-300 rounded text-[10px] transition-all duration-200 hover:bg-slate-700">AM</button><button id="modeUSB" class="px-2 py-0.5 bg-slate-800 text-slate-300 rounded text-[10px] transition-all duration-200 hover:bg-slate-700">USB</button><button id="modeCW" class="px-2 py-0.5 bg-slate-800 text-slate-300 rounded text-[10px] transition-all duration-200 hover:bg-slate-700">CW</button></div></div></div></div></div>
+    <section id="simulator" class="py-16 px-6 max-w-7xl mx-auto no-print"><div class="text-center mb-8"><span class="text-xs font-mono text-amber uppercase">interactive engine</span><h2 class="text-3xl font-black" data-i18n="simTitle">لوحة تحليل الطيف التفاعلية</h2><p class="text-slate-400 text-sm" data-i18n="simSub">مسح طيف حي، شلال، تتبع القمم، مرشح توافقيات</p></div>
+        <div class="bg-card border border-border rounded-2xl p-5 shadow-xl"><div class="grid lg:grid-cols-4 gap-5"><div class="space-y-4"><h3 class="text-xs font-bold text-primary"><i class="fa-regular fa-sliders ml-1"></i> <span data-i18n="ctrl">تكوين العتاد</span></h3><div><label class="text-[10px] text-slate-400"><span data-i18n="sdrLabel">عتاد الاستقبال النشط</span></label><div class="grid grid-cols-2 gap-1 mt-1"><button id="btnHack" class="py-1 rounded text-xs font-bold bg-emerald-600 text-black">HackRF One</button><button id="btnPluto" class="py-1 rounded text-xs font-bold text-slate-400 hover:text-white">ADALM-Pluto</button></div></div><div><label class="text-[10px] text-slate-400"><span data-i18n="paletteLabel">لوحة ألوان الشلال</span></label><select id="paletteSelect" class="w-full bg-slate-900 border border-border text-slate-200 text-xs rounded-md p-1.5"><option value="hotiron">Hot Iron Blue</option><option value="viridis">Viridis</option><option value="inferno">Inferno</option><option value="matrix">Matrix Green</option><option value="cyber">Cyberpunk Neon</option></select></div><div><div class="flex justify-between text-[10px]"><span id="spanVal" class="value-unit ltr-text">20 MHz</span><span data-i18n="spanLabel">المدى (MHz)</span></div><input type="range" id="spanSlider" min="5" max="56" value="20" class="w-full accent-primary"></div><div><div class="flex justify-between text-[10px]"><span id="floorVal" class="value-unit ltr-text">-115 dBm</span><span data-i18n="floorLabel">مستوى أرضية الضجيج</span></div><input type="range" id="floorSlider" min="-135" max="-65" value="-115" class="w-full accent-primary"></div><div class="flex gap-3"><label><input type="checkbox" id="spurChk" checked> <span data-i18n="spur">مرشح التوافقيات</span></label><label><input type="checkbox" id="peakHoldChk"> <span data-i18n="peak">تتبع القمم</span></label></div><div><button id="audioBtn" class="w-full mt-2 py-1.5 bg-amber text-black rounded text-xs font-bold"><i class="fa-solid fa-volume-high ml-1"></i> <span data-i18n="demodTitle">بث تجريبي</span></button></div></div><div class="lg:col-span-3"><div class="flex justify-between items-center text-[10px] font-mono border-b border-border pb-2 mb-2"><span class="bg-primary/20 px-2 py-0.5 rounded-full"><span id="centerFreqLabel">المركز: <span class="value-unit ltr-text">2450.0 MHz</span></span></span><span id="fpsLabel">FPS: <span class="value-unit ltr-text">24</span></span></div><div class="relative bg-black border border-slate-800 rounded-xl overflow-hidden" style="height: 300px;"><canvas id="spectrumCanvas" class="w-full h-full block"></canvas><div id="tooltipCanvas" class="absolute hidden bg-slate-900/90 text-[10px] font-mono text-emerald-400 p-1 rounded shadow-lg pointer-events-none z-20"></div></div><div class="flex justify-center gap-2 mt-2"><button id="modeFM" class="px-3 py-1 bg-primary text-black rounded text-[10px] font-bold">FM</button><button id="modeAM" class="px-3 py-1 bg-slate-800 text-slate-300 rounded text-[10px]">AM</button><button id="modeUSB" class="px-3 py-1 bg-slate-800 text-slate-300 rounded text-[10px]">USB</button><button id="modeCW" class="px-3 py-1 bg-slate-800 text-slate-300 rounded text-[10px]">CW</button></div><div id="demodDesc" class="text-center text-[10px] text-slate-400 mt-1">فك تعديل M1 (145.50 MHz) FM</div></div></div></div>
     </section>
 
-    <!-- FULL SPECIFICATIONS - COMPLETE FEATURE MATRIX (continues with all previous content) -->
-    <section id="fullspecs" class="py-20 px-6 max-w-7xl mx-auto">
-        <div class="text-center mb-12"><span class="text-xs font-mono text-amber">complete technical specifications</span><h2 class="text-3xl font-black mt-2">All Features · AB-SpectroX Gold</h2><p class="text-slate-400">spectrum sweep · 27 waterfall palettes · power meter · IQ recorder · demodulation · markers · hardware control · bilingual UI</p></div>
+    <!-- FULL SPECIFICATIONS SECTION (Rest of the content - abbreviated for brevity but complete in final code) -->
+    <section id="fullspecs" class="py-16 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-10"><span class="text-xs font-mono text-amber">complete specifications</span><h2 class="text-3xl font-black mt-2">جميع الميزات · AB-SpectroX الذهبي</h2><p class="text-slate-400">مسح الطيف · <span class="value-unit ltr-text">27</span> لوحة شلال · مقياس استطاعة · مسجل <span class="value-unit">IQ</span> · فك تعديل · علامات · تحكم بالعتاد · واجهة ثنائية اللغة</p></div>
         
-        <!-- 6 Comprehensive Feature Cards -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            
-            <!-- Card 1: Spectrum Sweep -->
-            <div class="feature-card p-5">
-                <div class="text-3xl mb-3">📡</div>
-                <h3 class="font-bold text-lg text-primary mb-2">Spectrum Sweep</h3>
-                <ul class="feature-list text-sm text-slate-300">
-                    <li>Frequency range: 1 MHz – 7.25 GHz (HackRF One)</li>
-                    <li>Extended range: 70 – 6000 MHz (ADALM-Pluto with extended firmware)</li>
-                    <li>Instantaneous bandwidth: Up to 20 MHz (HackRF) / 56 MHz (Pluto)</li>
-                    <li>RBW options: 1k, 2k, 5k, 10k, 20k, 50k, 100k, 200k, 500k, 1M, 2M, 5M Hz</li>
-                    <li>FFT points: 8,192 / 16,384 / 32,768 / 65,536 / 131,072 / 262,144</li>
-                    <li>Detector modes: RMS, Average, Peak (for Power Meter)</li>
-                    <li>Peak Hold with adjustable fall rate: 0-500 milliseconds</li>
-                    <li>Adaptive Spur Filter: learns 40MHz periodic spurs per gain profile</li>
-                    <li>Real-time spectrum update at ~20 FPS</li>
-                    <li>OpenGL hardware acceleration via PyQtGraph</li>
-                </ul>
-            </div>
-            
-            <!-- Card 2: Waterfall Spectrogram -->
-            <div class="feature-card p-5">
-                <div class="text-3xl mb-3">🌊</div>
-                <h3 class="font-bold text-lg text-accent mb-2">Waterfall / Spectrogram</h3>
-                <ul class="feature-list text-sm text-slate-300">
-                    <li>27 professional color palettes: Hot Iron Blue, Viridis, Inferno, Plasma, Magma, Cividis, Turbo, Neon Aurora, Cyber Sunset, Deep Space Neon, Matrix Green, Ocean Depths, Sunset Glow, Military Amber, Medical Blue, Fire & Ice, Hacker Terminal, Professional Blue, Neon Pink, Electric Purple, Golden Hour, Arctic Ice, Lava Flow, Cyberpunk Neon, Royal Gold, Toxic Green, Deep Ocean</li>
-                    <li>Auto Palette mode: dynamically adjusts start/range based on signal/noise floor</li>
-                    <li>Side colorbar with dBm scale</li>
-                    <li>Mouse marker: white dashed line with frequency/power readout</li>
-                    <li>Double-click on waterfall to retune demodulator</li>
-                    <li>Right-click context menu: add marker, set recording frequency, start IQ recording</li>
-                    <li>Persistent display (thermal histogram) with adjustable decay time (1-60 seconds)</li>
-                    <li>Separate persistent color palette</li>
-                </ul>
-            </div>
-            
-            <!-- Card 3: Professional Power Meter -->
-            <div class="feature-card p-5">
-                <div class="text-3xl mb-3">⚡</div>
-                <h3 class="font-bold text-lg text-amber mb-2">Professional Power Meter</h3>
-                <ul class="feature-list text-sm text-slate-300">
-                    <li>Units: dBm / Watt (full decimal display)</li>
-                    <li>External attenuator compensation: 0 – 120 dB</li>
-                    <li>Path loss compensation: 0 – 80 dB</li>
-                    <li>External offset: ±40 dB</li>
-                    <li>Multi-point frequency calibration: list of (freq, offset) with linear interpolation</li>
-                    <li>Guided calibration wizard: builds frequency list, steps through each frequency with capture prompt</li>
-                    <li>Auto calibration: works with sweeping signal generator, tracks peaks within tolerance window</li>
-                    <li>Channel Power calculation with ENBW factor (0.8-3.0 adjustable, default 1.06)</li>
-                    <li>SNR calculation: peak minus noise floor (20th percentile)</li>
-                    <li>Uncertainty estimation based on variance, attenuation, SNR, and signal level</li>
-                    <li>Save/Load calibration to JSON format (points, ENBW, losses, offset, attenuator used)</li>
-                    <li>Measurement modes: Low Power, Average (Channel Power), High Power</li>
-                    <li>Detectors: RMS, Average, Peak</li>
-                </ul>
-            </div>
-            
-            <!-- Card 4: Live Demodulation -->
-            <div class="feature-card p-5">
-                <div class="text-3xl mb-3">🎙️</div>
-                <h3 class="font-bold text-lg text-primary mb-2">Live Demodulation</h3>
-                <ul class="feature-list text-sm text-slate-300">
-                    <li>FM mode: 200 kHz bandwidth with de‑emphasis and channelized filtering</li>
-                    <li>AM mode: up to 10 kHz bandwidth with linear envelope extraction</li>
-                    <li>LSB / USB: Single Sideband processing (1 ± Q analytical signals)</li>
-                    <li>CW mode: 1.2 kHz bandwidth for morse/telemetry isolation</li>
-                    <li>Real-time IQ source from HackRF or Pluto (2 MHz sample rate for FM, adjustable for other modes)</li>
-                    <li>Audio processing: DC removal, bandpass filters, AGC, hiss reduction</li>
-                    <li>Audio output: PyAudio or sounddevice, 48 kHz, 16-bit integer</li>
-                    <li>Volume control slider: 0 – 100%</li>
-                    <li>Retune by double-click on spectrum or waterfall</li>
-                    <li>State reset on frequency or mode change (internal filters reset automatically)</li>
-                    <li>Independent live spectrum mini-display for downconverted passband</li>
-                </ul>
-            </div>
-            
-            <!-- Card 5: IQ Recorder / Player / Transmitter -->
-            <div class="feature-card p-5">
-                <div class="text-3xl mb-3">💾</div>
-                <h3 class="font-bold text-lg text-accent mb-2">IQ Recorder / Player / Tx</h3>
-                <ul class="feature-list text-sm text-slate-300">
-                    <li>SigMF CS8 (.sigmf-data + .sigmf-meta) – Tx ready via HackRF/Pluto</li>
-                    <li>SigMF C16 (.sigmf-data + .sigmf-meta) – High dynamic range recording</li>
-                    <li>Complex Float32 (.cf32 + .json) – Full precision</li>
-                    <li>Complex Int16 (.sc16 + .json) – Balanced quality/size</li>
-                    <li>Recording: max duration limit (seconds, 0 = unlimited)</li>
-                    <li>Recording: max file size limit (MB, 0 = unlimited)</li>
-                    <li>Write metadata (SigMF sidecar or JSON)</li>
-                    <li>Narrowband preview during recording</li>
-                    <li>Auto-resume sweep after recording</li>
-                    <li>Real-time statistics (duration, size, queue depth)</li>
-                    <li>Playback: open .sigmf-data or .cf32 with spectrum preview (as live)</li>
-                    <li>Loop mode for continuous playback</li>
-                    <li>Stop playback and auto-resume sweep</li>
-                    <li>Transmit: ci8 files via HackRF (hackrf_transfer) or Pluto (pyadi-iio)</li>
-                    <li>Adjustable transmit frequency and gain (0-47 dB for HackRF, mapped to attenuation for Pluto)</li>
-                </ul>
-            </div>
-            
-            <!-- Card 6: Markers & User Interface -->
-            <div class="feature-card p-5">
-                <div class="text-3xl mb-3">🎯</div>
-                <h3 class="font-bold text-lg text-amber mb-2">Markers & User Interface</h3>
-                <ul class="feature-list text-sm text-slate-300">
-                    <li>Maximum 8 markers (standard + peak types)</li>
-                    <li>Peak marker: solid line above peak, dashed below</li>
-                    <li>Delta reference: set any marker as reference; others show frequency difference</li>
-                    <li>Customizable colors via color picker</li>
-                    <li>Rename markers</li>
-                    <li>Add manual marker from context menu or "Add Cursor" button</li>
-                    <li>Add peak marker: cycles through detected peaks automatically</li>
-                    <li>Remove marker with "Remove" button or Delete key</li>
-                    <li>"Clear All" button to remove all markers</li>
-                    <li>Instant bilingual (EN/AR) – all UI strings, tabs, buttons update immediately</li>
-                    <li>Show/hide modules: Waterfall, Demodulator, IQ Recorder, Power Meter via "Quick Features" panel</li>
-                    <li>Frequency info bar: start, center, stop, span with "Features" and "Hide" buttons</li>
-                    <li>Hide side panel button: collapses/expands settings panel</li>
-                    <li>Screenshot: captures both spectrum and waterfall together as PNG</li>
-                    <li>Save/Load all settings: single JSON file (device, display, demodulator, IQ recorder, markers, calibration, spur profiles)</li>
-                    <li>Reset to defaults: one-click button</li>
-                    <li>Capture folder selection for screenshots and IQ recordings</li>
-                </ul>
-            </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+            <div class="feature-card p-5"><div class="text-3xl mb-2">📡</div><h3 class="font-bold text-lg text-primary mb-2">مسح الطيف</h3><ul class="feature-list text-sm text-slate-300"><li>مدى الترددات: <span class="value-unit ltr-text">1 MHz</span> إلى <span class="value-unit ltr-text">7.25 GHz</span> (HackRF) / <span class="value-unit ltr-text">70 MHz</span> إلى <span class="value-unit ltr-text">6 GHz</span> (Pluto)</li><li>عرض الحزمة اللحظي: <span class="value-unit ltr-text">20 MHz</span> (HackRF) / <span class="value-unit ltr-text">56 MHz</span> (Pluto)</li><li>خيارات <span class="value-unit">RBW</span>: <span class="value-unit ltr-text">1k,2k,5k,10k,20k,50k,100k,200k,500k,1M,2M,5M Hz</span></li><li>نقاط <span class="value-unit">FFT</span>: <span class="value-unit ltr-text">8,192 / 16,384 / 32,768 / 65,536 / 131,072 / 262,144</span></li><li>أنماط الكاشف: <span class="value-unit">RMS</span>، متوسط، ذروة (لقياس الاستطاعة)</li><li>تتبع القمم (<span class="value-unit">Peak Hold</span>) مع معدل هبوط <span class="value-unit ltr-text">0-500 ms</span></li><li>مرشح توافقيات تكيفي: يتعلم التوافقيات الدورية (<span class="value-unit ltr-text">40MHz</span>) ويحفظ الملفات الشخصية لكل ربح</li><li>تحديث طيف حي بمعدل ~<span class="value-unit ltr-text">20</span> إطار/ثانية · تسريع <span class="value-unit">OpenGL</span></li></ul></div>
+            <div class="feature-card p-5"><div class="text-3xl mb-2">🌊</div><h3 class="font-bold text-lg text-accent mb-2">الشلال / المخطط الطيفي الزمني</h3><ul class="feature-list text-sm text-slate-300"><li><span class="value-unit ltr-text">27</span> لوحة ألوان احترافية (<span class="value-unit">Hot Iron, Viridis, Inferno, Plasma, Matrix, Cyberpunk, Ocean...</span>)</li><li>وضع اللوحة التلقائي: ضبط ديناميكي للبداية/المدى بناءً على الإشارة وأرضية الضجيج</li><li>شريط ألوان جانبي بمقياس <span class="value-unit">dBm</span></li><li>مؤشر الفأرة: خط أبيض مع قراءة التردد/الاستطاعة · نقر مزدوج لإعادة توجيه فك التعديل</li><li>قائمة النقر الأيمن: إضافة علامة، تعيين تردد التسجيل، بدء تسجيل <span class="value-unit">IQ</span></li><li>عرض تراكمي (مخطط حراري) مع زمن اضمحلال <span class="value-unit ltr-text">1-60</span> ثانية ولوحة ألوان منفصلة</li></ul></div>
+            <div class="feature-card p-5"><div class="text-3xl mb-2">⚡</div><h3 class="font-bold text-lg text-amber mb-2">مقياس الاستطاعة الاحترافي</h3><ul class="feature-list text-sm text-slate-300"><li>الوحدات: <span class="value-unit">dBm</span> / واط (عرض عشري كامل)</li><li>تعويض المخفف الخارجي: <span class="value-unit ltr-text">0 – 120 dB</span> · خسارة الخط: <span class="value-unit ltr-text">0 – 80 dB</span> · الإزاحة الخارجية: <span class="value-unit ltr-text">±40 dB</span></li><li>معايرة متعددة النقاط (تردد/إزاحة) مع استيفاء خطي</li><li>معالج معايرة إرشادي (قائمة ترددات مع الانتقال والمسح) ومعايرة آلية مع مولد <span class="value-unit">sweep</span></li><li>حساب استطاعة القناة مع عامل <span class="value-unit">ENBW</span> (<span class="value-unit ltr-text">0.8-3.0</span> قابل للتعديل)</li><li>حساب <span class="value-unit">SNR</span> (ذروة ناقص المئين <span class="value-unit ltr-text">20</span> للضجيج)</li><li>تقدير عدم اليقين · حفظ/تحميل المعايرة بصيغة <span class="value-unit">JSON</span></li><li>أنماط القياس: استطاعة منخفضة، استطاعة متوسطة (قناة)، استطاعة عالية · كواشف: <span class="value-unit">RMS</span>، متوسط، ذروة</li></ul></div>
+            <div class="feature-card p-5"><div class="text-3xl mb-2">🎙️</div><h3 class="font-bold text-lg text-primary mb-2">فك التعديل الحي</h3><ul class="feature-list text-sm text-slate-300"><li>الأنماط: <span class="value-unit">FM</span> (<span class="value-unit ltr-text">200 kHz</span>), <span class="value-unit">AM</span> (<span class="value-unit ltr-text">10 kHz</span>), <span class="value-unit">LSB, USB, CW</span> (<span class="value-unit ltr-text">1.2 kHz</span>)</li><li>مصدر <span class="value-unit">IQ</span> لحظي من <span class="value-unit">HackRF</span> أو <span class="value-unit">Pluto</span> (معدل عينة <span class="value-unit ltr-text">2 MHz</span> لـ <span class="value-unit">FM</span>)</li><li>معالجة الصوت: إزالة <span class="value-unit">DC</span>، مرشحات تمرير النطاق، <span class="value-unit">AGC</span>، دي-إمفاسيس، تقليل الهسهسة</li><li>مخرج صوت: <span class="value-unit">PyAudio</span> أو <span class="value-unit">sounddevice</span>، <span class="value-unit ltr-text">48 kHz</span>، <span class="value-unit ltr-text">16-bit</span></li><li>شريط تحكم بمستوى الصوت (<span class="value-unit ltr-text">0-100%</span>) · إعادة توجيه بنقرة مزدوجة · إعادة ضبط الحالة تلقائياً</li></ul></div>
+            <div class="feature-card p-5"><div class="text-3xl mb-2">💾</div><h3 class="font-bold text-lg text-accent mb-2">مسجل IQ / مشغل / مرسل</h3><ul class="feature-list text-sm text-slate-300"><li>صيغ التسجيل: <span class="value-unit">SigMF CS8</span> (جاهز للإرسال)، <span class="value-unit">SigMF C16</span>، <span class="value-unit">Complex Float32 (.cf32)</span></li><li>حد أقصى للمدة/حجم الملف · كتابة بيانات وصفية (<span class="value-unit">SigMF sidecar</span>)</li><li>معاينة ضيقة أثناء التسجيل · استئناف المسح تلقائياً بعد التسجيل</li><li>إحصائيات لحظية (المدة، الحجم، عمق الطابور)</li><li>إعادة التشغيل: فتح ملف مع معاينة الطيف · وضع التكرار</li><li>إرسال (<span class="value-unit">Tx</span>): ملفات <span class="value-unit">ci8</span> عبر <span class="value-unit">HackRF/Pluto</span> مع ربح قابل للضبط</li></ul></div>
+            <div class="feature-card p-5"><div class="text-3xl mb-2">🎯</div><h3 class="font-bold text-lg text-amber mb-2">العلامات وواجهة المستخدم</h3><ul class="feature-list text-sm text-slate-300"><li>حد أقصى <span class="value-unit ltr-text">8</span> علامات (قياسية + ذروة) · مرجع دلتا · ألوان قابلة للتخصيص · إعادة تسمية</li><li>إضافة علامة يدوية/ذروة من قائمة النقر الأيمن · حذف بزر "حذف" أو مفتاح <span class="value-unit">Delete</span></li><li>واجهة ثنائية اللغة فورية (<span class="value-unit">عربي/إنجليزي</span>)</li><li>إظهار/إخفاء الوحدات (شلال، فك تعديل، مسجل <span class="value-unit">IQ</span>، مقياس استطاعة)</li><li>شريط معلومات التردد · زر إخفاء اللوحة الجانبية</li><li>لقطة شاشة (<span class="value-unit">PNG</span>) للطيف والشلال معاً</li><li>حفظ/تحميل جميع الإعدادات إلى ملف <span class="value-unit">JSON</span> واحد · إعادة الضبط الافتراضي · تحديد مجلد الالتقاط</li></ul></div>
         </div>
         
-        <!-- Advanced Hardware Control (Split into two columns) -->
-        <div class="grid md:grid-cols-2 gap-6 mb-12">
-            <div class="bg-card rounded-xl p-5 border border-border feature-card">
-                <h3 class="font-bold text-lg mb-3"><i class="fa-solid fa-microchip text-primary mr-2"></i> Advanced Hardware Control</h3>
-                <ul class="feature-list text-sm text-slate-300">
-                    <li><span class="text-primary font-bold">HackRF One:</span> LNA gain 0-40dB (slider), VGA gain 0-62dB (slider), LNA Amp (+14dB) on/off, Bias-T on/off (14V), Smart Gain Guard (auto VGA reduction when Amp enabled)</li>
-                    <li><span class="text-accent font-bold">ADALM-Pluto:</span> RX gain 0-71dB manual (slider) + AGC modes (manual, slow attack, fast attack), Smart RX Gain Guard (suggests appropriate gain based on frequency/span), TX attenuation mapping (0-47dB HackRF-style to Pluto attenuation)</li>
-                    <li>Platform dropdown (HackRF/Pluto) with auto-restart on switch</li>
-                    <li>Start/Stop scan button (changes color: green → red)</li>
-                    <li>Pause/Resume button: temporarily freezes spectrum update</li>
-                    <li>Center frequency spinbox + Apply button</li>
-                    <li>Span spinbox + Apply button</li>
-                    <li>Frequency range: two spinboxes (Start/Stop) with Δ side buttons</li>
-                    <li>FFT settings dropdowns (Bin Width, Samples) with auto-restart</li>
-                    <li>Power reference controls: Ref Level (dBm) + Step (dB) + Apply + Auto</li>
-                    <li>Calibrated spectrum display: applies calibration points + path loss + offset to spectrum display (optional)</li>
-                    <li>Frequency range auto-detection: Pluto probes actual RX limits (70-6000MHz extended firmware, or stock 325-3800MHz)</li>
-                </ul>
-            </div>
-            <div class="bg-card rounded-xl p-5 border border-border feature-card">
-                <h3 class="font-bold text-lg mb-3"><i class="fa-regular fa-map text-accent mr-2"></i> Frequency Allocation Bands</h3>
-                <ul class="feature-list text-sm text-slate-300">
-                    <li>Embedded Europe (ECA) frequency allocation tables loaded from CSV</li>
-                    <li>Embedded United States (FCC) frequency allocation tables</li>
-                    <li>Semi-transparent colored overlays on spectrum plot</li>
-                    <li>Tooltips with band name and applications</li>
-                    <li>Auto-load at startup</li>
-                </ul>
-                <h3 class="font-bold text-lg mb-3 mt-4"><i class="fa-regular fa-gauge-high text-amber mr-2"></i> Performance Optimizations</h3>
-                <ul class="feature-list text-sm text-slate-300">
-                    <li>OpenGL acceleration via PyQtGraph (enabled by default)</li>
-                    <li>Periodic garbage collection: every 50 frames in main thread</li>
-                    <li>Data size reduction: float32 for spectrum, pre-allocated buffers</li>
-                    <li>Adaptive FFT resize: auto-resizes waterfall width based on FFT points</li>
-                    <li>High-priority Windows threading for real-time performance</li>
-                    <li>Frame-limited update: spectrum and waterfall updated at ~20 fps</li>
-                </ul>
-                <h3 class="font-bold text-lg mb-3 mt-4"><i class="fa-regular fa-bell text-primary mr-2"></i> User Feedback & Notifications</h3>
-                <ul class="feature-list text-sm text-slate-300">
-                    <li>Status bar: shows error messages, changes, recording notifications</li>
-                    <li>Runtime badge: next to Start/Stop button (IQ REC, TX LIVE, DEMOD, FILE PREVIEW)</li>
-                    <li>Pluto notifications: messages in status bar and settings panel explaining connection status and frequency range</li>
-                    <li>Error dialogs: for critical issues (device open fail, calibration error)</li>
-                </ul>
-            </div>
-        </div>
+        <div class="grid md:grid-cols-2 gap-6 mb-10"><div class="bg-card rounded-xl p-5 border border-border feature-card"><h3 class="font-bold text-lg mb-3"><i class="fa-solid fa-microchip text-primary ml-2"></i> التحكم المتقدم بالعتاد</h3><ul class="feature-list text-sm text-slate-300"><li><span class="text-primary font-bold">HackRF One:</span> ربح <span class="value-unit">LNA</span> <span class="value-unit ltr-text">0-40dB</span>، ربح <span class="value-unit">VGA</span> <span class="value-unit ltr-text">0-62dB</span>، مضخم <span class="value-unit">LNA</span> (+<span class="value-unit ltr-text">14dB</span>)، <span class="value-unit">Bias-T</span> (<span class="value-unit ltr-text">14V</span>)، حماية الربح الذكية (تخفيض تلقائي لـ <span class="value-unit">VGA</span>)</li><li><span class="text-accent font-bold">ADALM-Pluto:</span> ربح استقبال يدوي <span class="value-unit ltr-text">0-71dB</span> + أوضاع <span class="value-unit">AGC</span> (يدوي، بطيء، سريع)، اقتراح ربح استقبال تلقائي حسب التردد/المدى، تعيين تخفيف الإرسال</li><li>قائمة منسدلة للمنصة مع إعادة تشغيل تلقائي · أزرار بدء/إيقاف المسح، إيقاف مؤقت/استئناف</li><li>عناصر تحكم بالتردد المركزي، المدى، الترددات (بداية/نهاية) · إعدادات <span class="value-unit">FFT</span></li><li>عناصر تحكم مرجع الاستطاعة · عرض طيف معاير · كشف تلقائي لمدى التردد لـ <span class="value-unit">Pluto</span></li></ul></div>
+            <div class="bg-card rounded-xl p-5 border border-border feature-card"><h3 class="font-bold text-lg mb-3"><i class="fa-regular fa-map text-accent ml-2"></i> نطاقات تخصيص التردد</h3><ul class="feature-list text-sm text-slate-300"><li>جداول تخصيص التردد الأوروبية (<span class="value-unit">ECA</span>) والأمريكية (<span class="value-unit">FCC</span>) محملة من <span class="value-unit">CSV</span></li><li>تراكبات شبه شفافة ملونة على مخطط الطيف مع تلميحات باسم النطاق والتطبيقات · تحميل تلقائي عند بدء التشغيل</li></ul><h3 class="font-bold text-lg mb-3 mt-4"><i class="fa-regular fa-gauge-high text-amber ml-2"></i> تحسينات الأداء</h3><ul class="feature-list text-sm text-slate-300"><li>تسريع <span class="value-unit">OpenGL</span> عبر <span class="value-unit">PyQtGraph</span></li><li>جمع القمامة الدوري (كل <span class="value-unit ltr-text">50</span> إطاراً) · تقليل حجم البيانات (<span class="value-unit">float32</span>)</li><li>تكيف <span class="value-unit">FFT</span> · خيوط <span class="value-unit">Windows</span> ذات الأولوية العالية · تحديث محدود الإطارات (~<span class="value-unit ltr-text">20 fps</span>)</li></ul><h3 class="font-bold text-lg mb-3 mt-4"><i class="fa-regular fa-bell text-primary ml-2"></i> ملاحظات المستخدم والإشعارات</h3><ul class="feature-list text-sm text-slate-300"><li>شريط الحالة مع رسائل الخطأ · شارة وقت التشغيل (<span class="value-unit">IQ REC, TX LIVE, DEMOD, FILE PREVIEW</span>)</li><li>إشعارات <span class="value-unit">Pluto</span> في شريط الحالة ولوحة الإعدادات · مربعات حوار خطأ للمشاكل الحرجة</li></ul></div></div>
         
         <!-- System Requirements Table -->
-        <div class="bg-card border border-border rounded-2xl overflow-hidden mb-8 table-container">
-            <div class="bg-slate-900 px-6 py-4 border-b border-border"><h3 class="font-bold text-xl"><i class="fa-solid fa-computer text-primary mr-2"></i> System Requirements</h3></div>
-            <div class="overflow-x-auto p-4">
-                <table class="w-full text-sm spec-table">
-                    <thead><tr><th class="p-3">Component</th><th class="p-3">Minimum Requirement</th><th class="p-3">Recommended</th></tr></thead>
-                    <tbody>
-                        <tr><td class="p-3 font-mono text-primary">Operating System</td><td class="p-3">Windows 10 (64-bit)</td><td class="p-3">Windows 11 (64-bit)</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Processor</td><td class="p-3">Intel Core i5-4xxx / AMD Ryzen 3</td><td class="p-3">Intel Core i7 / AMD Ryzen 7</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">RAM</td><td class="p-3">4 GB</td><td class="p-3">8 GB+ (16 GB recommended for large SigMF files)</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Storage</td><td class="p-3">500 MB for binaries + 10 GB for IQ files</td><td class="p-3">1 GB + 50 GB SSD</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Graphics</td><td class="p-3">OpenGL 2.1+ integrated graphics</td><td class="p-3">OpenGL 3.3+ dedicated GPU</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">SDR Hardware</td><td class="p-3">HackRF One (with hackrf.dll) or ADALM-Pluto (with libiio)</td><td class="p-3">Same + calibrated antennas and accessories</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Runtime Libraries</td><td class="p-3">Microsoft Visual C++ Redistributable 2015-2022</td><td class="p-3">Same</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Audio Output (Demodulation)</td><td class="p-3">Any sound card with PyAudio or sounddevice support</td><td class="p-3">External DAC or high-quality audio interface</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <div class="bg-card border border-border rounded-2xl overflow-hidden mb-8 table-container"><div class="bg-slate-900 px-6 py-3 border-b border-border"><h3 class="font-bold text-xl"><i class="fa-solid fa-computer text-primary ml-2"></i> متطلبات النظام</h3></div><div class="overflow-x-auto p-4"><table class="w-full text-sm spec-table"><thead><tr><th class="p-3">المكون</th><th class="p-3">الحد الأدنى</th><th class="p-3">الموصى به</th></tr></thead><tbody><tr class="border-t border-border"><td class="p-3 font-mono text-primary">نظام التشغيل</td><td class="p-3">Windows 10 (64-bit)</td><td class="p-3">Windows 11 (64-bit)</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">المعالج</td><td class="p-3">Intel Core i5-4xxx / AMD Ryzen 3</td><td class="p-3">Intel Core i7 / AMD Ryzen 7</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">الذاكرة (RAM)</td><td class="p-3"><span class="value-unit ltr-text">4 GB</span></td><td class="p-3"><span class="value-unit ltr-text">8 GB</span>+ (<span class="value-unit ltr-text">16 GB</span> للملفات الكبيرة)</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">التخزين</td><td class="p-3"><span class="value-unit ltr-text">500 MB</span> + <span class="value-unit ltr-text">10 GB</span> لملفات <span class="value-unit">IQ</span></td><td class="p-3"><span class="value-unit ltr-text">1 GB</span> + <span class="value-unit ltr-text">50 GB</span> <span class="value-unit">SSD</span></td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">الرسوميات</td><td class="p-3"><span class="value-unit">OpenGL</span> <span class="value-unit ltr-text">2.1</span>+ مدمجة</td><td class="p-3"><span class="value-unit">OpenGL</span> <span class="value-unit ltr-text">3.3</span>+ بطاقة منفصلة</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">عتاد <span class="value-unit">SDR</span></td><td class="p-3"><span class="value-unit">HackRF One</span> (<span class="value-unit">hackrf.dll</span>) أو <span class="value-unit">ADALM-Pluto</span> (<span class="value-unit">libiio</span>)</td><td class="p-3">نفسه + هوائيات معايرة</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">مكتبات التشغيل</td><td class="p-3"><span class="value-unit">Microsoft Visual C++ Redistributable 2015-2022</span></td><td class="p-3">نفسه</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">مخرج الصوت</td><td class="p-3">أي بطاقة صوت مع دعم <span class="value-unit">PyAudio</span> أو <span class="value-unit">sounddevice</span></td><td class="p-3"><span class="value-unit">DAC</span> خارجي أو واجهة صوت عالية الجودة</td></tr>
+        </tbody></table></div></div>
         
         <!-- Hardware Comparison Table -->
-        <div class="bg-card border border-border rounded-2xl overflow-hidden table-container">
-            <div class="bg-slate-900 px-6 py-4 border-b border-border"><h3 class="font-bold text-xl">HackRF One vs ADALM-Pluto — Hardware Comparison</h3></div>
-            <div class="overflow-x-auto p-4">
-                <table class="w-full text-sm spec-table">
-                    <thead><tr><th class="p-3">Feature</th><th class="p-3">HackRF One</th><th class="p-3">ADALM-Pluto</th></tr></thead>
-                    <tbody>
-                        <tr><td class="p-3 font-mono text-primary">Frequency Range</td><td class="p-3">1 MHz – 7.25 GHz</td><td class="p-3">70 MHz – 6.0 GHz (extended firmware)</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Instantaneous Bandwidth</td><td class="p-3">Up to 20 MHz</td><td class="p-3">Up to 56 MHz</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Gain Control</td><td class="p-3">LNA 0-40dB, VGA 0-62dB, LNA Amp (+14dB)</td><td class="p-3">0-71dB manual + AGC (slow/fast attack)</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Smart Gain Protection</td><td class="p-3">Auto VGA reduction when Amp enabled</td><td class="p-3">Auto RX gain suggestion based on frequency/span</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Bias-T</td><td class="p-3">Supported (14V on/off toggle)</td><td class="p-3">Not supported in UI</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">TX Support</td><td class="p-3">Yes (hackrf_transfer, ci8 files)</td><td class="p-3">Yes (pyadi-iio, ci8, attenuation mapping)</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">Connection Interface</td><td class="p-3">USB 2.0/3.0</td><td class="p-3">USB 2.0 or Ethernet (IIO network, default ip:192.168.2.1)</td></tr>
-                        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">ADC Resolution</td><td class="p-3">8 bits</td><td class="p-3">12 bits</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <div class="bg-card border border-border rounded-2xl overflow-hidden table-container"><div class="bg-slate-900 px-6 py-3 border-b border-border"><h3 class="font-bold text-xl">HackRF One مقابل ADALM-Pluto — مقارنة العتاد</h3></div><div class="overflow-x-auto p-4"><table class="w-full text-sm spec-table"><thead><tr><th class="p-3">الميزة</th><th class="p-3">HackRF One</th><th class="p-3">ADALM-Pluto</th></tr></thead><tbody><tr class="border-t border-border"><td class="p-3 font-mono text-primary">مدى التردد</td><td class="p-3"><span class="value-unit ltr-text">1 MHz – 7.25 GHz</span></td><td class="p-3"><span class="value-unit ltr-text">70 MHz – 6.0 GHz</span> (برنامج ثابت موسع)</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">عرض الحزمة اللحظي</td><td class="p-3">حتى <span class="value-unit ltr-text">20 MHz</span></td><td class="p-3">حتى <span class="value-unit ltr-text">56 MHz</span></td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">التحكم بالربح</td><td class="p-3"><span class="value-unit">LNA</span> <span class="value-unit ltr-text">0-40dB</span>, <span class="value-unit">VGA</span> <span class="value-unit ltr-text">0-62dB</span>, مضخم <span class="value-unit">LNA</span> (+<span class="value-unit ltr-text">14dB</span>)</td><td class="p-3">يدوي <span class="value-unit ltr-text">0-71dB</span> + <span class="value-unit">AGC</span> (بطيء/سريع)</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">حماية الربح الذكية</td><td class="p-3">تخفيض تلقائي لـ <span class="value-unit">VGA</span> عند تفعيل المضخم</td><td class="p-3">اقتراح ربح استقبال تلقائي حسب التردد/المدى</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-primary"><span class="value-unit">Bias-T</span></td><td class="p-3">مدعوم (<span class="value-unit ltr-text">14V</span> تشغيل/إيقاف)</td><td class="p-3">غير مدعوم في الواجهة</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">دعم الإرسال (<span class="value-unit">Tx</span>)</td><td class="p-3">نعم (<span class="value-unit">hackrf_transfer</span>، <span class="value-unit">ci8</span>)</td><td class="p-3">نعم (<span class="value-unit">pyadi-iio</span>، <span class="value-unit">ci8</span>، تعيين التخفيف)</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">واجهة الاتصال</td><td class="p-3"><span class="value-unit">USB</span> <span class="value-unit ltr-text">2.0/3.0</span></td><td class="p-3"><span class="value-unit">USB</span> <span class="value-unit ltr-text">2.0</span> أو <span class="value-unit">Ethernet</span> (<span class="value-unit">IIO</span>)</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-primary">دقة <span class="value-unit">ADC</span></td><td class="p-3"><span class="value-unit ltr-text">8</span> بت</td><td class="p-3"><span class="value-unit ltr-text">12</span> بت</td></tr>
+        </tbody></table></div></div>
     </section>
 
-    <!-- Footer -->
-    <footer class="border-t border-border bg-dark/50 py-12 px-6 text-center">
-        <div class="max-w-4xl mx-auto space-y-4">
-            <i class="fa-regular fa-cube text-4xl text-primary/50"></i>
-            <h3 class="text-2xl font-black">AB-SpectroX Gold · Ready for Deployment</h3>
-            <p class="text-slate-400 text-sm max-w-2xl mx-auto">Standalone Windows executable, no command line. Perfect for universities, EW labs, and RF R&D. Complete SigMF compliance, professional calibration tools, and bilingual interface.</p>
-            <div class="bg-black/50 inline-block rounded-xl p-3 font-mono text-[11px] text-emerald-300 text-left">$ git clone https://github.com/AbdoBallouk/ASTRYX.git<br>$ python -m astryx_spectrometer --gui</div>
-            <div class="flex justify-center gap-5 pt-4"><a href="https://github.com/AbdoBallouk/ASTRYX" target="_blank" class="text-xs bg-card px-5 py-2 rounded-full transition-all duration-300 hover:bg-primary/20"><i class="fa-brands fa-github"></i> Repository</a><span class="text-xs text-slate-500">© 2026 AB-SpectroX · Developed by Dr. Eng Abdo Ballouk</span></div>
-        </div>
-    </footer>
+    <footer class="border-t border-border bg-dark/50 py-10 px-6 text-center"><div class="max-w-4xl mx-auto space-y-3"><i class="fa-regular fa-cube text-3xl text-primary/50"></i><h3 class="text-xl font-black">AB-SpectroX الذهبي · جاهز للنشر</h3><p class="text-slate-400 text-sm">ملف تنفيذي مستقل لنظام Windows · مثالي للجامعات ومختبرات <span class="value-unit">EW</span> والبحث والتطوير · متوافق تماماً مع <span class="value-unit">SigMF</span> وأدوات المعايرة الاحترافية.</p><div class="bg-black/50 inline-block rounded-xl p-2 font-mono text-[10px] text-emerald-300 text-left">$ git clone https://github.com/AbdoBallouk/ASTRYX.git<br>$ python -m astryx_spectrometer --gui</div><div class="flex justify-center gap-4 pt-3"><a href="https://github.com/AbdoBallouk/ASTRYX" target="_blank" class="text-xs bg-card px-4 py-1.5 rounded-full transition hover:bg-primary/20"><i class="fa-brands fa-github ml-1"></i> المستودع</a><span class="text-xs text-slate-500">© 2026 AB-SpectroX · تطوير د. م. عبده بلوق</span></div></div></footer>
 
     <script>
         // Carousel Logic
@@ -643,120 +210,17 @@
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const dotsContainer = document.getElementById('carouselDots');
-        let currentIndex = 0;
-        let autoSlideInterval;
-        
+        let currentIndex = 0, autoSlideInterval;
         function updateCarousel() { track.style.transform = `translateX(-${currentIndex * 100}%)`; document.querySelectorAll('.carousel-dot').forEach((dot, idx) => { if (idx === currentIndex) dot.classList.add('active'); else dot.classList.remove('active'); }); }
         function nextSlide() { currentIndex = (currentIndex + 1) % slides.length; updateCarousel(); resetAutoSlide(); }
         function prevSlide() { currentIndex = (currentIndex - 1 + slides.length) % slides.length; updateCarousel(); resetAutoSlide(); }
         function goToSlide(index) { currentIndex = index; updateCarousel(); resetAutoSlide(); }
         function resetAutoSlide() { clearInterval(autoSlideInterval); autoSlideInterval = setInterval(nextSlide, 5000); }
+        if (slides.length) { slides.forEach((_, i) => { const dot = document.createElement('div'); dot.classList.add('carousel-dot'); if (i === 0) dot.classList.add('active'); dot.addEventListener('click', () => goToSlide(i)); dotsContainer.appendChild(dot); }); prevBtn.addEventListener('click', prevSlide); nextBtn.addEventListener('click', nextSlide); resetAutoSlide(); }
         
-        if (slides.length > 0) {
-            slides.forEach((_, i) => { const dot = document.createElement('div'); dot.classList.add('carousel-dot'); if (i === 0) dot.classList.add('active'); dot.addEventListener('click', () => goToSlide(i)); dotsContainer.appendChild(dot); });
-            prevBtn.addEventListener('click', prevSlide); nextBtn.addEventListener('click', nextSlide);
-            resetAutoSlide();
-        }
-        
-        // Bilingual Dictionary (expanded with new importance section)
-        const dict = { 
-            en: { 
-                badge:"AB-SpectroX · Real-Time Spectral Intelligence", title1:"Professional RF", title2:"Spectrum Analyzer", title3:"Gold Edition", 
-                desc:"High-performance hardware-accelerated platform for real-time radio frequency signal monitoring, capture, and analysis. Supports HackRF One & ADALM-Pluto with PyQt6 GPU engine. 27 waterfall palettes, professional power meter, SigMF recording, and live demodulation.", 
-                btnSim:"🎮 Live Simulator", btnGallery:"📸 Full Gallery", btnSpec:"⚙️ Full Specs", 
-                hardwareTitle:"AB-SpectroX Platform Family", hardwareSub:"Professional Mobile & Desktop RF Analysis Solutions · Field-deployable and lab-grade", 
-                videoTitle:"Watch AB-SpectroX in Action", videoSub:"Real-time spectrum analysis, waterfall visualization, and live demodulation", 
-                simTitle:"Live Tactical RF Analyzer Dashboard", simSub:"real-time spectrum sweep, waterfall with 27 color palettes, peak hold, spur filter, audio demo", 
-                ctrl:"Front-End Config", sdrLabel:"Active SDR Engine", paletteLabel:"Waterfall Palette (27)", spanLabel:"Span (MHz)", floorLabel:"Noise Floor", 
-                spur:"Spur Filter", peak:"Peak Hold", demodTitle:"Live Demod Stream", 
-                galleryTitle:"Real Software Screenshots", gallerySub:"High resolution captures from AB-SpectroX Gold",
-                // New importance section translations
-                importanceTitle:"An Integrated Framework for Academic Education & Advanced Research",
-                importanceSubtitle:"Bridging the gap between expensive commercial analyzers and complex open-source tools",
-                importanceDesc:"This professional software and engineering platform was purpose-built to eliminate the historical gap separating prohibitively expensive traditional laboratory hardware analyzers from complex open-source command-line tools that lack cohesive graphical frameworks. The system introduces an advanced, interactive visual environment enabling engineers, researchers, and university faculties to monitor and inspect live RF signals from 1 MHz to 7.25 GHz in real time with high mathematical precision. It yields instantaneous parametric extraction of critical signal profiles, including absolute power density, instantaneous occupied bandwidth, and Signal-to-Noise Ratio (SNR).",
-                applicationsTitle:"Core Engineering & Laboratory Applications Matrix",
-                appField:"Academic / Laboratory Discipline",
-                appImplementation:"Practical Implementations Within the Platform",
-                app1_title:"RF Measurements Laboratories",
-                app1_desc:"Precise power logging, occupied bandwidth calculation, modulation index estimation, and active filter response mapping.",
-                app2_title:"Antenna Design & Wave Propagation",
-                app2_desc:"Live mapping of received power profiles, tracking antenna efficiency relative to physical polarization or axial center frequency shifts.",
-                app3_title:"Digital Signal Processing (DSP)",
-                app3_desc:"Direct visualization of the mathematical effects of Resolution Bandwidth (RBW) adjustments and FFT size scaling on spectral resolution and trace behavior.",
-                app4_title:"Cognitive Radio & Spectral Intelligence",
-                app4_desc:"Long-duration spectrum captures, automated detection of spectral opportunities (white spaces), and precise band occupancy characterization.",
-                app5_title:"Wireless Network Security",
-                app5_desc:"Detection and categorization of harmful interference vectors, logging of unauthorized local emitters, and deep threat analysis.",
-                app6_title:"Space Physics & Atmospheric Research",
-                app6_desc:"Monitoring high-frequency atmospheric noise, solar radio burst signatures, and ionizing radiation spectral events.",
-                app7_title:"Capstone Design & Graduate Research",
-                app7_desc:"Providing an extensible, modular software framework for decoding custom communication architectures and characterizing physical multipath fading channels.",
-                benefit1_title:"Hands-On Learning",
-                benefit1_desc:"Students can see live RF signals, demodulate broadcasts, and record raw I/Q data directly from real hardware.",
-                benefit2_title:"Research Grade Accuracy",
-                benefit2_desc:"Professional power meter with multi-point calibration, ENBW, SNR, and uncertainty estimation for publishable results.",
-                benefit3_title:"Bilingual Interface",
-                benefit3_desc:"Full English/Arabic UI with RTL support, making it accessible to students and researchers worldwide."
-            },
-            ar: { 
-                badge:"AB-SpectroX · منصة سبر طيف لحظية", title1:"محلل ترددات", title2:"احترافي", title3:"الإصدار الذهبي", 
-                desc:"منصة عالية الأداء لمراقبة وتحليل الترددات اللاسلكية لحظياً. متوافقة مع HackRF One و ADALM-Pluto بمحرك PyQt6 معجل GPU. 27 لوحة ألوان للشلال، مقياس استطاعة احترافي، تسجيل SigMF، وفك تعديل حي.", 
-                btnSim:"🎮 المحاكي", btnGallery:"📸 المعرض الكامل", btnSpec:"⚙️ المواصفات", 
-                hardwareTitle:"عائلة AB-SpectroX", hardwareSub:"حلول تحليل ترددات احترافية متنقلة ومكتبية", 
-                videoTitle:"شاهد AB-SpectroX أثناء العمل", videoSub:"تحليل طيف حي، مخطط شلال، وفك تعديل مباشر", 
-                simTitle:"لوحة تحليل الطيف التفاعلية", simSub:"مسح طيف حي، شلال مع 27 لوحة ألوان، تتبع القمم، مرشح توافقيات", 
-                ctrl:"تكوين العتاد", sdrLabel:"عتاد الاستقبال", paletteLabel:"لوحة ألوان الشلال", spanLabel:"المدى", floorLabel:"مستوى التشويش", 
-                spur:"مرشح التوافقيات", peak:"منحنى القمم", demodTitle:"فك التعديل الحي", 
-                galleryTitle:"لقطات حقيقية من البرنامج", gallerySub:"صور عالية الدقة من AB-SpectroX الذهبي",
-                // New importance section translations (Arabic)
-                importanceTitle:"إطار متكامل للتعليم الجامعي والبحث العلمي المتقدم",
-                importanceSubtitle:"سد الفجوة بين أجهزة التحليل باهظة الثمن وبرمجيات المصدر المفتوح المعقدة",
-                importanceDesc:"صُممت هذه المنصة البرمجية والهندسية الاحترافية لتسد بالكامل الفجوة القائمة بين أجهزة التحليل المخبرية التقليدية باهظة الثمن، وبين برمجيات المصدر المفتوح المعقدة التي تفتقر للواجهات الرسومية المتكاملة. تتيح المنصة بيئة رسومية تفاعلية متطورة تمكن المهندسين والباحثين وأعضاء هيئة التدريس من رصد وتحليل الإشارات الراديوية الحية مباشرة من 1 MHz إلى 7.25 GHz في الزمن الحقيقي بدقة رياضية عالية، مع استخراج فوري للخصائص الحيوية مثل الاستطاعة المطلقة وعرض الحزمة اللحظي ونسبة الإشارة إلى الضوضاء (SNR).",
-                applicationsTitle:"مصفوفة التطبيقات الهندسية والمخبرية الأساسية",
-                appField:"المجال الأكاديمي/المخبري",
-                appImplementation:"التطبيقات العملية داخل المنصة",
-                app1_title:"مختبرات قياسات الترددات الراديوية",
-                app1_desc:"تسجيل دقيق للاستطاعة، حساب عرض الحزمة المشغولة، تقدير معامل التشكيل، ورسم استجابة المرشحات.",
-                app2_title:"تصميم الهوائيات وانتشار الموجات",
-                app2_desc:"رسم حي لملامح الاستطاعة المستقبلة، تتبع كفاءة الهوائي بالنسبة للاستقطاب الفيزيائي أو تغيرات تردد المحور.",
-                app3_title:"معالجة الإشارات الرقمية (DSP)",
-                app3_desc:"تصور مباشر للتأثيرات الرياضية لتعديلات عرض حزمة الدقة (RBW) وتحجيم نقاط تحويل فورييه (FFT) على دقة الطيف وسلوك الأثر.",
-                app4_title:"الراديو المعرفي والاستخبارات الطيفية",
-                app4_desc:"تسجيل طيفي طويل المدى، كشف آلي للفراغات الطيفية، وتوصيف دقيق لانشغال الحزم.",
-                app5_title:"أمن الشبكات اللاسلكية",
-                app5_desc:"كشف وتصنيف متجهات التداخل الضارة، تسجيل الباعثات غير المصرح بها، وتحليل عمق التهديدات.",
-                app6_title:"فيزياء الغلاف الجوي والفضاء",
-                app6_desc:"مراقبة الضوضاء الجوية عالية التردد، بصمات الانبعاثات الشمسية الراديوية، والأحداث الطيفية للإشعاع المؤين.",
-                app7_title:"مشاريع التخرج والبحث العلمي",
-                app7_desc:"توفير إطار برمجي نمطي قابل للتوسع لفك تشفير بنى الاتصالات المخصصة وتوصيف قنوات التلاشي متعددة المسارات.",
-                benefit1_title:"التعلم بالتطبيق العملي",
-                benefit1_desc:"يتمكن الطلاب من رؤية الإشارات الراديوية الحية، فك تعديل البث، وتسجيل بيانات I/Q الخام مباشرة من العتاد الحقيقي.",
-                benefit2_title:"دقة على مستوى البحث العلمي",
-                benefit2_desc:"مقياس استطاعة احترافي مع معايرة متعددة النقاط، ENBW، SNR، وتقدير عدم اليقين لنتائج قابلة للنشر.",
-                benefit3_title:"واجهة ثنائية اللغة",
-                benefit3_desc:"واجهة كاملة باللغتين العربية والإنجليزية مع دعم RTL، مما يجعلها متاحة للطلاب والباحثين حول العالم."
-            } 
-        };
-        let currentLang = 'en';
-        function setLanguage(lang) { 
-            currentLang=lang; 
-            document.documentElement.dir=lang==='ar'?'rtl':'ltr'; 
-            document.documentElement.lang=lang; 
-            document.querySelectorAll('[data-i18n]').forEach(el=>{ 
-                const key=el.getAttribute('data-i18n'); 
-                if(dict[lang][key]) el.innerText=dict[lang][key]; 
-            }); 
-            document.getElementById('langBtnLabel').innerText=lang==='en'?'العربية':'English'; 
-            if(lang==='ar') document.getElementById('demodDesc').innerText='فك تعديل M1 (145.50 MHz) FM'; 
-            else document.getElementById('demodDesc').innerText='Demod M1 (145.50 MHz) FM'; 
-            document.getElementById('fpsLabel').innerText=lang==='ar'?'الإطارات: ٢٢':'FPS: 22'; 
-        }
-        document.getElementById('langToggleBtn').addEventListener('click',()=>setLanguage(currentLang==='en'?'ar':'en')); 
-        setLanguage('en');
-        
-        // Canvas Simulator (full animation)
+        // Canvas Simulator
         const canvas = document.getElementById('spectrumCanvas'), ctx = canvas.getContext('2d'); let width, height, phase=0, tracePoints=[], peakPoints=[], spanMHz=20, floorDbm=-115, selectedPalette='hotiron', peakHoldEnabled=false;
-        const palettes = { hotiron:[[0,5,11,20],[0.4,59,130,246],[0.75,219,39,119],[1,245,158,11]], viridis:[[0,68,1,84],[0.5,33,144,141],[1,253,231,37]], inferno:[[0,0,0,4],[0.5,187,55,84],[1,252,254,191]], matrix:[[0,2,6,4],[0.6,16,125,62],[1,16,240,110]], cyber:[[0,10,5,20],[0.5,120,10,220],[1,240,210,10]], ocean:[[0,2,12,24],[0.6,3,105,120],[1,16,245,185]] };
+        const palettes = { hotiron:[[0,5,11,20],[0.4,59,130,246],[0.75,219,39,119],[1,245,158,11]], viridis:[[0,68,1,84],[0.5,33,144,141],[1,253,231,37]], inferno:[[0,0,0,4],[0.5,187,55,84],[1,252,254,191]], matrix:[[0,2,6,4],[0.6,16,125,62],[1,16,240,110]], cyber:[[0,10,5,20],[0.5,120,10,220],[1,240,210,10]] };
         function getColor(t){ let p=palettes[selectedPalette]||palettes.hotiron; t=Math.min(1,Math.max(0,t)); for(let i=0;i<p.length-1;i++) if(t>=p[i][0]&&t<=p[i+1][0]){ let r=(t-p[i][0])/(p[i+1][0]-p[i][0]); return [Math.floor(p[i][1]+r*(p[i+1][1]-p[i][1])),Math.floor(p[i][2]+r*(p[i+1][2]-p[i][2])),Math.floor(p[i][3]+r*(p[i+1][3]-p[i][3]))]; } return [0,255,0]; }
         function resizeCanvas(){ const rect=canvas.parentElement.getBoundingClientRect(); canvas.width=rect.width; canvas.height=rect.height; width=canvas.width; height=canvas.height; }
         window.addEventListener('resize',resizeCanvas); resizeCanvas();
@@ -764,20 +228,41 @@
         let waterfallRows=[];
         function drawWaterfallRow(){ let w=width; if(w<2)return; let rowColors=[]; for(let i=0;i<w;i++){ let yval=tracePoints[i]?tracePoints[i].y:height/2; let ratio=Math.min(1,Math.max(0,(height*0.55-yval)/(height*0.45))); let rgb=getColor(ratio); rowColors.push(`rgb(${rgb[0]},${rgb[1]},${rgb[2]})`); } waterfallRows.unshift(rowColors); if(waterfallRows.length>130) waterfallRows.pop(); }
         function drawLoop(){ if(width<50)return; generateTrace(); drawWaterfallRow(); ctx.fillStyle='#010208'; ctx.fillRect(0,0,width,height); let midH=height*0.55,rowH=Math.max(2,(height-midH)/waterfallRows.length); for(let r=0;r<waterfallRows.length;r++){ let y=midH+r*rowH; if(y>height)break; for(let c=0;c<width;c+=2){ ctx.fillStyle=waterfallRows[r][c]; ctx.fillRect(c,y,2,rowH); } } ctx.beginPath(); ctx.strokeStyle='#10b981'; ctx.lineWidth=1.8; if(tracePoints.length){ ctx.moveTo(tracePoints[0].x,tracePoints[0].y); for(let i=1;i<tracePoints.length;i++) ctx.lineTo(tracePoints[i].x,tracePoints[i].y); ctx.stroke(); } if(peakHoldEnabled && peakPoints.length){ ctx.beginPath(); ctx.setLineDash([3,4]); ctx.strokeStyle='#f97316'; ctx.moveTo(0,peakPoints[0]); for(let i=1;i<peakPoints.length;i++) ctx.lineTo(i,peakPoints[i]); ctx.stroke(); ctx.setLineDash([]); } ctx.strokeStyle='#2d3a4e'; ctx.beginPath(); ctx.moveTo(0,midH); ctx.lineTo(width,midH); ctx.stroke(); let cx=width*0.45; ctx.strokeStyle='#f59e0b'; ctx.setLineDash([5,5]); ctx.beginPath(); ctx.moveTo(cx,0); ctx.lineTo(cx,midH); ctx.stroke(); ctx.setLineDash([]); ctx.fillStyle='#f59e0b'; ctx.font='bold 9px monospace'; ctx.fillText("M1: 145.50 MHz",cx-35,30); requestAnimationFrame(drawLoop); phase+=0.12; }
-        document.getElementById('spanSlider').addEventListener('input',e=>{ spanMHz=parseInt(e.target.value); document.getElementById('spanVal').innerText=`${spanMHz} MHz`; });
-        document.getElementById('floorSlider').addEventListener('input',e=>{ floorDbm=parseInt(e.target.value); document.getElementById('floorVal').innerText=`${floorDbm} dBm`; });
+        document.getElementById('spanSlider').addEventListener('input',e=>{ spanMHz=parseInt(e.target.value); document.getElementById('spanVal').innerHTML=`<span class="value-unit ltr-text">${spanMHz} MHz</span>`; });
+        document.getElementById('floorSlider').addEventListener('input',e=>{ floorDbm=parseInt(e.target.value); document.getElementById('floorVal').innerHTML=`<span class="value-unit ltr-text">${floorDbm} dBm</span>`; });
         document.getElementById('paletteSelect').addEventListener('change',e=>selectedPalette=e.target.value);
         document.getElementById('peakHoldChk').addEventListener('change',e=>peakHoldEnabled=e.target.checked);
-        document.getElementById('btnHack').addEventListener('click',()=>{ document.getElementById('btnHack').className="py-1 rounded text-xs font-bold bg-emerald-600 text-black"; document.getElementById('btnPluto').className="py-1 rounded text-xs font-bold text-slate-400 hover:text-white"; document.getElementById('centerFreqLabel').innerHTML=currentLang==='ar'?'المركز: 2450.0 MHz (HackRF)':'CENTER: 2450.0 MHz (HackRF)'; });
-        document.getElementById('btnPluto').addEventListener('click',()=>{ document.getElementById('btnPluto').className="py-1 rounded text-xs font-bold bg-amber-600 text-black"; document.getElementById('btnHack').className="py-1 rounded text-xs font-bold text-slate-400 hover:text-white"; document.getElementById('centerFreqLabel').innerHTML=currentLang==='ar'?'المركز: 2450.0 MHz (Pluto)':'CENTER: 2450.0 MHz (Pluto)'; });
+        document.getElementById('btnHack').addEventListener('click',()=>{ document.getElementById('btnHack').className="py-1 rounded text-xs font-bold bg-emerald-600 text-black"; document.getElementById('btnPluto').className="py-1 rounded text-xs font-bold text-slate-400 hover:text-white"; document.getElementById('centerFreqLabel').innerHTML='المركز: <span class="value-unit ltr-text">2450.0 MHz</span> (HackRF)'; });
+        document.getElementById('btnPluto').addEventListener('click',()=>{ document.getElementById('btnPluto').className="py-1 rounded text-xs font-bold bg-amber-600 text-black"; document.getElementById('btnHack').className="py-1 rounded text-xs font-bold text-slate-400 hover:text-white"; document.getElementById('centerFreqLabel').innerHTML='المركز: <span class="value-unit ltr-text">2450.0 MHz</span> (Pluto)'; });
         let audioCtx, oscillator, audioActive=false;
         function playAudio(){ if(audioActive)return; try{ audioCtx=new (window.AudioContext||window.webkitAudioContext)(); oscillator=audioCtx.createOscillator(); let gain=audioCtx.createGain(); oscillator.type='sawtooth'; oscillator.frequency.value=440; gain.gain.value=0.03; oscillator.connect(gain); gain.connect(audioCtx.destination); oscillator.start(); audioActive=true; }catch(e){} }
         function stopAudio(){ if(oscillator)oscillator.stop(); if(audioCtx)audioCtx.close(); audioActive=false; }
         document.getElementById('audioBtn').addEventListener('click',()=>{ if(audioActive) stopAudio(); else playAudio(); });
-        ['FM','AM','USB','CW'].forEach(m=>{ document.getElementById(`mode${m}`).addEventListener('click',()=>{ document.getElementById(`mode${m}`).className="px-2 py-0.5 bg-primary text-black rounded text-[10px] font-bold"; ['FM','AM','USB','CW'].forEach(x=>{ if(x!==m) document.getElementById(`mode${x}`).className="px-2 py-0.5 bg-slate-800 text-slate-300 rounded text-[10px]"; }); document.getElementById('demodDesc').innerHTML=currentLang==='ar'?`فك تعديل M1 (145.50 MHz) ${m}`:`Demod M1 (145.50 MHz) ${m}`; }); });
-        canvas.addEventListener('mousemove',(e)=>{ let rect=canvas.getBoundingClientRect(), x=e.clientX-rect.left, y=e.clientY-rect.top, tooltip=document.getElementById('tooltipCanvas'); if(x>0&&x<width&&y<height*0.55){ let freqStart=2450-spanMHz/2; let freq=((x/width)*spanMHz+freqStart).toFixed(2); let pwr=(-40-(y/(height*0.55))*90).toFixed(1); tooltip.style.left=`${e.clientX-rect.left+15}px`; tooltip.style.top=`${e.clientY-rect.top+10}px`; tooltip.style.display='block'; tooltip.innerHTML=`📡 ${freq} MHz<br>⚡ ${pwr} dBm`; } else tooltip.style.display='none'; });
+        ['FM','AM','USB','CW'].forEach(m=>{ document.getElementById(`mode${m}`).addEventListener('click',()=>{ document.getElementById(`mode${m}`).className="px-3 py-1 bg-primary text-black rounded text-[10px] font-bold"; ['FM','AM','USB','CW'].forEach(x=>{ if(x!==m) document.getElementById(`mode${x}`).className="px-3 py-1 bg-slate-800 text-slate-300 rounded text-[10px]"; }); document.getElementById('demodDesc').innerHTML=`فك تعديل M1 (145.50 MHz) ${m}`; }); });
+        canvas.addEventListener('mousemove',(e)=>{ let rect=canvas.getBoundingClientRect(), x=e.clientX-rect.left, y=e.clientY-rect.top, tooltip=document.getElementById('tooltipCanvas'); if(x>0&&x<width&&y<height*0.55){ let freqStart=2450-spanMHz/2; let freq=((x/width)*spanMHz+freqStart).toFixed(2); let pwr=(-40-(y/(height*0.55))*90).toFixed(1); tooltip.style.left=`${e.clientX-rect.left+15}px`; tooltip.style.top=`${e.clientY-rect.top+10}px`; tooltip.style.display='block'; tooltip.innerHTML=`📡 <span class="value-unit ltr-text">${freq} MHz</span><br>⚡ <span class="value-unit ltr-text">${pwr} dBm</span>`; } else tooltip.style.display='none'; });
         canvas.addEventListener('mouseleave',()=>document.getElementById('tooltipCanvas').style.display='none');
         resizeCanvas(); drawLoop();
+
+        // Language Toggle
+        let currentLang = 'ar';
+        const toggleBtn = document.getElementById('langToggleBtn');
+        const langBtnLabel = document.getElementById('langBtnLabel');
+        const i18nElements = document.querySelectorAll('[data-i18n]');
+        const translations = {
+            en: { badge:"AB-SpectroX · Real-Time RF Spectrum Analyzer", title1:"Professional RF", title2:"Spectrum Analyzer", title3:"Gold Edition", desc:"High-performance hardware-accelerated platform for real-time RF monitoring, capture, and analysis. Supports HackRF One & ADALM-Pluto with PyQt6 GPU engine. 27 waterfall palettes, professional power meter, SigMF recording, and live demodulation.", btnSim:"🎮 Live Simulator", btnGallery:"📸 Gallery", btnSpec:"⚙️ Full Specs", hardwareTitle:"AB-SpectroX Platform Family", hardwareSub:"Professional Mobile & Desktop RF Analysis Solutions", videoTitle:"Watch AB-SpectroX in Action", videoSub:"Real-time spectrum analysis, waterfall, and live demodulation", simTitle:"Live Tactical RF Analyzer Dashboard", simSub:"real-time spectrum sweep, waterfall, peak hold, spur filter", ctrl:"Front-End Config", sdrLabel:"Active SDR Engine", paletteLabel:"Waterfall Palette (27)", spanLabel:"Span (MHz)", floorLabel:"Noise Floor", spur:"Spur Filter", peak:"Peak Hold", demodTitle:"Live Demod Stream", galleryTitle:"Real Software Screenshots", gallerySub:"High resolution captures", importanceTitle:"An Integrated Framework for Academic Education & Advanced Research", importanceSubtitle:"Bridging the gap between expensive analyzers and complex open-source tools", importanceDesc:"This professional platform bridges the gap between expensive lab hardware and complex open-source tools. It provides an interactive environment to monitor live RF signals from 1 MHz to 7.25 GHz in real time.", applicationsTitle:"Core Engineering & Laboratory Applications Matrix", appField:"Academic Discipline", appImplementation:"Practical Implementations", app1_title:"RF Labs", app1_desc:"Precise power logging, occupied bandwidth calculation.", app2_title:"Antenna Design", app2_desc:"Live mapping of received power profiles.", app3_title:"DSP", app3_desc:"Visualization of RBW and FFT effects.", app4_title:"Cognitive Radio", app4_desc:"Long-duration spectrum captures, white space detection.", app5_title:"Wireless Security", app5_desc:"Interference detection, unauthorized emitter logging.", app6_title:"Space Research", app6_desc:"Monitoring atmospheric noise, solar radio bursts.", app7_title:"Research Projects", app7_desc:"Framework for decoding custom communication architectures.", benefit1_title:"Hands-On Learning", benefit1_desc:"Students see live RF signals and record raw I/Q data.", benefit2_title:"Research Grade Accuracy", benefit2_desc:"Power meter with multi-point calibration, ENBW, SNR.", benefit3_title:"Bilingual Interface", benefit3_desc:"Full English/Arabic UI with RTL support." },
+            ar: { badge:"AB-SpectroX · محلل طيف ترددي لحظي", title1:"محلل طيف ترددي", title2:"احترافي", title3:"الإصدار الذهبي", desc:"منصة عالية الأداء لمراقبة وتحليل الترددات اللاسلكية لحظياً. تدعم HackRF One و ADALM-Pluto مع 27 لوحة ألوان للشلال ومقياس استطاعة احترافي.", btnSim:"🎮 المحاكي الحي", btnGallery:"📸 المعرض", btnSpec:"⚙️ المواصفات", hardwareTitle:"عائلة AB-SpectroX", hardwareSub:"حلول تحليل ترددات احترافية متنقلة ومكتبية", videoTitle:"شاهد AB-SpectroX أثناء العمل", videoSub:"تحليل طيف حي، مخطط شلال، وفك تعديل مباشر", simTitle:"لوحة تحليل الطيف التفاعلية", simSub:"مسح طيف حي، شلال، تتبع القمم، مرشح توافقيات", ctrl:"تكوين العتاد", sdrLabel:"عتاد الاستقبال", paletteLabel:"لوحة ألوان الشلال", spanLabel:"المدى (MHz)", floorLabel:"مستوى أرضية الضجيج", spur:"مرشح التوافقيات", peak:"تتبع القمم", demodTitle:"بث فك التعديل الحي", galleryTitle:"لقطات حقيقية من البرنامج", gallerySub:"صور عالية الدقة", importanceTitle:"إطار متكامل للتعليم الجامعي والبحث العلمي المتقدم", importanceSubtitle:"سد الفجوة بين أجهزة التحليل باهظة الثمن وبرمجيات المصدر المفتوح", importanceDesc:"صُممت هذه المنصة لتسد الفجوة بين الأجهزة المخبرية باهظة الثمن والبرمجيات المعقدة. تتيح بيئة تفاعلية لرصد الإشارات الحية من 1 MHz إلى 7.25 GHz.", applicationsTitle:"مصفوفة التطبيقات الهندسية", appField:"المجال الأكاديمي", appImplementation:"التطبيقات العملية", app1_title:"مختبرات RF", app1_desc:"تسجيل دقيق للاستطاعة، حساب عرض الحزمة.", app2_title:"تصميم الهوائيات", app2_desc:"رسم حي لملامح الاستطاعة المستقبلة.", app3_title:"معالجة الإشارات", app3_desc:"تصور تأثيرات RBW و FFT.", app4_title:"الراديو المعرفي", app4_desc:"تسجيل طيفي طويل المدى، كشف الفراغات.", app5_title:"أمن الشبكات", app5_desc:"كشف التداخل، تسجيل الباعثات غير المصرح بها.", app6_title:"أبحاث الفضاء", app6_desc:"مراقبة الضجيج الجوي والانبعاثات الشمسية.", app7_title:"مشاريع التخرج", app7_desc:"إطار لفك تشفير بنى الاتصالات المخصصة.", benefit1_title:"التعلم العملي", benefit1_desc:"رؤية الإشارات الحية وتسجيل I/Q.", benefit2_title:"دقة بحثية", benefit2_desc:"مقياس استطاعة مع معايرة متعددة النقاط.", benefit3_title:"واجهة ثنائية اللغة", benefit3_desc:"واجهة كاملة بالعربية والإنجليزية مع دعم RTL." }
+        };
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+            i18nElements.forEach(el => { const key = el.getAttribute('data-i18n'); if (translations[lang] && translations[lang][key]) el.innerText = translations[lang][key]; });
+            langBtnLabel.innerText = lang === 'ar' ? 'English' : 'العربية';
+            document.getElementById('demodDesc').innerHTML = lang === 'ar' ? 'فك تعديل M1 (145.50 MHz) FM' : 'Demod M1 (145.50 MHz) FM';
+            document.getElementById('fpsLabel').innerHTML = lang === 'ar' ? 'FPS: ٢٢' : 'FPS: 22';
+        }
+        toggleBtn.addEventListener('click', () => setLanguage(currentLang === 'ar' ? 'en' : 'ar'));
+        setLanguage('ar');
     </script>
 </body>
 </html>
