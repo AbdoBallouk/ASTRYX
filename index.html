@@ -35,11 +35,12 @@
             .hero-image, .hardware-image { max-height: 180px; object-fit: contain; }
             .page-break-before { page-break-before: always; }
             .cover-section { page-break-after: avoid; }
-            .importance-section { page-break-before: always; }
-            .hardware-section { page-break-before: always; }
-            .specs-section { page-break-before: always; }
             
-            /* إصلاح بطاقات الفوائد الثلاث لتظهر في صفحة واحدة */
+            /* القسم الذي يحتوي على جدول التطبيقات + بطاقات الفوائد يبقى في صفحة واحدة */
+            .importance-section {
+                page-break-before: always;
+                page-break-inside: avoid;
+            }
             #benefitsGrid {
                 page-break-inside: avoid;
                 break-inside: avoid;
@@ -56,6 +57,9 @@
             #benefitsGrid .bg-card h4 {
                 font-size: 9pt;
             }
+            
+            .hardware-section { page-break-before: always; }
+            .specs-section { page-break-before: always; }
         }
         body { background: #0a0c15; color: #eef2ff; font-family: 'Inter', sans-serif; }
         .hero-image { width: 100%; border-radius: 0; object-fit: contain; max-height: 550px; background: transparent; }
@@ -123,8 +127,8 @@
         </div>
     </section>
 
-    <!-- IMPORTANCE SECTION -->
-    <section class="importance-section py-16 px-6 max-w-7xl mx-auto page-break-before">
+    <!-- IMPORTANCE SECTION (with table + benefits grid) -->
+    <section class="importance-section py-16 px-6 max-w-7xl mx-auto">
         <div class="text-center mb-10"><span class="text-xs font-mono text-amber uppercase" id="importanceTag">ACADEMIC & RESEARCH VALUE</span><h2 class="text-3xl font-black mt-2" id="importanceTitle">Advanced RF spectrum analysis platform combining lab‑grade precision with ease of use</h2><p class="text-slate-400 text-sm max-w-3xl mx-auto mt-2" id="importanceSubtitle">A practical alternative to expensive equipment and complex software</p></div>
         <div class="importance-card bg-card rounded-2xl border border-border overflow-hidden mb-10"><div class="p-6 bg-gradient-to-r from-primary/10 to-accent/10"><p class="text-slate-300 leading-relaxed" id="importanceDesc">An advanced RF spectrum analysis platform combining lab‑grade precision with ease of use, offering researchers and students a powerful, reliable real‑time tool. Designed to provide professional capabilities without complexity, at a fraction of the cost of traditional analyzers.</p></div></div>
         <div class="mb-8"><h3 class="text-xl font-bold text-primary mb-4 text-center" id="applicationsTitle">Some Engineering Applications</h3><div class="overflow-x-auto"><table class="w-full text-sm importance-table bg-card rounded-xl border border-border"><thead class="bg-slate-900"><tr><th class="p-3 text-right font-bold text-primary" id="appFieldHeader">Academic / Laboratory Discipline</th><th class="p-3 text-right font-bold text-primary" id="appImplHeader">Practical Implementations Within the Platform</th></tr></thead><tbody id="appsTableBody"></tbody></table></div></div>
@@ -183,14 +187,14 @@
         <div class="bg-card border border-border rounded-2xl overflow-hidden table-container"><div class="bg-slate-900 px-6 py-3 border-b border-border"><h3 class="font-bold text-xl"><span id="compareTitle">HackRF One vs ADALM‑Pluto — Hardware Comparison</span></h3></div><div class="overflow-x-auto p-4"><table class="w-full text-sm spec-table"><thead><tr><th class="p-3" id="compFeature">Feature</th><th class="p-3" id="compHack">HackRF One</th><th class="p-3" id="compPluto">ADALM‑Pluto</th></tr></thead><tbody id="compTableBody"></tbody></table></div></div>
     </section>
 
-    <!-- FOOTER with local development notice and rights -->
+    <!-- FOOTER with updated local development notice -->
     <footer class="border-t border-border bg-dark/50 py-10 px-6 text-center">
         <div class="max-w-4xl mx-auto space-y-3">
             <i class="fa-regular fa-cube text-3xl text-primary/50"></i>
             <h3 class="text-xl font-black" id="footerTitle">AB‑SpectroX Gold · Ready for Deployment</h3>
             <p class="text-slate-400 text-sm" id="footerDesc">Standalone Windows executable, no command line. Perfect for universities, EW labs, and RF R&D. Complete <span class="value-unit">SigMF</span> compliance, professional calibration tools, and bilingual interface.</p>
             
-            <!-- Local development notice - added here -->
+            <!-- Updated local notice -->
             <p class="text-xs text-slate-500 mt-3" id="footerLocalNotice"></p>
             <p class="text-xs text-slate-500" id="footerRights"></p>
             
@@ -362,8 +366,8 @@
                 compFeature: "Feature", compHack: "HackRF One", compPluto: "ADALM‑Pluto",
                 footerTitle: "AB‑SpectroX Gold · Ready for Deployment",
                 footerDesc: "Standalone Windows executable, no command line. Perfect for universities, EW labs, and RF R&D. Complete SigMF compliance, professional calibration tools, and bilingual interface.",
-                // New local notice and rights
-                footerLocalNotice: "Designed, developed, and tested locally in Damascus, Syria – from concept to production.",
+                // New local notice and rights – updated phrasing
+                footerLocalNotice: "This software was developed and tested locally, relying on pure national expertise and adhering to high engineering standards in Damascus, Syria.",
                 footerRights: "All rights reserved. Proprietary software protected by intellectual property laws.",
                 repoLink: "Repository", copyright: "© 2026 AB‑SpectroX · Developed by Dr. Eng Abdo Ballouk",
                 printBtnText: "Print (A4)"
@@ -405,8 +409,8 @@
                 compFeature: "الميزة", compHack: "HackRF One", compPluto: "ADALM-Pluto",
                 footerTitle: "AB-SpectroX الذهبي · جاهز للنشر",
                 footerDesc: "ملف تنفيذي مستقل لنظام Windows · مثالي للجامعات والمخابر العلمية EW والبحث والتطوير · متوافق تماماً مع SigMF وأدوات المعايرة الاحترافية.",
-                // New local notice and rights in Arabic
-                footerLocalNotice: "تم تصميم هذا البرنامج وتطويره واختباره محلياً في دمشق، سوريا – من الألف إلى الياء.",
+                // New local notice and rights – updated phrasing
+                footerLocalNotice: "تم تطوير هذا البرنامج واختباره محلياً، وبقدرات وكفاءات وطنية خالصة، ووفق معايير هندسية عالية في دمشق، سوريا.",
                 footerRights: "جميع الحقوق محفوظة. برمجية خاصة محمية بقوانين الملكية الفكرية.",
                 repoLink: "المستودع", copyright: "© 2026 AB-SpectroX · تطوير د. م. عبده بللوق",
                 printBtnText: "طباعة (A4)"
