@@ -36,26 +36,43 @@
             .page-break-before { page-break-before: always; }
             .cover-section { page-break-after: avoid; }
             
-            /* القسم الذي يحتوي على جدول التطبيقات + بطاقات الفوائد يبقى في صفحة واحدة */
+            /* تحسينات لقسم الأهمية لضمان بقاء الجدول + البطاقات في صفحة واحدة */
             .importance-section {
                 page-break-before: always;
                 page-break-inside: avoid;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
             }
+            .importance-section .importance-card .p-6 {
+                padding: 0.4rem 0.6rem !important;
+            }
+            .importance-section .importance-card p {
+                font-size: 8.5pt;
+                line-height: 1.3;
+            }
+            .importance-table td, .importance-table th {
+                font-size: 7.5pt;
+                padding: 3px 6px;
+            }
+            .importance-table {
+                margin-bottom: 0.5rem;
+            }
+            
             #benefitsGrid {
                 page-break-inside: avoid;
                 break-inside: avoid;
                 grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
+                gap: 5px;
             }
             #benefitsGrid .bg-card {
-                font-size: 8pt;
-                padding: 0.4rem 0.6rem;
+                font-size: 7.5pt;
+                padding: 0.3rem 0.4rem;
             }
             #benefitsGrid .bg-card p {
-                font-size: 7.5pt;
+                font-size: 7pt;
             }
             #benefitsGrid .bg-card h4 {
-                font-size: 9pt;
+                font-size: 8.5pt;
             }
             
             .hardware-section { page-break-before: always; }
@@ -187,14 +204,13 @@
         <div class="bg-card border border-border rounded-2xl overflow-hidden table-container"><div class="bg-slate-900 px-6 py-3 border-b border-border"><h3 class="font-bold text-xl"><span id="compareTitle">HackRF One vs ADALM‑Pluto — Hardware Comparison</span></h3></div><div class="overflow-x-auto p-4"><table class="w-full text-sm spec-table"><thead><tr><th class="p-3" id="compFeature">Feature</th><th class="p-3" id="compHack">HackRF One</th><th class="p-3" id="compPluto">ADALM‑Pluto</th></tr></thead><tbody id="compTableBody"></tbody></table></div></div>
     </section>
 
-    <!-- FOOTER with updated local development notice -->
+    <!-- FOOTER -->
     <footer class="border-t border-border bg-dark/50 py-10 px-6 text-center">
         <div class="max-w-4xl mx-auto space-y-3">
             <i class="fa-regular fa-cube text-3xl text-primary/50"></i>
             <h3 class="text-xl font-black" id="footerTitle">AB‑SpectroX Gold · Ready for Deployment</h3>
             <p class="text-slate-400 text-sm" id="footerDesc">Standalone Windows executable, no command line. Perfect for universities, EW labs, and RF R&D. Complete <span class="value-unit">SigMF</span> compliance, professional calibration tools, and bilingual interface.</p>
             
-            <!-- Updated local notice -->
             <p class="text-xs text-slate-500 mt-3" id="footerLocalNotice"></p>
             <p class="text-xs text-slate-500" id="footerRights"></p>
             
@@ -366,7 +382,6 @@
                 compFeature: "Feature", compHack: "HackRF One", compPluto: "ADALM‑Pluto",
                 footerTitle: "AB‑SpectroX Gold · Ready for Deployment",
                 footerDesc: "Standalone Windows executable, no command line. Perfect for universities, EW labs, and RF R&D. Complete SigMF compliance, professional calibration tools, and bilingual interface.",
-                // New local notice and rights – updated phrasing
                 footerLocalNotice: "This software was developed and tested locally, relying on pure national expertise and adhering to high engineering standards in Damascus, Syria.",
                 footerRights: "All rights reserved. Proprietary software protected by intellectual property laws.",
                 repoLink: "Repository", copyright: "© 2026 AB‑SpectroX · Developed by Dr. Eng Abdo Ballouk",
@@ -409,7 +424,6 @@
                 compFeature: "الميزة", compHack: "HackRF One", compPluto: "ADALM-Pluto",
                 footerTitle: "AB-SpectroX الذهبي · جاهز للنشر",
                 footerDesc: "ملف تنفيذي مستقل لنظام Windows · مثالي للجامعات والمخابر العلمية EW والبحث والتطوير · متوافق تماماً مع SigMF وأدوات المعايرة الاحترافية.",
-                // New local notice and rights – updated phrasing
                 footerLocalNotice: "تم تطوير هذا البرنامج واختباره محلياً، وبقدرات وكفاءات وطنية خالصة، ووفق معايير هندسية عالية في دمشق، سوريا.",
                 footerRights: "جميع الحقوق محفوظة. برمجية خاصة محمية بقوانين الملكية الفكرية.",
                 repoLink: "المستودع", copyright: "© 2026 AB-SpectroX · تطوير د. م. عبده بللوق",
