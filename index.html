@@ -38,6 +38,24 @@
             .importance-section { page-break-before: always; }
             .hardware-section { page-break-before: always; }
             .specs-section { page-break-before: always; }
+            
+            /* إصلاح بطاقات الفوائد الثلاث لتظهر في صفحة واحدة */
+            #benefitsGrid {
+                page-break-inside: avoid;
+                break-inside: avoid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+            #benefitsGrid .bg-card {
+                font-size: 8pt;
+                padding: 0.4rem 0.6rem;
+            }
+            #benefitsGrid .bg-card p {
+                font-size: 7.5pt;
+            }
+            #benefitsGrid .bg-card h4 {
+                font-size: 9pt;
+            }
         }
         body { background: #0a0c15; color: #eef2ff; font-family: 'Inter', sans-serif; }
         .hero-image { width: 100%; border-radius: 0; object-fit: contain; max-height: 550px; background: transparent; }
@@ -133,9 +151,9 @@
     <!-- VIDEO SECTION (no print) -->
     <section class="py-16 px-6 bg-slate-950/40 border-y border-border no-print"><div class="max-w-6xl mx-auto text-center mb-8"><span class="text-xs font-mono text-primary uppercase" id="videoTag">product demonstration</span><h2 class="text-3xl font-black mt-2" id="videoTitle">Watch AB-SpectroX in Action</h2><p class="text-slate-400" id="videoSub">Real‑time spectrum analysis, waterfall visualization, and live demodulation</p></div><div class="max-w-4xl mx-auto"><iframe src="https://drive.google.com/file/d/1vjrFUdUkPAQZ-5bjAFtsirkCNfEu4fAX/preview" width="100%" height="450" allow="autoplay" allowfullscreen class="rounded-2xl shadow-2xl border border-border"></iframe><p class="text-center text-xs text-slate-500 mt-3" id="videoNote">Demonstration video · AB-SpectroX Gold Edition (Click to play)</p></div></section>
 
-    <!-- CAROUSEL GALLERY - FIXED: added dir="ltr" to container -->
+    <!-- CAROUSEL GALLERY -->
     <section id="carousel" class="py-16 px-6 max-w-7xl mx-auto no-print"><div class="text-center mb-8"><span class="text-xs font-mono text-accent uppercase" id="galleryTag">software gallery</span><h2 class="text-3xl font-black mt-1" id="galleryTitle">Real Software Screenshots</h2><p class="text-slate-400 text-sm" id="gallerySub">High‑resolution captures from AB‑SpectroX Gold</p></div>
-        <div class="carousel-container relative" dir="ltr"><!-- Added dir="ltr" to fix RTL issue -->
+        <div class="carousel-container relative" dir="ltr">
             <div class="carousel-track" id="carouselTrack">
                 <div class="carousel-slide"><img src="S6%20Wideband%20Spectrum.png" onerror="this.src='S6_Wideband_Spectrum.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/10b981?text=S6+Wideband+Spectrum'" alt="S6 Wideband Spectrum"></div>
                 <div class="carousel-slide"><img src="S1%20Arabic%20Interface.png" onerror="this.src='S1_Arabic_Interface.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/3b82f6?text=S1+Arabic+Interface'" alt="S1 Arabic Interface"></div>
@@ -165,7 +183,24 @@
         <div class="bg-card border border-border rounded-2xl overflow-hidden table-container"><div class="bg-slate-900 px-6 py-3 border-b border-border"><h3 class="font-bold text-xl"><span id="compareTitle">HackRF One vs ADALM‑Pluto — Hardware Comparison</span></h3></div><div class="overflow-x-auto p-4"><table class="w-full text-sm spec-table"><thead><tr><th class="p-3" id="compFeature">Feature</th><th class="p-3" id="compHack">HackRF One</th><th class="p-3" id="compPluto">ADALM‑Pluto</th></tr></thead><tbody id="compTableBody"></tbody></table></div></div>
     </section>
 
-    <footer class="border-t border-border bg-dark/50 py-10 px-6 text-center"><div class="max-w-4xl mx-auto space-y-3"><i class="fa-regular fa-cube text-3xl text-primary/50"></i><h3 class="text-xl font-black" id="footerTitle">AB‑SpectroX Gold · Ready for Deployment</h3><p class="text-slate-400 text-sm" id="footerDesc">Standalone Windows executable, no command line. Perfect for universities, EW labs, and RF R&D. Complete <span class="value-unit">SigMF</span> compliance, professional calibration tools, and bilingual interface.</p><div class="bg-black/50 inline-block rounded-xl p-2 font-mono text-[10px] text-emerald-300 text-left">$ git clone https://github.com/AbdoBallouk/ASTRYX.git<br>$ python -m astryx_spectrometer --gui</div><div class="flex justify-center gap-4 pt-3"><a href="https://github.com/AbdoBallouk/ASTRYX" target="_blank" class="text-xs bg-card px-4 py-1.5 rounded-full transition hover:bg-primary/20"><i class="fa-brands fa-github ml-1"></i> <span id="repoLink">Repository</span></a><span class="text-xs text-slate-500" id="copyright">© 2026 AB‑SpectroX · Developed by Dr. Eng Abdo Ballouk</span></div></div></footer>
+    <!-- FOOTER with local development notice and rights -->
+    <footer class="border-t border-border bg-dark/50 py-10 px-6 text-center">
+        <div class="max-w-4xl mx-auto space-y-3">
+            <i class="fa-regular fa-cube text-3xl text-primary/50"></i>
+            <h3 class="text-xl font-black" id="footerTitle">AB‑SpectroX Gold · Ready for Deployment</h3>
+            <p class="text-slate-400 text-sm" id="footerDesc">Standalone Windows executable, no command line. Perfect for universities, EW labs, and RF R&D. Complete <span class="value-unit">SigMF</span> compliance, professional calibration tools, and bilingual interface.</p>
+            
+            <!-- Local development notice - added here -->
+            <p class="text-xs text-slate-500 mt-3" id="footerLocalNotice"></p>
+            <p class="text-xs text-slate-500" id="footerRights"></p>
+            
+            <div class="bg-black/50 inline-block rounded-xl p-2 font-mono text-[10px] text-emerald-300 text-left mt-2">$ git clone https://github.com/AbdoBallouk/ASTRYX.git<br>$ python -m astryx_spectrometer --gui</div>
+            <div class="flex justify-center gap-4 pt-3">
+                <a href="https://github.com/AbdoBallouk/ASTRYX" target="_blank" class="text-xs bg-card px-4 py-1.5 rounded-full transition hover:bg-primary/20"><i class="fa-brands fa-github ml-1"></i> <span id="repoLink">Repository</span></a>
+                <span class="text-xs text-slate-500" id="copyright">© 2026 AB‑SpectroX · Developed by Dr. Eng Abdo Ballouk</span>
+            </div>
+        </div>
+    </footer>
 
     <script>
         // Carousel Logic
@@ -327,6 +362,9 @@
                 compFeature: "Feature", compHack: "HackRF One", compPluto: "ADALM‑Pluto",
                 footerTitle: "AB‑SpectroX Gold · Ready for Deployment",
                 footerDesc: "Standalone Windows executable, no command line. Perfect for universities, EW labs, and RF R&D. Complete SigMF compliance, professional calibration tools, and bilingual interface.",
+                // New local notice and rights
+                footerLocalNotice: "Designed, developed, and tested locally in Damascus, Syria – from concept to production.",
+                footerRights: "All rights reserved. Proprietary software protected by intellectual property laws.",
                 repoLink: "Repository", copyright: "© 2026 AB‑SpectroX · Developed by Dr. Eng Abdo Ballouk",
                 printBtnText: "Print (A4)"
             },
@@ -367,6 +405,9 @@
                 compFeature: "الميزة", compHack: "HackRF One", compPluto: "ADALM-Pluto",
                 footerTitle: "AB-SpectroX الذهبي · جاهز للنشر",
                 footerDesc: "ملف تنفيذي مستقل لنظام Windows · مثالي للجامعات والمخابر العلمية EW والبحث والتطوير · متوافق تماماً مع SigMF وأدوات المعايرة الاحترافية.",
+                // New local notice and rights in Arabic
+                footerLocalNotice: "تم تصميم هذا البرنامج وتطويره واختباره محلياً في دمشق، سوريا – من الألف إلى الياء.",
+                footerRights: "جميع الحقوق محفوظة. برمجية خاصة محمية بقوانين الملكية الفكرية.",
                 repoLink: "المستودع", copyright: "© 2026 AB-SpectroX · تطوير د. م. عبده بللوق",
                 printBtnText: "طباعة (A4)"
             }
