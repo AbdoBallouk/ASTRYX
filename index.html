@@ -133,17 +133,22 @@
     <!-- VIDEO SECTION (no print) -->
     <section class="py-16 px-6 bg-slate-950/40 border-y border-border no-print"><div class="max-w-6xl mx-auto text-center mb-8"><span class="text-xs font-mono text-primary uppercase" id="videoTag">product demonstration</span><h2 class="text-3xl font-black mt-2" id="videoTitle">Watch AB-SpectroX in Action</h2><p class="text-slate-400" id="videoSub">Real‑time spectrum analysis, waterfall visualization, and live demodulation</p></div><div class="max-w-4xl mx-auto"><iframe src="https://drive.google.com/file/d/1vjrFUdUkPAQZ-5bjAFtsirkCNfEu4fAX/preview" width="100%" height="450" allow="autoplay" allowfullscreen class="rounded-2xl shadow-2xl border border-border"></iframe><p class="text-center text-xs text-slate-500 mt-3" id="videoNote">Demonstration video · AB-SpectroX Gold Edition (Click to play)</p></div></section>
 
-    <!-- CAROUSEL GALLERY - FIXED for both languages -->
+    <!-- CAROUSEL GALLERY - FIXED: added dir="ltr" to container -->
     <section id="carousel" class="py-16 px-6 max-w-7xl mx-auto no-print"><div class="text-center mb-8"><span class="text-xs font-mono text-accent uppercase" id="galleryTag">software gallery</span><h2 class="text-3xl font-black mt-1" id="galleryTitle">Real Software Screenshots</h2><p class="text-slate-400 text-sm" id="gallerySub">High‑resolution captures from AB‑SpectroX Gold</p></div>
-        <div class="carousel-container relative"><div class="carousel-track" id="carouselTrack">
-            <!-- Using URL-encoded filenames with spaces (%20) for better cross-browser compatibility -->
-            <div class="carousel-slide"><img src="S6%20Wideband%20Spectrum.png" onerror="this.src='S6_Wideband_Spectrum.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/10b981?text=S6+Wideband+Spectrum'" alt="S6 Wideband Spectrum"></div>
-            <div class="carousel-slide"><img src="S1%20Arabic%20Interface.png" onerror="this.src='S1_Arabic_Interface.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/3b82f6?text=S1+Arabic+Interface'" alt="S1 Arabic Interface"></div>
-            <div class="carousel-slide"><img src="S2%20Power%20Meter.png" onerror="this.src='S2_Power_Meter.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/f59e0b?text=S2+Power+Meter'" alt="S2 Power Meter"></div>
-            <div class="carousel-slide"><img src="S3%20Delta%20Markers.png" onerror="this.src='S3_Delta_Markers.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/10b981?text=S3+Delta+Markers'" alt="S3 Delta Markers"></div>
-            <div class="carousel-slide"><img src="S4.png" onerror="this.src='https://placehold.co/1200x600/0f1420/ef4444?text=S4+Smart+Gain'" alt="S4 Smart Gain"></div>
-            <div class="carousel-slide"><img src="S5%20Spectrogram%2027%20palettes.png" onerror="this.src='S5_Spectrogram_27_palettes.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/3b82f6?text=S5+27+Palettes'" alt="S5 Spectrogram"></div>
-        </div><button class="carousel-button carousel-button-prev" id="prevBtn"><i class="fa-solid fa-chevron-left text-white text-xl"></i></button><button class="carousel-button carousel-button-next" id="nextBtn"><i class="fa-solid fa-chevron-right text-white text-xl"></i></button><div class="carousel-dots" id="carouselDots"></div></div><p class="text-center text-xs text-slate-500 mt-3" id="galleryInfo"><i class="fa-regular fa-images"></i> <span class="ltr-text">6</span> screenshots · Auto‑slideshow every <span class="ltr-text">5</span> seconds</p>
+        <div class="carousel-container relative" dir="ltr"><!-- Added dir="ltr" to fix RTL issue -->
+            <div class="carousel-track" id="carouselTrack">
+                <div class="carousel-slide"><img src="S6%20Wideband%20Spectrum.png" onerror="this.src='S6_Wideband_Spectrum.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/10b981?text=S6+Wideband+Spectrum'" alt="S6 Wideband Spectrum"></div>
+                <div class="carousel-slide"><img src="S1%20Arabic%20Interface.png" onerror="this.src='S1_Arabic_Interface.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/3b82f6?text=S1+Arabic+Interface'" alt="S1 Arabic Interface"></div>
+                <div class="carousel-slide"><img src="S2%20Power%20Meter.png" onerror="this.src='S2_Power_Meter.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/f59e0b?text=S2+Power+Meter'" alt="S2 Power Meter"></div>
+                <div class="carousel-slide"><img src="S3%20Delta%20Markers.png" onerror="this.src='S3_Delta_Markers.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/10b981?text=S3+Delta+Markers'" alt="S3 Delta Markers"></div>
+                <div class="carousel-slide"><img src="S4.png" onerror="this.src='https://placehold.co/1200x600/0f1420/ef4444?text=S4+Smart+Gain'" alt="S4 Smart Gain"></div>
+                <div class="carousel-slide"><img src="S5%20Spectrogram%2027%20palettes.png" onerror="this.src='S5_Spectrogram_27_palettes.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/3b82f6?text=S5+27+Palettes'" alt="S5 Spectrogram"></div>
+            </div>
+            <button class="carousel-button carousel-button-prev" id="prevBtn"><i class="fa-solid fa-chevron-left text-white text-xl"></i></button>
+            <button class="carousel-button carousel-button-next" id="nextBtn"><i class="fa-solid fa-chevron-right text-white text-xl"></i></button>
+            <div class="carousel-dots" id="carouselDots"></div>
+        </div>
+        <p class="text-center text-xs text-slate-500 mt-3" id="galleryInfo"><i class="fa-regular fa-images"></i> <span class="ltr-text">6</span> screenshots · Auto‑slideshow every <span class="ltr-text">5</span> seconds</p>
     </section>
 
     <!-- LIVE SIMULATOR (no print) -->
