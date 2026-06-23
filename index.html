@@ -87,7 +87,6 @@
         </div>
         <div class="flex gap-3 flex-wrap">
             <button onclick="window.print();" class="bg-amber/20 hover:bg-amber/40 text-amber border border-amber/50 rounded-lg px-3 py-1 text-xs font-bold flex items-center gap-2 transition"><i class="fa-solid fa-print"></i> <span id="printBtnText">Print (A4)</span></button>
-            <!-- زر تحميل الكتيب Word -->
             <button id="downloadWordBtn" class="bg-blue-600 hover:bg-blue-700 text-white border border-blue-400 rounded-lg px-3 py-1 text-xs font-bold flex items-center gap-2 transition"><i class="fa-regular fa-file-word"></i> <span id="wordBtnText">📄 تحميل كتيب Word</span></button>
             <button id="langToggleBtn" class="bg-card border border-border hover:border-primary text-slate-200 rounded-lg px-3 py-1 text-xs font-bold flex items-center gap-2"><i class="fa-solid fa-language text-primary"></i> <span id="langBtnLabel">العربية</span></button>
             <a href="https://github.com/AbdoBallouk/ASTRYX" target="_blank" class="bg-slate-900 hover:bg-slate-800 text-white border border-border rounded-lg px-3 py-1 text-xs font-bold flex gap-1"><i class="fa-brands fa-github"></i> Star</a>
@@ -137,14 +136,14 @@
 
     <!-- CAROUSEL GALLERY - FIXED: added dir="ltr" to container -->
     <section id="carousel" class="py-16 px-6 max-w-7xl mx-auto no-print"><div class="text-center mb-8"><span class="text-xs font-mono text-accent uppercase" id="galleryTag">software gallery</span><h2 class="text-3xl font-black mt-1" id="galleryTitle">Real Software Screenshots</h2><p class="text-slate-400 text-sm" id="gallerySub">High‑resolution captures from AB‑SpectroX Gold</p></div>
-        <div class="carousel-container relative" dir="ltr"><!-- Added dir="ltr" to fix RTL issue -->
+        <div class="carousel-container relative" dir="ltr">
             <div class="carousel-track" id="carouselTrack">
-                <div class="carousel-slide"><img src="S6%20Wideband%20Spectrum.png" onerror="this.src='S6_Wideband_Spectrum.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/10b981?text=S6+Wideband+Spectrum'" alt="S6 Wideband Spectrum"></div>
-                <div class="carousel-slide"><img src="S1%20Arabic%20Interface.png" onerror="this.src='S1_Arabic_Interface.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/3b82f6?text=S1+Arabic+Interface'" alt="S1 Arabic Interface"></div>
-                <div class="carousel-slide"><img src="S2%20Power%20Meter.png" onerror="this.src='S2_Power_Meter.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/f59e0b?text=S2+Power+Meter'" alt="S2 Power Meter"></div>
-                <div class="carousel-slide"><img src="S3%20Delta%20Markers.png" onerror="this.src='S3_Delta_Markers.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/10b981?text=S3+Delta+Markers'" alt="S3 Delta Markers"></div>
+                <div class="carousel-slide"><img src="S6%20Wideband%20Spectrum.png" onerror="this.src='https://placehold.co/1200x600/0f1420/10b981?text=S6+Wideband+Spectrum'" alt="S6 Wideband Spectrum"></div>
+                <div class="carousel-slide"><img src="S1%20Arabic%20Interface.png" onerror="this.src='https://placehold.co/1200x600/0f1420/3b82f6?text=S1+Arabic+Interface'" alt="S1 Arabic Interface"></div>
+                <div class="carousel-slide"><img src="S2%20Power%20Meter.png" onerror="this.src='https://placehold.co/1200x600/0f1420/f59e0b?text=S2+Power+Meter'" alt="S2 Power Meter"></div>
+                <div class="carousel-slide"><img src="S3%20Delta%20Markers.png" onerror="this.src='https://placehold.co/1200x600/0f1420/10b981?text=S3+Delta+Markers'" alt="S3 Delta Markers"></div>
                 <div class="carousel-slide"><img src="S4.png" onerror="this.src='https://placehold.co/1200x600/0f1420/ef4444?text=S4+Smart+Gain'" alt="S4 Smart Gain"></div>
-                <div class="carousel-slide"><img src="S5%20Spectrogram%2027%20palettes.png" onerror="this.src='S5_Spectrogram_27_palettes.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/3b82f6?text=S5+27+Palettes'" alt="S5 Spectrogram"></div>
+                <div class="carousel-slide"><img src="S5%20Spectrogram%2027%20palettes.png" onerror="this.src='https://placehold.co/1200x600/0f1420/3b82f6?text=S5+27+Palettes'" alt="S5 Spectrogram"></div>
             </div>
             <button class="carousel-button carousel-button-prev" id="prevBtn"><i class="fa-solid fa-chevron-left text-white text-xl"></i></button>
             <button class="carousel-button carousel-button-next" id="nextBtn"><i class="fa-solid fa-chevron-right text-white text-xl"></i></button>
@@ -289,7 +288,6 @@
             
             document.getElementById('fpsLabel').innerHTML = lang === 'ar' ? 'FPS: ٢٢' : 'FPS: 22';
             document.getElementById('langBtnLabel').innerText = lang === 'ar' ? 'English' : 'العربية';
-            // تحديث نص زر Word أيضاً
             document.getElementById('wordBtnText').innerText = lang === 'ar' ? '📄 تحميل كتيب Word' : '📄 Download Word Brochure';
         }
 
@@ -376,17 +374,16 @@
             }
         };
 
-        // ======= وظيفة توليد ملف Word =======
+        // ======= توليد ملف Word مع الصور =======
         function generateWord() {
             const lang = document.documentElement.lang || 'en';
             const isRtl = lang === 'ar';
             const t = translations[lang];
 
-            // جمع البيانات حسب اللغة
+            // جمع البيانات
             const appsRows = appsData[lang].map(app => `<tr><td style="padding:6px 10px;border:1px solid #ccc;font-weight:bold;">${app[0]}</td><td style="padding:6px 10px;border:1px solid #ccc;">${app[1]}</td></tr>`).join('');
             const benefitsItems = benefitsData[lang].map(b => `<div style="margin-bottom:10px;"><strong>${b[0]} ${b[1]}</strong><br><span style="font-size:11px;">${b[2]}</span></div>`).join('');
 
-            // ميزات
             let featuresHtml = '';
             featuresData[lang].forEach(f => {
                 let items = f[2].map(item => `<li style="margin-bottom:4px;">${item}</li>`).join('');
@@ -397,7 +394,6 @@
                 </div>`;
             });
 
-            // متقدم
             let advancedHtml = '';
             advancedData[lang].forEach(a => {
                 let items = a[1].map(item => `<li style="margin-bottom:4px;">${item}</li>`).join('');
@@ -407,15 +403,17 @@
                 </div>`;
             });
 
-            // جداول النظام والمقارنة
             const sysRows = sysData[lang].map(row => `<tr><td style="padding:6px 10px;border:1px solid #ccc;font-weight:bold;">${row[0]}</td><td style="padding:6px 10px;border:1px solid #ccc;">${row[1]}</td><td style="padding:6px 10px;border:1px solid #ccc;">${row[2]}</td></tr>`).join('');
             const compRows = compData[lang].map(row => `<tr><td style="padding:6px 10px;border:1px solid #ccc;font-weight:bold;">${row[0]}</td><td style="padding:6px 10px;border:1px solid #ccc;">${row[1]}</td><td style="padding:6px 10px;border:1px solid #ccc;">${row[2]}</td></tr>`).join('');
 
-            // عنوان الصفحة
             const title = isRtl ? 'كتيب AB‑SpectroX Gold' : 'AB‑SpectroX Gold Brochure';
             const dir = isRtl ? 'rtl' : 'ltr';
 
-            // بناء HTML للـ Word
+            // الصور (روابط خارجية بديلة تضمن الظهور)
+            const coverImg = "https://placehold.co/800x500/0f1420/10b981?text=AB-SpectroX+Main+View";
+            const mobileImg = "https://placehold.co/600x400/0f1420/10b981?text=Mobile+Edition";
+            const desktopImg = "https://placehold.co/600x400/0f1420/3b82f6?text=Desktop+Workstation";
+
             const htmlContent = `
             <html dir="${dir}" lang="${lang}">
             <head>
@@ -438,18 +436,23 @@
                     .cover .sub { font-size: 18pt; color: #10b981; }
                     .footer { text-align: center; margin-top: 30px; font-size: 9pt; color: #666; border-top: 1px solid #ccc; padding-top: 15px; }
                     .page-break { page-break-before: always; }
-                    .feature-grid { display: flex; flex-wrap: wrap; gap: 15px; }
-                    .feature-item { flex: 1 1 30%; border: 1px solid #ddd; padding: 10px; border-radius: 8px; }
+                    .img-container { text-align: center; margin: 15px 0; }
+                    .img-container img { max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 8px; }
+                    .hardware-row { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+                    .hardware-item { flex: 1 1 40%; border: 1px solid #ddd; padding: 10px; border-radius: 8px; text-align: center; }
                     @media print { body { margin: 1.2cm; } }
                 </style>
             </head>
             <body>
 
-                <!-- الغلاف -->
+                <!-- الغلاف مع الصورة -->
                 <div class="cover">
                     <h1>AB‑SpectroX Gold</h1>
                     <div class="sub">${isRtl ? 'محلل طيف ترددي احترافي' : 'Professional RF Spectrum Analyzer'}</div>
                     <div style="font-size:14pt;color:#10b981;margin:10px 0;">${isRtl ? 'الإصدار الذهبي · Gold Edition' : 'Gold Edition'}</div>
+                    <div class="img-container">
+                        <img src="${coverImg}" alt="AB-SpectroX Main View" style="max-width:80%;">
+                    </div>
                     <p style="font-size:12pt;max-width:700px;margin:20px auto;line-height:1.6;">
                         ${t.heroDesc}
                     </p>
@@ -472,6 +475,28 @@
                 <div style="margin-top:20px;">
                     <h3>${isRtl ? 'فوائد المنصة' : 'Platform Benefits'}</h3>
                     ${benefitsItems}
+                </div>
+
+                <div class="page-break"></div>
+
+                <!-- عرض الأجهزة مع الصور -->
+                <h2>${t.hardwareTitle}</h2>
+                <p>${t.hardwareSub}</p>
+                <div class="hardware-row">
+                    <div class="hardware-item">
+                        <h3 style="color:#10b981;">${t.mobileTitle}</h3>
+                        <p>${t.mobileSub}</p>
+                        <div class="img-container"><img src="${mobileImg}" alt="Mobile Edition" style="max-width:100%;"></div>
+                        <p>${t.mobileDesc}</p>
+                        <p><strong>${t.mobileBattery}</strong> · ${t.mobileStorage} · ${t.mobileSync}</p>
+                    </div>
+                    <div class="hardware-item">
+                        <h3 style="color:#3b82f6;">${t.desktopTitle}</h3>
+                        <p>${t.desktopSub}</p>
+                        <div class="img-container"><img src="${desktopImg}" alt="Desktop Workstation" style="max-width:100%;"></div>
+                        <p>${t.desktopDesc}</p>
+                        <p><strong>${t.desktopDisplay}</strong> · ${t.desktopCpu} · ${t.desktopRam}</p>
+                    </div>
                 </div>
 
                 <div class="page-break"></div>
@@ -516,7 +541,6 @@
             </html>
             `;
 
-            // تحميل الملف
             const blob = new Blob([htmlContent], { type: 'application/msword' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -528,10 +552,8 @@
             URL.revokeObjectURL(url);
         }
 
-        // ربط الزر بوظيفة التحميل
         document.getElementById('downloadWordBtn').addEventListener('click', generateWord);
 
-        // Set default language to English
         let currentLang = 'en';
         document.getElementById('langToggleBtn').addEventListener('click', () => { currentLang = currentLang === 'en' ? 'ar' : 'en'; buildPage(currentLang); });
         buildPage('en');
