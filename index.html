@@ -8,6 +8,31 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        /* بداية منع النسخ */
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        /* نسمح بتحديد النص في الحقول التفاعلية فقط (مثل الـ inputs و textarea و select) */
+        input, textarea, select, [contenteditable="true"] {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+        /* نمنع ظهور القائمة المنبثقة (النسخ) عند الضغط بزر الفأرة الأيمن */
+        body {
+            -webkit-touch-callout: none;
+        }
+        /* نمنع سحب الصور أو النصوص */
+        img, a, button {
+            -webkit-user-drag: none;
+            user-drag: none;
+        }
+        /* نهاية منع النسخ */
+
         .ltr-text { direction: ltr; display: inline-block; unicode-bidi: isolate; font-family: 'JetBrains Mono', monospace; font-weight: 500; }
         .value-unit { direction: ltr; display: inline-block; unicode-bidi: isolate; font-family: 'JetBrains Mono', monospace; font-weight: 500; }
         [dir="rtl"] .ltr-text, [dir="rtl"] .value-unit { direction: ltr; display: inline-block; }
@@ -35,7 +60,46 @@
             .hero-image, .hardware-image { max-height: 180px; object-fit: contain; }
             .page-break-before { page-break-before: always; }
             .cover-section { page-break-after: avoid; }
-            .importance-section { page-break-before: always; }
+            
+            /* تحسينات لقسم الأهمية لضمان بقاء الجدول + البطاقات في صفحة واحدة */
+            .importance-section {
+                page-break-before: always;
+                page-break-inside: avoid;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+            }
+            .importance-section .importance-card .p-6 {
+                padding: 0.4rem 0.6rem !important;
+            }
+            .importance-section .importance-card p {
+                font-size: 10.5pt;
+                line-height: 1.3;
+            }
+            .importance-table td, .importance-table th {
+                font-size: 9.5pt;
+                padding: 3px 6px;
+            }
+            .importance-table {
+                margin-bottom: 0.5rem;
+            }
+            
+            #benefitsGrid {
+                page-break-inside: avoid;
+                break-inside: avoid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 5px;
+            }
+            #benefitsGrid .bg-card {
+                font-size: 9.5pt;
+                padding: 0.3rem 0.4rem;
+            }
+            #benefitsGrid .bg-card p {
+                font-size: 9pt;
+            }
+            #benefitsGrid .bg-card h4 {
+                font-size: 10.5pt;
+            }
+            
             .hardware-section { page-break-before: always; }
             .specs-section { page-break-before: always; }
         }
@@ -85,9 +149,8 @@
             <img src="main spectrum logo.png" onerror="this.src='https://placehold.co/40x40/10b981/white?text=AS'" class="w-9 h-9 rounded-xl object-cover shadow-lg">
             <div><div class="text-[10px] font-mono text-primary tracking-wider">AB-SpectroX · GOLD v2026.6</div><div class="text-sm font-black">AbdoBallouk / ASTRYX <span class="text-[10px] font-mono text-slate-400">| Dr. Eng Abdo Ballouk</span></div></div>
         </div>
-        <div class="flex gap-3 flex-wrap">
+        <div class="flex gap-3">
             <button onclick="window.print();" class="bg-amber/20 hover:bg-amber/40 text-amber border border-amber/50 rounded-lg px-3 py-1 text-xs font-bold flex items-center gap-2 transition"><i class="fa-solid fa-print"></i> <span id="printBtnText">Print (A4)</span></button>
-            <button id="downloadWordBtn" class="bg-blue-600 hover:bg-blue-700 text-white border border-blue-400 rounded-lg px-3 py-1 text-xs font-bold flex items-center gap-2 transition"><i class="fa-regular fa-file-word"></i> <span id="wordBtnText">📄 تحميل كتيب Word</span></button>
             <button id="langToggleBtn" class="bg-card border border-border hover:border-primary text-slate-200 rounded-lg px-3 py-1 text-xs font-bold flex items-center gap-2"><i class="fa-solid fa-language text-primary"></i> <span id="langBtnLabel">العربية</span></button>
             <a href="https://github.com/AbdoBallouk/ASTRYX" target="_blank" class="bg-slate-900 hover:bg-slate-800 text-white border border-border rounded-lg px-3 py-1 text-xs font-bold flex gap-1"><i class="fa-brands fa-github"></i> Star</a>
         </div>
@@ -106,11 +169,11 @@
         </div>
     </section>
 
-    <!-- IMPORTANCE SECTION -->
-    <section class="importance-section py-16 px-6 max-w-7xl mx-auto page-break-before">
-        <div class="text-center mb-10"><span class="text-xs font-mono text-amber uppercase" id="importanceTag">ACADEMIC & RESEARCH VALUE</span><h2 class="text-3xl font-black mt-2" id="importanceTitle">Advanced RF spectrum analysis platform combining lab‑grade precision with ease of use</h2><p class="text-slate-400 text-sm max-w-3xl mx-auto mt-2" id="importanceSubtitle">A practical alternative to expensive equipment and complex software</p></div>
-        <div class="importance-card bg-card rounded-2xl border border-border overflow-hidden mb-10"><div class="p-6 bg-gradient-to-r from-primary/10 to-accent/10"><p class="text-slate-300 leading-relaxed" id="importanceDesc">An advanced RF spectrum analysis platform combining lab‑grade precision with ease of use, offering researchers and students a powerful, reliable real‑time tool. Designed to provide professional capabilities without complexity, at a fraction of the cost of traditional analyzers.</p></div></div>
-        <div class="mb-8"><h3 class="text-xl font-bold text-primary mb-4 text-center" id="applicationsTitle">Some Engineering Applications</h3><div class="overflow-x-auto"><table class="w-full text-sm importance-table bg-card rounded-xl border border-border"><thead class="bg-slate-900"><tr><th class="p-3 text-right font-bold text-primary" id="appFieldHeader">Academic / Laboratory Discipline</th><th class="p-3 text-right font-bold text-primary" id="appImplHeader">Practical Implementations Within the Platform</th></tr></thead><tbody id="appsTableBody"></tbody></table></div></div>
+    <!-- IMPORTANCE SECTION (with table + benefits grid) -->
+    <section class="importance-section py-8 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-6"><span class="text-xs font-mono text-amber uppercase" id="importanceTag">ACADEMIC & RESEARCH VALUE</span><h2 class="text-3xl font-black mt-2" id="importanceTitle">Advanced RF spectrum analysis platform combining lab‑grade precision with ease of use</h2><p class="text-slate-400 text-sm max-w-3xl mx-auto mt-2" id="importanceSubtitle">A practical alternative to expensive equipment and complex software</p></div>
+        <div class="importance-card bg-card rounded-2xl border border-border overflow-hidden mb-6"><div class="p-6 bg-gradient-to-r from-primary/10 to-accent/10"><p class="text-slate-300 leading-relaxed" id="importanceDesc">An advanced RF spectrum analysis platform combining lab‑grade precision with ease of use, offering researchers and students a powerful, reliable real‑time tool. Designed to provide professional capabilities without complexity, at a fraction of the cost of traditional analyzers.</p></div></div>
+        <div class="mb-4"><h3 class="text-xl font-bold text-primary mb-4 text-center" id="applicationsTitle">Some Engineering Applications</h3><div class="overflow-x-auto"><table class="w-full text-sm importance-table bg-card rounded-xl border border-border"><thead class="bg-slate-900"><tr><th class="p-3 text-right font-bold text-primary" id="appFieldHeader">Academic / Laboratory Discipline</th><th class="p-3 text-right font-bold text-primary" id="appImplHeader">Practical Implementations Within the Platform</th></tr></thead><tbody id="appsTableBody"></tbody></table></div></div>
         <div class="grid md:grid-cols-3 gap-6" id="benefitsGrid"></div>
     </section>
 
@@ -132,18 +195,18 @@
     </section>
 
     <!-- VIDEO SECTION (no print) -->
-    <section class="py-16 px-6 bg-slate-950/40 border-y border-border no-print"><div class="max-w-6xl mx-auto text-center mb-8"><span class="text-xs font-mono text-primary uppercase" id="videoTag">product demonstration</span><h2 class="text-3xl font-black mt-2" id="videoTitle">Watch AB-SpectroX in Action</h2><p class="text-slate-400" id="videoSub">Real‑time spectrum analysis, waterfall visualization, and live demodulation</p></div><div class="max-w-4xl mx-auto"><iframe src="https://drive.google.com/file/d/1vjrFUdUkPAQZ-5bjAFtsirkCNfEu4fAX/preview" width="100%" height="450" allow="autoplay" allowfullscreen class="rounded-2xl shadow-2xl border border-border"></iframe><p class="text-center text-xs text-slate-500 mt-3" id="videoNote">Demonstration video · AB-SpectroX Gold Edition (Click to play)</p></div></section>
+    <section class="py-16 px-6 bg-slate-950/40 border-y border-border no-print"><div class="max-w-6xl mx-auto text-center mb-8"><span class="text-xs font-mono text-primary uppercase" id="videoTag">product demonstration</span><h2 class="text-3xl font-black mt-2" id="videoTitle">Watch AB-SpectroX in Action</h2><p class="text-slate-400" id="videoSub">Real‑time spectrum analysis, waterfall visualization, and live demodulation</p></div><div class="max-w-4xl mx-auto"><iframe src="https://drive.google.com/file/d/1zbIXofMDzhwpN02IPXxGfsu4YAqlgYvj/preview" width="100%" height="450" allow="autoplay" allowfullscreen class="rounded-2xl shadow-2xl border border-border"></iframe><p class="text-center text-xs text-slate-500 mt-3" id="videoNote">Demonstration video · AB-SpectroX Gold Edition (Click to play)</p></div></section>
 
-    <!-- CAROUSEL GALLERY - FIXED: added dir="ltr" to container -->
+    <!-- CAROUSEL GALLERY -->
     <section id="carousel" class="py-16 px-6 max-w-7xl mx-auto no-print"><div class="text-center mb-8"><span class="text-xs font-mono text-accent uppercase" id="galleryTag">software gallery</span><h2 class="text-3xl font-black mt-1" id="galleryTitle">Real Software Screenshots</h2><p class="text-slate-400 text-sm" id="gallerySub">High‑resolution captures from AB‑SpectroX Gold</p></div>
         <div class="carousel-container relative" dir="ltr">
             <div class="carousel-track" id="carouselTrack">
-                <div class="carousel-slide"><img src="S6%20Wideband%20Spectrum.png" onerror="this.src='https://placehold.co/1200x600/0f1420/10b981?text=S6+Wideband+Spectrum'" alt="S6 Wideband Spectrum"></div>
-                <div class="carousel-slide"><img src="S1%20Arabic%20Interface.png" onerror="this.src='https://placehold.co/1200x600/0f1420/3b82f6?text=S1+Arabic+Interface'" alt="S1 Arabic Interface"></div>
-                <div class="carousel-slide"><img src="S2%20Power%20Meter.png" onerror="this.src='https://placehold.co/1200x600/0f1420/f59e0b?text=S2+Power+Meter'" alt="S2 Power Meter"></div>
-                <div class="carousel-slide"><img src="S3%20Delta%20Markers.png" onerror="this.src='https://placehold.co/1200x600/0f1420/10b981?text=S3+Delta+Markers'" alt="S3 Delta Markers"></div>
+                <div class="carousel-slide"><img src="S6%20Wideband%20Spectrum.png" onerror="this.src='S6_Wideband_Spectrum.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/10b981?text=S6+Wideband+Spectrum'" alt="S6 Wideband Spectrum"></div>
+                <div class="carousel-slide"><img src="S1%20Arabic%20Interface.png" onerror="this.src='S1_Arabic_Interface.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/3b82f6?text=S1+Arabic+Interface'" alt="S1 Arabic Interface"></div>
+                <div class="carousel-slide"><img src="S2%20Power%20Meter.png" onerror="this.src='S2_Power_Meter.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/f59e0b?text=S2+Power+Meter'" alt="S2 Power Meter"></div>
+                <div class="carousel-slide"><img src="S3%20Delta%20Markers.png" onerror="this.src='S3_Delta_Markers.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/10b981?text=S3+Delta+Markers'" alt="S3 Delta Markers"></div>
                 <div class="carousel-slide"><img src="S4.png" onerror="this.src='https://placehold.co/1200x600/0f1420/ef4444?text=S4+Smart+Gain'" alt="S4 Smart Gain"></div>
-                <div class="carousel-slide"><img src="S5%20Spectrogram%2027%20palettes.png" onerror="this.src='https://placehold.co/1200x600/0f1420/3b82f6?text=S5+27+Palettes'" alt="S5 Spectrogram"></div>
+                <div class="carousel-slide"><img src="S5%20Spectrogram%2027%20palettes.png" onerror="this.src='S5_Spectrogram_27_palettes.png'; this.onerror=null; this.src='https://placehold.co/1200x600/0f1420/3b82f6?text=S5+27+Palettes'" alt="S5 Spectrogram"></div>
             </div>
             <button class="carousel-button carousel-button-prev" id="prevBtn"><i class="fa-solid fa-chevron-left text-white text-xl"></i></button>
             <button class="carousel-button carousel-button-next" id="nextBtn"><i class="fa-solid fa-chevron-right text-white text-xl"></i></button>
@@ -166,10 +229,97 @@
         <div class="bg-card border border-border rounded-2xl overflow-hidden table-container"><div class="bg-slate-900 px-6 py-3 border-b border-border"><h3 class="font-bold text-xl"><span id="compareTitle">HackRF One vs ADALM‑Pluto — Hardware Comparison</span></h3></div><div class="overflow-x-auto p-4"><table class="w-full text-sm spec-table"><thead><tr><th class="p-3" id="compFeature">Feature</th><th class="p-3" id="compHack">HackRF One</th><th class="p-3" id="compPluto">ADALM‑Pluto</th></tr></thead><tbody id="compTableBody"></tbody></table></div></div>
     </section>
 
-    <footer class="border-t border-border bg-dark/50 py-10 px-6 text-center"><div class="max-w-4xl mx-auto space-y-3"><i class="fa-regular fa-cube text-3xl text-primary/50"></i><h3 class="text-xl font-black" id="footerTitle">AB‑SpectroX Gold · Ready for Deployment</h3><p class="text-slate-400 text-sm" id="footerDesc">Standalone Windows executable, no command line. Perfect for universities, EW labs, and RF R&D. Complete <span class="value-unit">SigMF</span> compliance, professional calibration tools, and bilingual interface.</p><div class="bg-black/50 inline-block rounded-xl p-2 font-mono text-[10px] text-emerald-300 text-left">$ git clone https://github.com/AbdoBallouk/ASTRYX.git<br>$ python -m astryx_spectrometer --gui</div><div class="flex justify-center gap-4 pt-3"><a href="https://github.com/AbdoBallouk/ASTRYX" target="_blank" class="text-xs bg-card px-4 py-1.5 rounded-full transition hover:bg-primary/20"><i class="fa-brands fa-github ml-1"></i> <span id="repoLink">Repository</span></a><span class="text-xs text-slate-500" id="copyright">© 2026 AB‑SpectroX · Developed by Dr. Eng Abdo Ballouk</span></div></div></footer>
+    <!-- FOOTER -->
+    <footer class="border-t border-border bg-dark/50 py-10 px-6 text-center">
+        <div class="max-w-4xl mx-auto space-y-3">
+            <i class="fa-regular fa-cube text-3xl text-primary/50"></i>
+            <h3 class="text-xl font-black" id="footerTitle">AB‑SpectroX Gold · Ready for Deployment</h3>
+            <p class="text-slate-400 text-sm" id="footerDesc">Standalone Windows executable, no command line. Perfect for universities, EW labs, and RF R&D. Complete <span class="value-unit">SigMF</span> compliance, professional calibration tools, and bilingual interface.</p>
+            
+            <p class="text-xs text-slate-500 mt-3" id="footerLocalNotice"></p>
+            <p class="text-xs text-slate-500" id="footerRights"></p>
+            
+            <div class="bg-black/50 inline-block rounded-xl p-2 font-mono text-[10px] text-emerald-300 text-left mt-2">$ git clone https://github.com/AbdoBallouk/ASTRYX.git<br>$ python -m astryx_spectrometer --gui</div>
+            <div class="flex justify-center gap-4 pt-3">
+                <a href="https://github.com/AbdoBallouk/ASTRYX" target="_blank" class="text-xs bg-card px-4 py-1.5 rounded-full transition hover:bg-primary/20"><i class="fa-brands fa-github ml-1"></i> <span id="repoLink">Repository</span></a>
+                <span class="text-xs text-slate-500" id="copyright">© 2026 AB‑SpectroX · Developed by Dr. Eng Abdo Ballouk</span>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        // Carousel Logic
+        // ================== منع النسخ ==================
+        // 1. منع قائمة السياق (النقر الأيمن)
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // 2. منع أحداث النسخ والقص واللصق
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        document.addEventListener('cut', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        document.addEventListener('paste', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // 3. منع تحديد النص (بالإضافة إلى CSS)
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // 4. منع اختصارات لوحة المفاتيح (Ctrl+C, Ctrl+X, Ctrl+V, Ctrl+A, Ctrl+U, F12)
+        document.addEventListener('keydown', function(e) {
+            // منع Ctrl+C, Ctrl+X, Ctrl+V, Ctrl+A, Ctrl+U
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'C' || 
+                              e.key === 'x' || e.key === 'X' || 
+                              e.key === 'v' || e.key === 'V' || 
+                              e.key === 'a' || e.key === 'A' || 
+                              e.key === 'u' || e.key === 'U')) {
+                e.preventDefault();
+                return false;
+            }
+            // منع F12 (أداة المطور)
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+            // منع Ctrl+Shift+I (أداة المطور)
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) {
+                e.preventDefault();
+                return false;
+            }
+            // منع Ctrl+Shift+J (console)
+            if (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // 5. منع السحب (drag) للصور أو النصوص
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // 6. (اختياري) منع النقر بزر الفأرة الأوسط (الذي قد يفتح الرابط)
+        document.addEventListener('auxclick', function(e) {
+            if (e.button === 1) { // الزر الأوسط
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // ================== نهاية منع النسخ ==================
+
+        // Carousel Logic (باقي الكود كما هو)
         const track = document.getElementById('carouselTrack');
         const slides = document.querySelectorAll('.carousel-slide');
         const prevBtn = document.getElementById('prevBtn');
@@ -230,7 +380,7 @@
             ar: [
                 ["📡","مسح الطيف",["مدى الترددات: <span class='ltr-text'>1 MHz – 7.25 GHz</span> (HackRF One) / <span class='ltr-text'>70 – 6000 MHz</span> (ADALM-Pluto مع البرنامج الثابت الموسع)","عرض الحزمة اللحظي: حتى <span class='ltr-text'>20 MHz</span> (HackRF) / حتى <span class='ltr-text'>56 MHz</span> (Pluto)","خيارات RBW: <span class='ltr-text'>1k, 2k, 5k, 10k, 20k, 50k, 100k, 200k, 500k, 1M, 2M, 5M Hz</span>","نقاط FFT: <span class='ltr-text'>8,192 / 16,384 / 32,768 / 65,536 / 131,072 / 262,144</span>","أنماط الكاشف في مقياس الاستطاعة: RMS، Average، Peak","تتبع الذروة: نعم، مع معدل هبوط قابل للضبط <span class='ltr-text'>0 – 500 ms</span>","مرشح الشوائب التوافقية: نعم، يتعلم ويزيل التوافقيات ذات التباعد <span class='ltr-text'>40 MHz</span> (حساس لربح الجهاز، ويحفظ ملفات تعريف لكل ربح)","إعادة معايرة المرشح: زر مخصص لتعليم المرشح من جديد","وضع التصحيح: يعرض معلومات إضافية عن المرشح"]],
                 ["🌊","مخطط الشلال (Spectrogram) - تحليل ترددي مع الزمن والاستطاعة",["<span class='ltr-text'>27</span> لوحة ألوان احترافية: Hot Iron Blue، Viridis، Inferno، Plasma، Magma، Cividis، Turbo، Neon Aurora، Cyber Sunset، Deep Space Neon، Matrix Green، Ocean Depths، Sunset Glow، Military Amber، Medical Blue، Fire and Ice، Hacker Terminal، Professional Blue، Neon Pink، Electric Purple، Golden Hour، Arctic Ice، Lava Flow، Cyberpunk Neon، Royal Gold، Toxic Green، Deep Ocean","وضع اللوحة التلقائي: يضبط تلقائياً بداية ومدى الألوان بناءً على مستوى الإشارة والضجيج","شريط ألوان جانبي: يعرض مقياس dBm بجانب الشلال","مؤشر الفأرة على الشلال: خط أبيض متقطع مع عرض التردد والاستطاعة","نقر مزدوج على الشلال: يعيد توجيه فك التعديل إلى التردد المختار","قائمة النقر الأيمن على الشلال: إضافة علامة، تعيين تردد التسجيل، بدء تسجيل IQ","مخطط تقاطع (Crosshair) على الطيف: يعرض التردد والاستطاعة عند تحريك الفأرة","الأثر الحي: لون وسماكة قابلان للتخصيص (<span class='ltr-text'>1, 1.5, 2, 3</span>)","منحنى تتبع الذروة: لون قابل للتخصيص، يظهر عند تفعيل Show Peaks","العرض التراكمي: تراكب شبه شفاف مع زمن اضمحلال قابل للتعديل (<span class='ltr-text'>1 – 60</span> ثانية) ولوحة ألوان منفصلة"]],
-                ["⚡","مقياس الاستطاعة الاحترافي",["الوحدات: dBm و Watt (عشرية كاملة)","أنماط القياس: استطاعة منخفضة، استطاعة متوسطة (قناة)، استطاعة عالية","الكاشفات: RMS، Average، Peak","تعويض المخفف الخارجي: <span class='ltr-text'>0 – 120 dB</span>","خسارة الخط: <span class='ltr-text'>0 – 80 dB</span>","إزاحة خارجية: <span class='ltr-text'>±40 dB</span>","معايرة ترددية متعددة النقاط: قائمة (تردد، إزاحة)، استيفاء خطي، مجال تطبيق قابل للتحديد","معايرة إرشادية: تبني قائمة ترددات مع الانتقال والمسح والتقاط (شبه تلقائي)","معايرة آلية: تعمل مع مولد إشارة متغير التردد (sweep)، تلتقط القمم المطابقة للخطوة مع نافذة تتبع","قدرة القناة: تحسب باستخدام عامل ENBW (<span class='ltr-text'>1.06</span> افتراضياً، قابل للتعديل <span class='ltr-text'>0.8 – 3.0</span>)","نسبة الإشارة إلى الضجيج (SNR): تحسب من الفرق بين القمة ومستوى الضجيج (النسبة المئوية <span class='ltr-text'>20</span>)","تقدير عدم اليقين: بناءً على التباين، التوهين، نسبة SNR، ومستوى الإشارة","حفظ وتحميل ملف المعايرة بصيغة JSON (يتضمن النقاط، ENBW، الخسائر، الإزاحة، التوهين المستخدم)"]],
+                ["⚡","مقياس الاستطاعة الاحترافي",["الوحدات: dBm و Watt (عشرية كاملة)","أنماط القياس: استطاعة منخفضة، استطاعة متوسطة (قناة)، استطاعة عالية","الكاشفات: RMS، Average، Peak","تعويض المخفف الخارجي: <span class='ltr-text'>0 – 120 dB</span>","خسارة الخط: <span class='ltr-text'>0 – 80 dB</span>","إزاحة خارجية: <span class='ltr-text'>±40 dB</span>","معايرة ترددية متعددة النقاط: قائمة (تردد، إزاحة)، استيفاء خطي، نطاق تطبيق قابل للتحديد","معايرة إرشادية: تبني قائمة ترددات مع الانتقال والمسح والتقاط (شبه تلقائي)","معايرة آلية: تعمل مع مولد إشارة متغير التردد (sweep)، تلتقط القمم المطابقة للخطوة مع نافذة تتبع","قدرة القناة: تحسب باستخدام عامل ENBW (<span class='ltr-text'>1.06</span> افتراضياً، قابل للتعديل <span class='ltr-text'>0.8 – 3.0</span>)","نسبة الإشارة إلى الضجيج (SNR): تحسب من الفرق بين القمة ومستوى الضجيج (النسبة المئوية <span class='ltr-text'>20</span>)","تقدير عدم اليقين: بناءً على التباين، التوهين، نسبة SNR، ومستوى الإشارة","حفظ وتحميل ملف المعايرة بصيغة JSON (يتضمن النقاط، ENBW، الخسائر، الإزاحة، التوهين المستخدم)"]],
                 ["🎙️","فك التعديل الحي",["الأنماط: FM (عرض <span class='ltr-text'>200 kHz</span>)، AM (حتى <span class='ltr-text'>10 kHz</span>)، LSB، USB، CW (<span class='ltr-text'>1.2 kHz</span>)","مصدر الإشارة: مستقبل IQ حقيقي من HackRF أو Pluto (معدل عينة <span class='ltr-text'>2 MHz</span> لـ FM، وقابل للتعديل للأنماط الأخرى)","معالجة الصوت: إزالة DC، مرشحات تمرير نطاق، دي-إمفاسيس (FM)، ربح تلقائي (AGC)، إلغاء تشويش خفيف","مخرجات الصوت: PyAudio أو sounddevice، <span class='ltr-text'>48 kHz</span>، <span class='ltr-text'>16-bit</span> int","مستوى الصوت: شريط تحكم <span class='ltr-text'>0 – 100%</span>","إعادة توجيه التردد: من نقر مزدوج على الطيف أو الشلال","إعادة ضبط الحالة: عند تغيير التردد أو النمط، تُعاد ضبط مرشحات الحالة الداخلية تلقائياً"]],
                 ["💾","تسجيل وإعادة تشغيل IQ",["صيغ التسجيل: SigMF CS8 (<span class='ltr-text'>.sigmf-data + .sigmf-meta</span>, int8) – مناسب للإرسال، SigMF C16 (<span class='ltr-text'>.sigmf-data + .sigmf-meta</span>, int16)، Complex Float32 (<span class='ltr-text'>.cf32 + .json</span>, float32)، Complex Int16 (<span class='ltr-text'>.sc16 + .json</span>, int16)","ميزات التسجيل: تحديد أقصى مدة/حجم للملف، كتابة بيانات وصفية (SigMF sidecar أو JSON)، معاينة ضيقة أثناء التسجيل، استئناف المسح تلقائياً بعد التسجيل، إحصائيات لحظية (المدة، الحجم، عمق الطابور)","ميزات إعادة التشغيل: فتح ملف IQ (.sigmf-data أو .cf32)، عرض الطيف أثناء التشغيل، وضع تكرار (loop)، إيقاف التشغيل واستئناف المسح","ميزات الإرسال (Tx): إرسال ملفات IQ (ci8 فقط) عبر HackRF أو Pluto، تحديد تردد الإرسال وربح الإرسال (<span class='ltr-text'>0-47 dB</span> لـ HackRF، يترجم إلى تخفيف لـ Pluto)، وضع تكرار"]],
                 ["🎯","المؤشرات وواجهة المستخدم",["المؤشرات: حتى <span class='ltr-text'>8</span> مؤشرات، أنواع: قياسية (خط متصل)، ذروة (خط متصل فوق الذروة ومتقطع تحتها)","مرجع دلتا: تعيين أي علامة كمرجع؛ تعرض المؤشرات الأخرى فرق التردد","ألوان قابلة للتخصيص عبر منتقي الألوان، إعادة تسمية المؤشرات","إضافة علامة يدوية: من قائمة النقر الأيمن أو زر Add Cursor","إضافة علامة ذروة: من زر Add Peak (يتنقل عبر القمم المكتشفة)","إزالة علامة: زر Remove أو مفتاح Delete، مسح الكل: Clear All","قائمة منسدلة للمؤشرات: تعرض أسماء المؤشرات والترددات","التبديل الفوري بين العربية والإنجليزية: جميع النصوص تترجم (أزرار، مؤشرات تبويب، تسميات)","إظهار/إخفاء الوحدات: Waterfall، Demodulator، IQ Recorder، Power Meter (قائمة Quick Features)","شريط معلومات علوي: يعرض بداية، مركز، نهاية، والامتداد الترددي، مع زر Features و Hide","زر إخفاء لوحة التحكم الجانبية: يطوي/يفتح لوحة الإعدادات","نافذة معلومات: نافذة منبثقة تعرض الإصدار، المطور، حقوق النشر","لقطة شاشة: تلتقط كلاً من الطيف والشلال معاً وتحفظ كـ PNG","حفظ وتحميل جميع الإعدادات: ملف JSON واحد (الجهاز، العرض، فك التعديل، مسجل IQ، المؤشرات، المعايرة)","زر إعادة الضبط الافتراضي: يعيد كل شيء إلى حالته الأصلية","تحديد مجلد الالتقاط: لحفظ لقطات الشاشة وتسجيلات IQ"]]
@@ -242,7 +392,7 @@
                 ["Frequency Bands, Performance & User Feedback",["Frequency allocation bands: Embedded Europe (ECA) and United States (FCC) tables, loaded from CSV","Semi-transparent colored bands on spectrum with tooltips (band name, application)","Auto-load at startup","Performance optimizations: Frame-limited update (spectrum and waterfall at ~<span class='ltr-text'>20 fps</span>), OpenGL in PyQtGraph (enabled by default)","Periodic garbage collection: Every <span class='ltr-text'>50</span> frames in main thread","Data size reduction: Uses float32 for spectrum, pre-allocated buffers","Adapts to FFT points: Auto-resizes waterfall width","User feedback & notifications: Status bar shows error messages, changes, recording notifications","Runtime badge: Next to Start/Stop button (IQ REC, TX LIVE, DEMOD, FILE PREVIEW)","Pluto notifications: Message in status bar and settings panel explaining connection status and frequency range","Error dialogs: For critical issues (device open fail, calibration error)"]]
             ],
             ar: [["التحكم المتقدم بالعتاد (HackRF / Pluto)",["HackRF One: ربح LNA <span class='ltr-text'>0-40 dB</span> (شريط تمرير)، ربح VGA <span class='ltr-text'>0-62 dB</span> (شريط تمرير)، مضخم LNA Amp (+<span class='ltr-text'>14 dB</span>) تشغيل/إيقاف، Bias-T تشغيل/إيقاف","ADALM-Pluto: ربح RX شامل <span class='ltr-text'>0-71 dB</span> (شريط) + أوضاع AGC (يدوي، بطيء، سريع)","حماية RX الذكية: HackRF: تخفض VGA تلقائياً إذا كان LNA Amp مفعلاً / Pluto: تقترح ربحاً مناسباً على شريط RX","قائمة منسدلة للمنصة مع إعادة تشغيل تلقائي للمسح","زر بدء/إيقاف المسح (يتغير لونه أخضر ← أحمر)","زر إيقاف مؤقت/استئناف: يوقف تحديث الطيف مؤقتاً","عناصر تحكم بالتردد المركزي (حقل رقمي + زر Apply)","عناصر تحكم بالامتداد الترددي (Span) (حقل رقمي + زر Apply)","عناصر تحكم بمدى التردد (حقلين Start/Stop مع أزرار جانبية)","إعدادات FFT: قوائم منسدلة (عرض الحزمة، العينات) مع إعادة تشغيل تلقائي","عناصر تحكم مرجع الاستطاعة: مستوى المرجع (dBm) + الخطوة (dB) + زر Apply + زر Auto","عرض طيف معاير (اختياري): يطبق نقاط المعايرة + خسارة المسار + الإزاحة على عرض الطيف","كشف تلقائي لمدى التردد لـ Pluto: يكتشف المدى الفعلي (<span class='ltr-text'>70-6000 MHz</span> حسب البرنامج الثابت)"]],
-                ["مجالات تخصيص التردد وتحسينات الأداء وإشعارات المستخدم",["مجالات تخصيص التردد: جداول مدمجة لأوروبا (ECA) والولايات المتحدة (FCC)، تُحمّل من CSV","مجالات شبه شفافة على الطيف مع تلميحات (اسم النطاق، التطبيق)","تحميل تلقائي عند بدء التشغيل","تحسينات الأداء: تحديث محدود الإطارات (~<span class='ltr-text'>20 fps</span>)، OpenGL في PyQtGraph (مفعّل افتراضياً)","جمع القمة الدوري: كل <span class='ltr-text'>50</span> إطار في الخيط الرئيسي","تقليل حجم البيانات: يستخدم float32 للطيف، مؤشرات الذاكرة المسبقة","تكيف مع عدد نقاط FFT: يعيد تشكيل عرض الشلال تلقائياً","التواصل مع المستخدم وإشعارات الحالة: شريط الحالة يعرض رسائل الخطأ، التغييرات، إشعارات التسجيل","شارة وقت التشغيل: تظهر بجانب زر Start/Stop (IQ REC, TX LIVE, DEMOD, FILE PREVIEW)","إشعارات Pluto: رسالة في شريط الحالة ولوحة الإعدادات تشرح حالة الاتصال ونطاق التردد","مربعات حوار خطأ: تظهر للمشاكل الحرجة (فشل فتح الجهاز، خطأ في المعايرة)"]]
+                ["نطاقات تخصيص التردد وتحسينات الأداء وإشعارات المستخدم",["نطاقات تخصيص التردد: جداول مدمجة لأوروبا (ECA) والولايات المتحدة (FCC)، تُحمّل من CSV","نطاقات شبه شفافة ملونة على الطيف مع تلميحات (اسم النطاق، التطبيق)","تحميل تلقائي عند بدء التشغيل","تحسينات الأداء: تحديث محدود الإطارات (~<span class='ltr-text'>20 fps</span>)، OpenGL في PyQtGraph (مفعّل افتراضياً)","جمع القمة الدوري: كل <span class='ltr-text'>50</span> إطار في الخيط الرئيسي","تقليل حجم البيانات: يستخدم float32 للطيف، مؤشرات الذاكرة المسبقة","تكيف مع عدد نقاط FFT: يعيد تشكيل عرض الشلال تلقائياً","التواصل مع المستخدم وإشعارات الحالة: شريط الحالة يعرض رسائل الخطأ، التغييرات، إشعارات التسجيل","شارة وقت التشغيل: تظهر بجانب زر Start/Stop (IQ REC, TX LIVE, DEMOD, FILE PREVIEW)","إشعارات Pluto: رسالة في شريط الحالة ولوحة الإعدادات تشرح حالة الاتصال ونطاق التردد","مربعات حوار خطأ: تظهر للمشاكل الحرجة (فشل فتح الجهاز، خطأ في المعايرة)"]]
             ]
         };
         
@@ -288,7 +438,6 @@
             
             document.getElementById('fpsLabel').innerHTML = lang === 'ar' ? 'FPS: ٢٢' : 'FPS: 22';
             document.getElementById('langBtnLabel').innerText = lang === 'ar' ? 'English' : 'العربية';
-            document.getElementById('wordBtnText').innerText = lang === 'ar' ? '📄 تحميل كتيب Word' : '📄 Download Word Brochure';
         }
 
         const translations = {
@@ -329,13 +478,15 @@
                 compFeature: "Feature", compHack: "HackRF One", compPluto: "ADALM‑Pluto",
                 footerTitle: "AB‑SpectroX Gold · Ready for Deployment",
                 footerDesc: "Standalone Windows executable, no command line. Perfect for universities, EW labs, and RF R&D. Complete SigMF compliance, professional calibration tools, and bilingual interface.",
+                footerLocalNotice: "This software was developed and tested locally, relying on pure national expertise and adhering to high engineering standards in Damascus, Syria.",
+                footerRights: "All rights reserved. Proprietary software protected by intellectual property laws.",
                 repoLink: "Repository", copyright: "© 2026 AB‑SpectroX · Developed by Dr. Eng Abdo Ballouk",
                 printBtnText: "Print (A4)"
             },
             ar: {
                 heroBadge: "AB-SpectroX · محلل طيف ترددي لحظي مع شلال ومقياس استطاعة وتسجيل عينات IQ",
                 heroTitle1: "محلل طيف ترددي", heroTitle2: "احترافي", heroTitle3: "الإصدار الذهبي",
-                heroDesc: "منصة عالية الأداء معجلة بالعتاد لتحليل الترددات اللاسلكية في الزمن الحقيقي، والتقاطها وعرضها. تدعم HackRF One و ADALM-Pluto بمحرك PyQt6 معجل GPU. 27 لوحة ألوان للشلال، مقياس استطاعة احترافي، تسجيل SigMF، وفك تعديل حي.",
+                heroDesc: "منصة عالية الأداء تعتمد على تسريع عتادي لمعالجة الترددات اللاسلكية في الزمن الحقيقي، مع دعم التقاطها وعرضها. تدعم HackRF One وADALM‑Pluto، وتستخدم محرك PyQt6 مع تسريع GPU لواجهة العرض. تتضمن 27 لوحة ألوان للشلال، مقياس استطاعة احترافي، تسجيل SigMF، وفك تعديل حي.",
                 btnSim: "🎮 المحاكي الحي", btnGallery: "📸 المعرض", btnSpec: "⚙️ المواصفات الكاملة",
                 importanceTag: "القيمة الأكاديمية والبحثية",
                 importanceTitle: "منصة تحليل طيف ترددي متقدمة تجمع بين الدقة المخبرية وسهولة الاستخدام",
@@ -369,191 +520,14 @@
                 compFeature: "الميزة", compHack: "HackRF One", compPluto: "ADALM-Pluto",
                 footerTitle: "AB-SpectroX الذهبي · جاهز للنشر",
                 footerDesc: "ملف تنفيذي مستقل لنظام Windows · مثالي للجامعات والمخابر العلمية EW والبحث والتطوير · متوافق تماماً مع SigMF وأدوات المعايرة الاحترافية.",
+                footerLocalNotice: "تم تطوير هذا البرنامج واختباره محلياً، وبقدرات وكفاءات وطنية خالصة، ووفق معايير هندسية عالية في دمشق، سوريا.",
+                footerRights: "جميع الحقوق محفوظة. برمجية خاصة محمية بقوانين الملكية الفكرية.",
                 repoLink: "المستودع", copyright: "© 2026 AB-SpectroX · تطوير د. م. عبده بللوق",
                 printBtnText: "طباعة (A4)"
             }
         };
 
-        // ======= توليد ملف Word مع الصور =======
-        function generateWord() {
-            const lang = document.documentElement.lang || 'en';
-            const isRtl = lang === 'ar';
-            const t = translations[lang];
-
-            // جمع البيانات
-            const appsRows = appsData[lang].map(app => `<tr><td style="padding:6px 10px;border:1px solid #ccc;font-weight:bold;">${app[0]}</td><td style="padding:6px 10px;border:1px solid #ccc;">${app[1]}</td></tr>`).join('');
-            const benefitsItems = benefitsData[lang].map(b => `<div style="margin-bottom:10px;"><strong>${b[0]} ${b[1]}</strong><br><span style="font-size:11px;">${b[2]}</span></div>`).join('');
-
-            let featuresHtml = '';
-            featuresData[lang].forEach(f => {
-                let items = f[2].map(item => `<li style="margin-bottom:4px;">${item}</li>`).join('');
-                featuresHtml += `<div style="margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:15px;">
-                    <div style="font-size:24px;">${f[0]}</div>
-                    <h3 style="font-size:16px;font-weight:bold;color:#2c3e50;">${f[1]}</h3>
-                    <ul style="list-style-type:disc;padding-left:20px;font-size:12px;">${items}</ul>
-                </div>`;
-            });
-
-            let advancedHtml = '';
-            advancedData[lang].forEach(a => {
-                let items = a[1].map(item => `<li style="margin-bottom:4px;">${item}</li>`).join('');
-                advancedHtml += `<div style="margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:15px;">
-                    <h3 style="font-size:15px;font-weight:bold;color:#2980b9;">${a[0]}</h3>
-                    <ul style="list-style-type:disc;padding-left:20px;font-size:12px;">${items}</ul>
-                </div>`;
-            });
-
-            const sysRows = sysData[lang].map(row => `<tr><td style="padding:6px 10px;border:1px solid #ccc;font-weight:bold;">${row[0]}</td><td style="padding:6px 10px;border:1px solid #ccc;">${row[1]}</td><td style="padding:6px 10px;border:1px solid #ccc;">${row[2]}</td></tr>`).join('');
-            const compRows = compData[lang].map(row => `<tr><td style="padding:6px 10px;border:1px solid #ccc;font-weight:bold;">${row[0]}</td><td style="padding:6px 10px;border:1px solid #ccc;">${row[1]}</td><td style="padding:6px 10px;border:1px solid #ccc;">${row[2]}</td></tr>`).join('');
-
-            const title = isRtl ? 'كتيب AB‑SpectroX Gold' : 'AB‑SpectroX Gold Brochure';
-            const dir = isRtl ? 'rtl' : 'ltr';
-
-            // الصور (روابط خارجية بديلة تضمن الظهور)
-            const coverImg = "https://placehold.co/800x500/0f1420/10b981?text=AB-SpectroX+Main+View";
-            const mobileImg = "https://placehold.co/600x400/0f1420/10b981?text=Mobile+Edition";
-            const desktopImg = "https://placehold.co/600x400/0f1420/3b82f6?text=Desktop+Workstation";
-
-            const htmlContent = `
-            <html dir="${dir}" lang="${lang}">
-            <head>
-                <meta charset="UTF-8">
-                <title>${title}</title>
-                <style>
-                    body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11pt; line-height: 1.4; margin: 1.5cm; direction: ${dir}; }
-                    h1 { font-size: 24pt; font-weight: bold; color: #1a5276; text-align: center; }
-                    h2 { font-size: 18pt; font-weight: bold; color: #2c3e50; margin-top: 20px; border-bottom: 2px solid #10b981; padding-bottom: 5px; }
-                    h3 { font-size: 14pt; font-weight: bold; color: #2980b9; }
-                    p { margin: 8px 0; }
-                    table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 10pt; }
-                    th, td { border: 1px solid #aaa; padding: 6px 8px; vertical-align: top; }
-                    th { background: #eef2f7; font-weight: bold; }
-                    ul { padding-left: 20px; }
-                    li { margin-bottom: 3px; }
-                    .ltr-text { direction: ltr; unicode-bidi: isolate; }
-                    .cover { text-align: center; margin-bottom: 30px; }
-                    .cover h1 { font-size: 32pt; }
-                    .cover .sub { font-size: 18pt; color: #10b981; }
-                    .footer { text-align: center; margin-top: 30px; font-size: 9pt; color: #666; border-top: 1px solid #ccc; padding-top: 15px; }
-                    .page-break { page-break-before: always; }
-                    .img-container { text-align: center; margin: 15px 0; }
-                    .img-container img { max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 8px; }
-                    .hardware-row { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
-                    .hardware-item { flex: 1 1 40%; border: 1px solid #ddd; padding: 10px; border-radius: 8px; text-align: center; }
-                    @media print { body { margin: 1.2cm; } }
-                </style>
-            </head>
-            <body>
-
-                <!-- الغلاف مع الصورة -->
-                <div class="cover">
-                    <h1>AB‑SpectroX Gold</h1>
-                    <div class="sub">${isRtl ? 'محلل طيف ترددي احترافي' : 'Professional RF Spectrum Analyzer'}</div>
-                    <div style="font-size:14pt;color:#10b981;margin:10px 0;">${isRtl ? 'الإصدار الذهبي · Gold Edition' : 'Gold Edition'}</div>
-                    <div class="img-container">
-                        <img src="${coverImg}" alt="AB-SpectroX Main View" style="max-width:80%;">
-                    </div>
-                    <p style="font-size:12pt;max-width:700px;margin:20px auto;line-height:1.6;">
-                        ${t.heroDesc}
-                    </p>
-                    <p style="font-size:10pt;color:#666;">${t.footerDesc}</p>
-                    <p style="font-size:10pt;color:#888;margin-top:20px;">${t.copyright}</p>
-                </div>
-
-                <div class="page-break"></div>
-
-                <!-- القيمة الأكاديمية -->
-                <h2>${t.importanceTag}</h2>
-                <p><strong>${t.importanceTitle}</strong></p>
-                <p>${t.importanceDesc}</p>
-                <h3>${t.applicationsTitle}</h3>
-                <table>
-                    <tr><th>${t.appFieldHeader}</th><th>${t.appImplHeader}</th></tr>
-                    ${appsRows}
-                </table>
-
-                <div style="margin-top:20px;">
-                    <h3>${isRtl ? 'فوائد المنصة' : 'Platform Benefits'}</h3>
-                    ${benefitsItems}
-                </div>
-
-                <div class="page-break"></div>
-
-                <!-- عرض الأجهزة مع الصور -->
-                <h2>${t.hardwareTitle}</h2>
-                <p>${t.hardwareSub}</p>
-                <div class="hardware-row">
-                    <div class="hardware-item">
-                        <h3 style="color:#10b981;">${t.mobileTitle}</h3>
-                        <p>${t.mobileSub}</p>
-                        <div class="img-container"><img src="${mobileImg}" alt="Mobile Edition" style="max-width:100%;"></div>
-                        <p>${t.mobileDesc}</p>
-                        <p><strong>${t.mobileBattery}</strong> · ${t.mobileStorage} · ${t.mobileSync}</p>
-                    </div>
-                    <div class="hardware-item">
-                        <h3 style="color:#3b82f6;">${t.desktopTitle}</h3>
-                        <p>${t.desktopSub}</p>
-                        <div class="img-container"><img src="${desktopImg}" alt="Desktop Workstation" style="max-width:100%;"></div>
-                        <p>${t.desktopDesc}</p>
-                        <p><strong>${t.desktopDisplay}</strong> · ${t.desktopCpu} · ${t.desktopRam}</p>
-                    </div>
-                </div>
-
-                <div class="page-break"></div>
-
-                <!-- الميزات الأساسية -->
-                <h2>${t.specTitle}</h2>
-                <p>${t.specSub}</p>
-                <div style="display:flex;flex-wrap:wrap;gap:15px;">
-                    ${featuresHtml}
-                </div>
-
-                <div class="page-break"></div>
-
-                <!-- ميزات متقدمة -->
-                <h2>${isRtl ? 'الميزات المتقدمة' : 'Advanced Features'}</h2>
-                ${advancedHtml}
-
-                <div class="page-break"></div>
-
-                <!-- متطلبات النظام -->
-                <h2>${t.sysReqTitle}</h2>
-                <table>
-                    <tr><th>${t.sysComp}</th><th>${t.sysMin}</th><th>${t.sysRec}</th></tr>
-                    ${sysRows}
-                </table>
-
-                <!-- مقارنة العتاد -->
-                <h2>${t.compareTitle}</h2>
-                <table>
-                    <tr><th>${t.compFeature}</th><th>${t.compHack}</th><th>${t.compPluto}</th></tr>
-                    ${compRows}
-                </table>
-
-                <div class="footer">
-                    <p>${t.footerTitle}</p>
-                    <p>${t.footerDesc}</p>
-                    <p>${t.repoLink}: <a href="https://github.com/AbdoBallouk/ASTRYX">github.com/AbdoBallouk/ASTRYX</a></p>
-                    <p>${t.copyright}</p>
-                </div>
-
-            </body>
-            </html>
-            `;
-
-            const blob = new Blob([htmlContent], { type: 'application/msword' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `AB-SpectroX_Brochure_${lang}.doc`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
-        document.getElementById('downloadWordBtn').addEventListener('click', generateWord);
-
+        // Set default language to English
         let currentLang = 'en';
         document.getElementById('langToggleBtn').addEventListener('click', () => { currentLang = currentLang === 'en' ? 'ar' : 'en'; buildPage(currentLang); });
         buildPage('en');
